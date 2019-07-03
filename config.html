@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>
+    <div class="hk-wrapper hk-vertical-nav">
+        <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar">
+            <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span
+                    class="feather-icon"><i data-feather="menu"></i></span></a>
+            <a class="navbar-brand" href="./">
+                <img class="brand-img d-inline-block" src="dist/img/logo-light.png" alt="brand" height="40" />
+            </a>
+            <ul class="navbar-nav hk-navbar-content">
+                <li class="nav-item dropdown dropdown-authentication">
+                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar">
+                                    <img src="dist/img/users/no_foto.jpg" alt="user"
+                                        class="avatar-img rounded-circle user-image">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <span><span class="user_users"></span> <i class="zmdi zmdi-chevron-down"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX"
+                        data-dropdown-out="flipOutX">
+                        <a class="dropdown-item" href="profile.html">
+                            <i class="dropdown-icon zmdi zmdi-account"></i>
+                            <span>Profile</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item logout" href="javascript:void(0);"><i
+                                class="dropdown-icon zmdi zmdi-power"></i><span>Logout</span></a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <nav class="hk-nav hk-nav-light">
+            <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i
+                        data-feather="x"></i></span></a>
+            <div class="nicescroll-bar">
+                <div class="navbar-nav-wrap">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./">
+                                <i class="material-icons">home</i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse"
+                                data-target="#page_account">
+                                <i class="material-icons">account_box</i>
+                                <span class="nav-link-text">My Account</span>
+                            </a>
+                            <ul id="page_account" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="profile.html">Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link logout" href="javascript:void(0);">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <hr class="nav-separator">
+                    <div id="list-menu"></div>
+                </div>
+            </div>
+        </nav>
+        <div id="hk_nav_backdrop" class="hk-nav-backdrop"></div>
+        <div class="hk-pg-wrapper">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">Master</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Config</li>
+                </ol>
+            </nav>
+            <div class="container">
+                <div class="hk-pg-header">
+                    <h4 class="hk-pg-title">
+                        <span class="pg-title-icon">
+                            <span class="feather-icon"><i data-feather="settings"></i></span>
+                        </span>
+                        Config
+                    </h4>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header p-0">
+                                <ul class="nav nav-tabs text-center" role="tablist">
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#form-email" class="nav-link active" data-toggle="tab"
+                                            aria-expanded="true">
+                                            <i class="fa fa-envelope"></i>
+                                            <span class="d-none d-sm-block">Email</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#form-code" class="nav-link" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-code"></i>
+                                            <span class="d-none d-sm-block">Code</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#form-google" class="nav-link" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-google"></i>
+                                            <span class="d-none d-sm-block">Google</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#form-facebook" class="nav-link" data-toggle="tab"
+                                            aria-expanded="false">
+                                            <i class="fa fa-facebook"></i>
+                                            <span class="d-none d-sm-block">Facebook</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#formCMD" class="nav-link" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-terminal"></i>
+                                            <span class="d-none d-sm-block">Terminal</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content block">
+                                    <form id="form-email" class="tab-pane active" method="POST" action="config"
+                                        data-modal="false" data-reset="false">
+                                        <h5>Email SMTP</h5>
+                                        <span>
+                                            Konfigurasi Email dengan SMTP (Simple Mail Transfer Protocol)
+                                        </span>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">
+                                                    Sender Name <span class="symbol required"></span>
+                                                </label>
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                    placeholder="Sender Name" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">
+                                                    SMTP Server <span class="symbol required"></span>
+                                                </label>
+                                                <input type="text" class="form-control" id="host" name="host"
+                                                    placeholder="smtp.sipkur.net" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">
+                                                    Email <span class="symbol required"></span>
+                                                </label>
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    placeholder="Email" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">
+                                                    Password <span class="symbol required"></span>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="password" placeholder="Password" class="form-control"
+                                                        id="pswd" name="pswd" required>
+                                                    <div class="input-group-append">
+                                                        <label class="input-group-text">
+                                                            <input type="checkbox" id="show_paswd">&nbsp;Show
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-8">
+                                                <label class="control-label">
+                                                    Security <span class="symbol required"></span>
+                                                </label>
+                                                <select class="form-control" id="smtp" name="smtp" required>
+                                                    <option value="">-- Select Data --</option>
+                                                    <option value="ssl">SSL</option>
+                                                    <option value="tls">TLS</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="control-label">
+                                                    Port <span class="symbol required"></span>
+                                                </label>
+                                                <input type="number" placeholder="Port" class="form-control" id="port"
+                                                    name="port">
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="save" value="true">
+                                    </form>
+                                    <form id="form-code" class="tab-pane" method="POST" action="config"
+                                        data-modal="false" data-reset="false">
+                                        <h5>Code</h5>
+                                        <span>
+                                            Konfigurasi Code &amp; API (Application Programming Interface)
+                                        </span>
+                                        <hr>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                API Google Map
+                                            </label>
+                                            <input type="text" placeholder="API Google Map" class="form-control"
+                                                id="api" name="api">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Header Code
+                                            </label>
+                                            <textarea class="form-control" id="headers" name="headers"
+                                                placeholder="Header Code"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Footer Code
+                                            </label>
+                                            <textarea class="form-control" id="footers" name="footers"
+                                                placeholder="Footer Code"></textarea>
+                                        </div>
+                                        <input type="hidden" name="save" value="true">
+                                    </form>
+                                    <form id="form-google" class="tab-pane" method="POST" action="config"
+                                        data-modal="false" data-reset="false">
+                                        <h5>API Google</h5>
+                                        <span>
+                                            Silahkan buat API di <a href="https://console.developers.google.com"
+                                                target="_blank">Google Developers</a>
+                                        </span>
+                                        <hr>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Application Name <span class="symbol required"></span>
+                                            </label>
+                                            <input type="text" placeholder="ApplicationName" class="form-control"
+                                                id="go_ap" name="go_ap" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Client Id <span class="symbol required"></span>
+                                            </label>
+                                            <input type="text" placeholder="ClientId" class="form-control" id="go_id"
+                                                name="go_id" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Client Secret <span class="symbol required"></span>
+                                            </label>
+                                            <input type="text" placeholder="ClientSecret" class="form-control"
+                                                id="go_sc" name="go_sc" required>
+                                        </div>
+                                        <input type="hidden" name="save" value="true">
+                                    </form>
+                                    <form id="form-facebook" class="tab-pane" method="POST" action="config"
+                                        data-modal="false" data-reset="false">
+                                        <h5>API Facebook</h5>
+                                        <span>
+                                            Silahkan buat API di <a href="https://developers.facebook.com/"
+                                                target="_blank">Facebook Developers</a>
+                                        </span>
+                                        <hr>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                App Version <span class="symbol required"></span>
+                                            </label>
+                                            <input type="text" placeholder="App Version" class="form-control" id="fb_vs"
+                                                name="fb_vs" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                App Id <span class="symbol required"></span>
+                                            </label>
+                                            <input type="text" placeholder="App Id" class="form-control" id="fb_id"
+                                                name="fb_id" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                App Secret <span class="symbol required"></span>
+                                            </label>
+                                            <input type="text" placeholder="App Secret" class="form-control" id="fb_sc"
+                                                name="fb_sc" required>
+                                        </div>
+                                        <input type="hidden" name="save" value="true">
+                                    </form>
+                                    <form id="formCMD" class="tab-pane" method="POST" action="config">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">
+                                                    Server <span class="symbol required"></span>
+                                                </label>
+                                                <select class="form-control" name="command" required>
+                                                    <option value="">-- Select Server --</option>
+                                                    <optgroup label="Server">
+                                                        <option value="apache2">Apache</option>
+                                                        <option value="webmin">Webmin</option>
+                                                        <option value="freeradius">Free Radius</option>
+                                                        <option value="bind9">Bind DNS</option>
+                                                        <option value="squid">Web Proxy</option>
+                                                        <option value="vboxweb">VirtualBox</option>
+                                                    </optgroup>
+                                                    <optgroup label="Printer">
+                                                        <option value="cups">CUPS</option>
+                                                        <option value="cups-browsed">CUPS Browser</option>
+                                                    </optgroup>
+                                                    <optgroup label="Database">
+                                                        <option value="mysql">MySQL</option>
+                                                        <option value="postgresql">PostgreSQL</option>
+                                                    </optgroup>
+                                                    <optgroup label="Network">
+                                                        <option value="networking">Network</option>
+                                                        <option value="fail2ban">Fail2ban</option>
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">
+                                                    Action
+                                                </label>
+                                                <select class="form-control" name="action">
+                                                    <option value="status">Status</option>
+                                                    <option value="restart">Restart</option>
+                                                    <option value="start">Start</option>
+                                                    <option value="stop">Stop</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <pre id="terminal" class="bg-dark-100 p-3 h-300p text-white">
+Welcome to MangoSpot
+                                        </pre>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <div class="mr-auto">
+
+                                </div>
+                                <button type="reset" id="reset" class="btn btn-secondary mr-5">
+                                    <i class="fa fa-close"></i> Cancel
+                                </button>
+                                <button type="submit" id="save" class="btn btn-info">
+                                    <i class="fa fa-save"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hk-footer-wrap container" data-include="menu/footer.html"></div>
+        </div>
+    </div>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendors/validation/jquery.validate.min.js"></script>
+    <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
+    <script src="vendors/jquery-toast/jquery.toast.js"></script>
+    <script src="vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="dist/js/feather.min.js"></script>
+    <script src="dist/js/controls.js"></script>
+    <script src="dist/js/init.js"></script>
+    <script src="dist/js/config.js"></script>
+
+</body>
+
+</html>

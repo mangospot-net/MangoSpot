@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+    <link rel="stylesheet" type="text/css" href="vendors/jquery/jquery-ui.min.css">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>
+    <div class="hk-wrapper hk-vertical-nav">
+        <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar">
+            <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span
+                    class="feather-icon"><i data-feather="menu"></i></span></a>
+            <a class="navbar-brand" href="./">
+                <img class="brand-img d-inline-block" src="dist/img/logo-light.png" alt="brand" height="40" />
+            </a>
+            <ul class="navbar-nav hk-navbar-content">
+                <li class="nav-item dropdown dropdown-authentication">
+                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar">
+                                    <img src="dist/img/users/no_foto.jpg" alt="user"
+                                        class="avatar-img rounded-circle user-image">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <span><span class="user_users"></span> <i class="zmdi zmdi-chevron-down"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX"
+                        data-dropdown-out="flipOutX">
+                        <a class="dropdown-item" href="profile.html">
+                            <i class="dropdown-icon zmdi zmdi-account"></i>
+                            <span>Profile</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item logout" href="javascript:void(0);"><i
+                                class="dropdown-icon zmdi zmdi-power"></i><span>Logout</span></a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <nav class="hk-nav hk-nav-light">
+            <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i
+                        data-feather="x"></i></span></a>
+            <div class="nicescroll-bar">
+                <div class="navbar-nav-wrap">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./">
+                                <i class="material-icons">home</i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse"
+                                data-target="#page_account">
+                                <i class="material-icons">account_box</i>
+                                <span class="nav-link-text">My Account</span>
+                            </a>
+                            <ul id="page_account" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="profile.html">Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link logout" href="javascript:void(0);">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <hr class="nav-separator">
+                    <div id="list-menu"></div>
+                </div>
+            </div>
+        </nav>
+        <div id="hk_nav_backdrop" class="hk-nav-backdrop"></div>
+        <div class="hk-pg-wrapper">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">Master</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Identity</li>
+                </ol>
+            </nav>
+            <div class="container">
+                <div class="hk-pg-header">
+                    <h4 class="hk-pg-title">
+                        <span class="pg-title-icon">
+                            <span class="feather-icon"><i data-feather="globe"></i></span>
+                        </span>
+                        Identity
+                    </h4>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <form id="form-identity" method="POST" action="identity" class="card" data-modal="false"
+                            data-reset="false">
+                            <div class="card-header">
+                                Form Identity
+                            </div>
+                            <div class="card-body row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="data">Name <span class="symbol required"></span></label>
+                                        <input type="text" class="form-control" placeholder="Name" name="data" id="data"
+                                            value="" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="title">Title <span class="symbol required"></span></label>
+                                        <input type="text" class="form-control" placeholder="Title" name="title"
+                                            id="title" value="" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="web">Website </label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-globe"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Website" name="web"
+                                                id="web">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email </label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                            </div>
+                                            <input type="email" class="form-control" placeholder="Email address"
+                                                name="email" id="email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="phone">Tlp/HP </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Phone number"
+                                                    name="phone" id="phone">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="fax">Fax </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-fax"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Fax" name="fax"
+                                                    id="fax">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zip">Zip Code <span class="symbol required"></span></label>
+                                        <input type="number" min="5" class="form-control" placeholder="Zip Code"
+                                            name="zip" id="zip" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Address <span class="symbol required"></span></label>
+                                        <textarea class="form-control" placeholder="Address" rows="5" name="address"
+                                            id="address" required=""></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <div class="mr-auto"></div>
+                                <button type="reset" class="btn btn-secondary mr-5"> <i class="fa fa-times"></i>
+                                    Reset</button>
+                                <button type="submit" class="btn btn-blue"> <i class="fa fa-save"></i> Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="card">
+                            <div class="card-header">
+                                Form Image
+                            </div>
+                            <div class="card-body text-center">
+                                <label>Icon</label>
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <a href="javascript:void(0)" class="thumbnail" data-id="icon">
+                                        <img src="dist/img/blank.png" class="img-responsive img-fluid img-thumbnail"
+                                            alt="icon">
+                                    </a>
+                                </div>
+                                <label>Logo</label>
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <a href="javascript:void(0)" class="thumbnail" data-id="logo">
+                                        <img src="dist/img/blank.png" class="img-responsive img-fluid img-thumbnail"
+                                            alt="logo">
+                                    </a>
+                                </div>
+                                <div class="alert alert-info text-center mt-10 mb-0">
+                                    Click image to change data.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <form id="form-cover" method="POST" action="identity" class="card" data-modal="false"
+                            data-reset="false">
+                            <div class="card-header">
+                                Form Cover
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group" id="cover-list"></ul>
+                                <div class="alert alert-info text-center mt-10 mb-0">
+                                    Drag & Drop to Sort Data.
+                                </div>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <div class="mr-auto">
+                                    <a href="#add-data" class="btn btn-info" data-toggle="modal">
+                                        <i class="fa fa-plus"></i>
+                                        <span class="hidden-xs">Add</span>
+                                    </a>
+                                </div>
+                                <button type="submit" class="btn btn-blue"> <i class="fa fa-save"></i> Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-xl-12">
+                        <form id="form-maps" method="POST" action="identity" class="card" data-modal="false"
+                            data-reset="false">
+                            <div class="card-header">
+                                Form Maps
+                            </div>
+                            <div class="card-body">
+                                <div id="map1" style="display:block; height:350px; margin:0 auto;"></div>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ti-location-pin"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Latitude" id="lat" name="lat">
+                                    <input type="text" class="form-control" placeholder="Longitude" id="lng" name="lng">
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-blue"><i class="fa fa-save"></i>
+                                            Save</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal fade" id="add-data" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <form class="modal-content" id="cover-data" method="POST">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Form Cover</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>Title </label>
+                                        <input type="text" class="form-control" name="title" placeholder="Title Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" name="info"
+                                            placeholder="Description..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <a href="javascript:void(0)" class="images">
+                                            <img src="dist/img/blank.png" class="img-responsive img-fluid img-thumbnail"
+                                                alt="image">
+                                        </a>
+                                        <input type="hidden" name="img" value="">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="mr-auto">
+                                        <input type="hidden" id="add" name="add" value="">
+                                    </div>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        <i class="fa fa-close"></i> Close
+                                    </button>
+                                    <button type="submit" class="btn btn-blue">
+                                        <i class="fa fa-save"></i> Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hk-footer-wrap container" data-include="menu/footer.html"></div>
+    </div>
+    </div>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/jquery/jquery-ui.min.js"></script>
+    <script
+        src="https://maps.google.com/maps/api/js?sensor=true&callback=initMap&key=AIzaSyAu5KS39OBDcXZJV5UxRWVx-e1n0ytR_tY">
+    </script>
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendors/validation/jquery.validate.min.js"></script>
+    <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
+    <script src="vendors/jquery-toast/jquery.toast.js"></script>
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+    <script src="vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="vendors/gmaps/gmaps.min.js"></script>
+    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="dist/js/feather.min.js"></script>
+    <script src="dist/js/controls.js"></script>
+    <script src="dist/js/init.js"></script>
+    <script src="dist/js/identity.js"></script>
+
+</body>
+
+</html>

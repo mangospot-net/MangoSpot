@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MangoSpot | Interner Network Solutions</title>
+    <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+    <link rel="stylesheet" type="text/css" href="vendors/morris.js/morris.css">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>
+    <div class="hk-wrapper hk-vertical-nav">
+        <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar">
+            <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span
+                    class="feather-icon"><i data-feather="menu"></i></span></a>
+            <a class="navbar-brand" href="./">
+                <img class="brand-img d-inline-block" src="dist/img/logo-light.png" alt="brand" height="40" />
+            </a>
+            <ul class="navbar-nav hk-navbar-content">
+                <li class="nav-item dropdown dropdown-authentication">
+                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar">
+                                    <img src="dist/img/users/no_foto.jpg" alt="user"
+                                        class="avatar-img rounded-circle user-image">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <span><span class="user_users"></span> <i class="zmdi zmdi-chevron-down"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX"
+                        data-dropdown-out="flipOutX">
+                        <a class="dropdown-item" href="profile.html">
+                            <i class="dropdown-icon zmdi zmdi-account"></i>
+                            <span>Profile</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item logout" href="javascript:void(0);"><i
+                                class="dropdown-icon zmdi zmdi-power"></i><span>Logout</span></a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <nav class="hk-nav hk-nav-light">
+            <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i
+                        data-feather="x"></i></span></a>
+            <div class="nicescroll-bar">
+                <div class="navbar-nav-wrap">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./">
+                                <i class="material-icons">home</i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse"
+                                data-target="#page_account">
+                                <i class="material-icons">account_box</i>
+                                <span class="nav-link-text">My Account</span>
+                            </a>
+                            <ul id="page_account" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="profile.html">Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link logout" href="javascript:void(0);">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <hr class="nav-separator">
+                    <div id="list-menu"></div>
+                </div>
+            </div>
+        </nav>
+        <div id="hk_nav_backdrop" class="hk-nav-backdrop"></div>
+        <div class="hk-pg-wrapper">
+            <div class="container">
+                <div class="hk-pg-header mt-20 mb-20">
+                    <h4 class="hk-pg-title">
+                        <span class="pg-title-icon">
+                            <span class="feather-icon"><i data-feather="activity"></i></span>
+                        </span>
+                        Dashboard
+                    </h4>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hk-row">
+                            <div class="col-sm-12">
+                                <div class="card-group hk-dash-type-2">
+                                    <div class="card card-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <div>
+                                                    <span
+                                                        class="d-block font-15 text-dark font-weight-500">Online</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="d-block display-4 text-success mb-5">
+                                                    <i class="fa fa-signal"></i>
+                                                    <span class="counter-anim show_active"></span>
+                                                </span>
+                                                <small class="d-block">Hotspot Active</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card card-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <div>
+                                                    <span class="d-block font-15 text-dark font-weight-500">Users</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="d-block display-4 text-info mb-5">
+                                                    <i class="fa fa-users"></i>
+                                                    <span class="counter-anim show_client"></span>
+                                                </span>
+                                                <small class="d-block">Hotspot Users</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card card-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <div>
+                                                    <span
+                                                        class="d-block font-15 text-dark font-weight-500">Radius</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="d-block display-4 text-warning mb-5">
+                                                    <i class="fa fa-server"></i>
+                                                    <span class="counter-anim show_radius"></span>
+                                                </span>
+                                                <small class="d-block">Radius Client</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card card-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-5">
+                                                <div>
+                                                    <span class="d-block font-15 text-dark font-weight-500"
+                                                        id="day"></span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="d-block display-4 text-danger mb-5">
+                                                    <i class="fa fa-clock-o"></i> <span id="clock"></span>
+                                                </span>
+                                                <small class="d-block" id="date"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hk-row">
+                            <div class="col-lg-8">
+                                <div class="card card-refresh">
+                                    <div class="refresh-container">
+                                        <div class="loader-pendulums"></div>
+                                    </div>
+                                    <div class="card-header card-header-action">
+                                        <h6><i class="fa fa-area-chart"></i> Chart</h6>
+                                        <div class="d-flex align-items-center card-action-wrap">
+                                            <a href="#" class="inline-block refresh">
+                                                <i class="ion ion-md-radio-button-off"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body row">
+                                        <div id="e_chart_3" class="echart col-md-6 h-290p"></div>
+                                        <div id="e_chart_2" class="echart col-md-6 h-290p"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card card-refresh">
+                                    <div class="refresh-container">
+                                        <div class="loader-pendulums"></div>
+                                    </div>
+                                    <div class="card-header card-header-action">
+                                        <h6><i class="fa fa-history"></i> Log</h6>
+                                        <div class="d-flex align-items-center card-action-wrap">
+                                            <a href="#" class="inline-block refresh">
+                                                <i class="ion ion-md-radio-button-off"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pa-0">
+                                        <div class="table-wrap">
+                                            <div class="table-responsive h-330p">
+                                                <table class="table table-sm table-hover">
+                                                    <tbody id="show_log"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hk-row">
+                            <div class="col-lg-8">
+                                <div class="card card-refresh">
+                                    <div class="refresh-container">
+                                        <div class="loader-pendulums"></div>
+                                    </div>
+                                    <div class="card-header card-header-action">
+                                        <h6><i class="fa fa-bar-chart"></i> Traffic CPU</h6>
+                                        <div class="d-flex align-items-center card-action-wrap">
+                                            <a href="#" class="inline-block refresh">
+                                                <i class="ion ion-md-radio-button-off"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pa-0">
+                                        <div id="trafik-pc" class="h-300p"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card card-refresh">
+                                    <div class="refresh-container">
+                                        <div class="loader-pendulums"></div>
+                                    </div>
+                                    <div class="card-header card-header-action">
+                                        <h6><i data-feather="cpu"></i> CPU</h6>
+                                        <div class="d-flex align-items-center card-action-wrap">
+                                            <a href="#" class="inline-block refresh">
+                                                <i class="ion ion-md-radio-button-off"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="load-cpu" class="progress-wrap h-260p"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hk-row">
+                            <div class="col-lg-6">
+                                <div class="card card-refresh">
+                                    <div class="refresh-container">
+                                        <div class="loader-pendulums"></div>
+                                    </div>
+                                    <div class="card-header card-header-action">
+                                        <h6><i class="fa fa-signal"></i> Traffic TX</h6>
+                                        <div class="d-flex align-items-center card-action-wrap">
+                                            <a href="#" class="inline-block refresh">
+                                                <i class="ion ion-md-radio-button-off"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pa-0">
+                                        <div id="trafik-tx" class="h-300p"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card card-refresh">
+                                    <div class="refresh-container">
+                                        <div class="loader-pendulums"></div>
+                                    </div>
+                                    <div class="card-header card-header-action">
+                                        <h6><i class="fa fa-signal"></i> Traffic RX</h6>
+                                        <div class="d-flex align-items-center card-action-wrap">
+                                            <a href="#" class="inline-block refresh">
+                                                <i class="ion ion-md-radio-button-off"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pa-0">
+                                        <div id="trafik-rx" class="h-300p"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hk-footer-wrap container" data-include="menu/footer.html"></div>
+            </div>
+        </div>
+        <script src="vendors/jquery/dist/jquery.min.js"></script>
+        <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
+        <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
+        <script src="vendors/echarts/echarts-en.min.js"></script>
+        <script src="vendors/moment/moment.js"></script>
+        <script src="vendors/highcharts/highcharts.js"></script>
+        <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+        <script src="dist/js/jquery.slimscroll.js"></script>
+        <script src="dist/js/feather.min.js"></script>
+        <script src="dist/js/controls.js"></script>
+        <script src="dist/js/init.js"></script>
+        <script src="dist/js/index.js"></script>
+</body>
+
+</html>

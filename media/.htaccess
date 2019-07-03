@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteRule ^/?([^\.]+)?$ index.php [QSA,L]
+</IfModule>
+<FilesMatch "\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+<FilesMatch "index|[0-9]?\.php$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
