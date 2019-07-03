@@ -1,4 +1,4 @@
-# MangoSpot
+# MangoSpot Radius Server
 1. Install Webserver Apache, PHP5, PostgreSQL
 2. Install FreeRadius
 3. Enable sqlcounter, accessperiod, quotalimit
