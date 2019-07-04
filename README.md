@@ -1,7 +1,7 @@
 # MangoSpot Radius Server
 1. Install Webserver Apache, PHP, PostgreSQL
 2. Install FreeRadius
-3. Enable sqlcounter, accessperiod, quotalimit
+3. Enable sqlcounter, accessperiod, quotalimit (Folder SQL/sqlcounter)
 4. Upload Folder to Webserver
 5. Import Schema.sql & Data.sql (Folder SQL)
 
