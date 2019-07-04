@@ -47,7 +47,7 @@ function Tables() {
                 "data": "id",
                 className: 'dt-body-right',
                 render: function (data, type, row) {
-                    var btn = (row.status == 1 ?
+                    var btn = (row.status == 1 || row.status == 'true' ?
                         '<button name="active" data-target="client" class="btn btn-success btn-sm" title="On" value="' + row.id + '"><i class="fa fa-eye"></i></button>' :
                         '<button name="active" data-target="client" class="btn btn-danger btn-sm" title="Off" value="' + row.id + '"><i class="fa fa-eye-slash"></i></button>');
                     return '<div class="btn-group">' + btn + '<button data-toggle="dropdown" class="btn btn-info btn-sm"><i class="fa fa-cog"></i></button>' +
