@@ -15,7 +15,7 @@ if(isset($_POST['save'])){
 }
 if(isset($_POST['command'])){
     if($con = ssh2_connect($_SERVER['SERVER_NAME'], 22)){
-        if(ssh2_auth_password($con, "root", "bolenk@koplak")) {
+        if(ssh2_auth_password($con, "root", "1234")) {
             if($stream = ssh2_exec($con, '/etc/init.d/'.$_POST['command'].' '.$_POST['action'])){
                 stream_set_blocking($stream, true );
                 $data = "";
