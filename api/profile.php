@@ -28,7 +28,7 @@ if(isset($_FILES['images']['tmp_name'])){
 	$format = array("jpg");
 	$upload = false;
 	$extention = pathinfo($basename, PATHINFO_EXTENSION);
-	$images = $Bsk->Tampil("users", "id, image", "id = '$Api' and md5(pswd) = '$Key' and status = 'TRUE'");
+	$images = $Bsk->Tampil("users", "id, image", "id = '$Api' and md5(pswd) = '$Key' and status = 'true'");
 	if(in_array($extention, $format)){
 		$file_name = ($images['image'] ? str_replace('dist/img/users/', '', $images['image']) : date('idmsYhi').".".$extention);
 		if(strlen($file_name)>0){
