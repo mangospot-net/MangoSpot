@@ -1,7 +1,7 @@
 <?php
 if(isset($_GET['data'])){
     $explo = (empty($_GET['data']) ? array() : explode(' - ', $_GET['data']));
-    $chang = (empty($_GET['data']) ? "" : " and date  BETWEEN '$explo[0]' AND '$explo[1]' ");
+    $chang = (empty($_GET['data']) ? "" : " and date  BETWEEN '$explo[0]' and '$explo[1]' ");
     $query = DataTable(
         "resume", 
         "id, date, total, value", 

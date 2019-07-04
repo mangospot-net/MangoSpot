@@ -6,7 +6,7 @@ function Rp(data) {
 }
 
 function Tables() {
-    var Table = $('#tables').DataTable({
+    $('#tables').DataTable({
         "responsive": true,
         "processing": true,
         "serverSide": true,

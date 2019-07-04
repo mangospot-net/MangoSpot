@@ -30,7 +30,7 @@ if(isset($_GET['profile'])){
 }
 if(isset($_POST['delete'])){
     $count = count($_POST['delete']);
-    for($i = 0; $i < $count; $i++){
+    for($i = 0; $i<$count; $i++){
         $Bsk->Hapus("radacct", array("username" => Rahmad($_POST['delete'][$i]), "identity" => $Menu['identity'], "users" => $Menu['id']));
         $Bsk->Hapus("radcheck", array("username" => Rahmad($_POST['delete'][$i]), "identity" => $Menu['identity'], "users" => $Menu['id']));
         $Bsk->Hapus("radreply", array("username" => Rahmad($_POST['delete'][$i]), "identity" => $Menu['identity'], "users" => $Menu['id']));

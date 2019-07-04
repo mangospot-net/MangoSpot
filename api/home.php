@@ -20,7 +20,10 @@ if(isset($_GET['pie'])){
     foreach($nas as $key){
         $sum = $Bsk->Tampil("active", "count(*) as total", "nasname = '$key[nasname]' and identity = '$Menu[identity]' and users = '$Menu[id]'");
         $lgn[] = $key['description'];
-        $pie[] = array("name" => $key['description'], "value" => $sum['total']);
+        $pie[] = array(
+            "name" => $key['description'], 
+            "value" => $sum['total']
+        );
     }
     $chart = array("legend" => $lgn, "series" => $pie);
     echo json_encode($pie ? 
