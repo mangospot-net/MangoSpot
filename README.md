@@ -3,6 +3,7 @@
 2. Install FreeRadius
 3. Enable sqlcounter, accessperiod, quotalimit
 4. Upload Folder to Webserver
+5. Import Schema.sql & Data.sql (Folder SQL)
 
 Note:
 Enable: htaccess, mcrypt, php-mcrypt, php-ssh2, libssh2-1
