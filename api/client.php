@@ -52,7 +52,7 @@ if(isset($_POST['active'])){
     $check_active = $Bsk->Tampil("users", "id, status", "id = '$id_active' and identity = '$Menu[identity]'");
     $query_active = $Bsk->Ubah(
         "users", 
-        array("status" => ($check_active['status'] ? 'false' : 'true')),
+        array("status" => ($check_active['status'] == 'true' ? 'false' : 'true')),
         "id = '$check_active[id]' "
     );
     echo json_encode($query_active ? 
