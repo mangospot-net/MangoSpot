@@ -24,7 +24,7 @@ $Menu   = $Bsk->Tampil(
 $Access = $Bsk->Tampil(
     "menu", 
     "value", 
-    "id in ($Menu[value]) and value = '$Page' and slug != 0 and status = 'TRUE'"
+    "id in ($Menu[value]) and value = '$Page' and slug != 0 and status = 'true'"
 );
 $Default = array("login", "data", "profile");
 $Include = (in_array($Page, $Default)? $Page : $Access['value']);

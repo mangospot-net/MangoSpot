@@ -28,7 +28,7 @@ if(isset($_FILES['images']['tmp_name'])){
 	$format = array("jpg");
 	$upload = false;
 	$extention = pathinfo($basename, PATHINFO_EXTENSION);
-	$images = $Bsk->Tampil("users", "id, image", "id = '$Api' and md5(pswd) = '$Key' and status = 'TRUE'");
+	$images = $Bsk->Tampil("users", "id, image", "id = '$Api' and md5(pswd) = '$Key' and status = 'true'");
 	if(in_array($extention, $format)){
 		$file_name = ($images['image'] ? str_replace('dist/img/users/', '', $images['image']) : date('idmsYhi').".".$extention);
 		if(strlen($file_name)>0){
@@ -37,7 +37,7 @@ if(isset($_FILES['images']['tmp_name'])){
 			$image->resize(200,200);
 			$image->save($folder.$file_name);
 		}
-		$upload = $Bsk->Ubah("users", array("image"	=> "dist/img/users/".$file_name), "id = '$images[id]' and status = 'TRUE' ");
+		$upload = $Bsk->Ubah("users", array("image"	=> "dist/img/users/".$file_name), "id = '$images[id]' and status = 'true' ");
 	}
 	echo json_encode($upload ?
 		array("status" => true, "message" => "success", "color" => "green", "data" => "Upload data success") : 

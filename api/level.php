@@ -54,7 +54,7 @@ if(isset($_POST['active'])){
     $id_active = Rahmad($_POST['active']);
     $check_active = $Bsk->Tampil("level", "id, status", "id = '$id_active' and identity = '$Menu[identity]' and slug = '$Menu[level]'");
     $query_active = $Bsk->Ubah(
-        "level", array("status" => ($check_active['status'] ? 'false' : 'true')),
+        "level", array("status" => ($check_active['status'] == 'true' ? 'false' : 'true')),
         "id = '$check_active[id]' "
     );
     echo json_encode($query_active ? 

@@ -49,7 +49,7 @@ if(isset($_POST['qr_code'])){
 }
 if(isset($_POST['forgot'])){
 	$email = Rahmad($_POST['email']);
-	$forgot = $Bsk->Tampil("users", "id, email, name, times, pswd", "email = '$email' and identity = '$Identity[id]' and status = 'TRUE'");
+	$forgot = $Bsk->Tampil("users", "id, email, name, times, pswd", "email = '$email' and identity = '$Identity[id]' and status = 'true'");
 	$theme = file_get_contents('../email/themes/forgot.html');
 	$theme = str_replace('[data]', $Identity['data'], $theme);
 	$theme = str_replace('[address]', $Identity['address'], $theme);
