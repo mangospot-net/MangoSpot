@@ -23,6 +23,39 @@ INSERT INTO menu VALUES (20, 4, 'Payment', 'payment', NULL, 2, 't');
 
 INSERT INTO level VALUES (1, 1, 0, 'Admin', '6,7,8,9,10,11,12,13,14,15,16,17,18,19,20', 't');
 INSERT INTO users VALUES (1, 1, 1, NULL, 'admin', '+DykVVGTPrsYdKbxoWh+ype3L6pBuRaQeoIa35Vhz3M=', 'Basuki Rahmad', 'mangospot.net@gmail.com', '85642311781', 'Pria', 'Islam', NULL, NULL, 'Dsn. Pelem Pulokulon 04/05', NULL, '', NULL, NULL, '', '2019-06-25 02:22:05', 't');
+INSERT INTO themes VALUES (1, 1, 0, 'Standar', '<table class="voucher" style="display:inline-block; border: 2px solid black; margin:3px;">
+<tbody>
+<tr>
+<td style="padding-left:3px;font-size: 14px;font-weight:bold;border-bottom: 1px black solid;">[profile] <small style="float:right;margin:2px">[identity] [[NO]]</small></td>
+</tr>
+<tr>
+<td>
+<table style=" text-align: center; width: 155px; margin:2px;">
+<tbody>
+<tr style="color: black; font-size: 11px;">
+<td>
+<table style="width:100%;">
+<tbody><tr>
+<td style="width: 50%">Username</td>
+<td>Password</td>
+</tr>
+<tr style="color: black; font-size: 14px;">
+<td style="text-align: center; border: 1px solid black; font-weight:bold;">[username]</td>
+<td style="text-align: center; border: 1px solid black; font-weight:bold;">[password]</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center; border: 1px solid black; font-weight:bold;">Rp. [price]</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>');
 
 INSERT INTO type VALUES (1, 'cisco', 'nas', NULL, 't');
 INSERT INTO type VALUES (2, 'computone', 'nas', NULL, 't');
