@@ -1,8 +1,8 @@
 INSERT INTO identity VALUES (1, 0, '', 'MangoSpot', 'Networking', 'mangospot.net', 'mangospot.net', 'mangospot.net@gmail.com', '085642311781', '085642311781', 'Dsn. Pelem Pulokulon 04/05', 57771, 'dist/img/favicon.png', 'dist/img/logo-dark.png', '[{"title":"","info":"","image":"dist\/img\/bg\/bg1.png"},{"title":"MangoSpot","info":"Network & Software House Development","image":"dist\/img\/bg\/bg2.jpg"}]', '-7.561122387074532', '110.86817470262451', '2019-10-10 00:00:00', '2020-10-10 00:00:00', '', 'false', 'true');
 
 INSERT INTO menu VALUES (1, 0, 'Master', '', 'tune', 1, 'true');
-INSERT INTO menu VALUES (2, 0, 'MikroTik', '', 'router', 2, 'true');
-INSERT INTO menu VALUES (3, 0, 'Hotspot', '', 'wifi', 3, 'true');
+INSERT INTO menu VALUES (2, 0, 'Hotspot', '', 'wifi', 2, 'true');
+INSERT INTO menu VALUES (3, 0, 'MikroTik', '', 'router', 3, 'true');
 INSERT INTO menu VALUES (4, 0, 'Report', '', 'list_alt', 4, 'true');
 INSERT INTO menu VALUES (5, 0, 'Other', '', 'more', 5, 'true');
 INSERT INTO menu VALUES (6, 1, 'Identity', 'identity', NULL, 1, 'true');
