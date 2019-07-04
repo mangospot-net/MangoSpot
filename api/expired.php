@@ -4,9 +4,9 @@ if(isset($_GET['data'])){
     $chang = (empty($_GET['data']) ? "" : " and profile = '".Rahmad($_GET['data'])."'");
     $query = DataTable(
         "expired", 
-        "profile, username, attribute, to_char(time, 'DD-MM-YYYY HH24:MI') as time, expired, price", 
+        "profile, username, attribute, time, expired, price", 
         "identity = '$Menu[identity]' and users = '$Menu[id]' ".$chang, 
-        array("username", "profile", "username", "to_char(time, 'DD-MM-YYYY HH24:MI')", "expired", "price")
+        array("username", "profile", "username", "time", "expired", "price")
     );
     foreach($query['data'] as $list){
 		$table[] = array_replace($list, array("expired" => $list['attribute'] == 'Max-Data' ? formatBytes($list['expired']) : $list['expired']));

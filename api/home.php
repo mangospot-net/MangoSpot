@@ -34,8 +34,8 @@ if(isset($_GET['income'])){
     $finish = date('Y-m-d', strtotime('0 weeks ago +1 day'));
     $weeks = array('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun');
     foreach($weeks as $week){
-        $coming = $Bsk->Tampil("income", "sum(value) as total", 
-        "identity = '$Menu[identity]' and users = '$Menu[id]' and to_char(date, 'Dy') = '$week' and date BETWEEN '$starts' and '$finish'");
+        $coming = $Bsk->Tampil("resume", "sum(value) as total", 
+        "identity = '$Menu[identity]' and users = '$Menu[id]' and week = '$week' and date BETWEEN '$starts' and '$finish'");
         $income[] = array("name" => $week, "value" => $coming['total']);
     }
     echo json_encode($income ? 
@@ -47,11 +47,11 @@ if(isset($_GET['log'])){
     $log = array();
     $result = array();
     $replay = $Bsk->View(
-        "replay", "to_char(time, 'HH24:MI:SS') as time, username, info, time as date", 
+        "replay", "time, username, info, time as date", 
         "identity = '$Menu[identity]' and users = '$Menu[id]'", "time desc", "15"
     );
     $lost = $Bsk->View(
-        "lost", "to_char(time, 'HH24:MI:SS') as time, username, info, time as date", 
+        "lost", "time, username, info, time as date", 
         "identity = '$Menu[identity]' and users = '$Menu[id]'", "time desc", "15"
     );
     foreach ($replay as $valu) {

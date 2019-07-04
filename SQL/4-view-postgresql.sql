@@ -4,7 +4,8 @@ b.identity,
 b.users,
 a.username,
 a.reply AS info,
-a.authdate AS time
+a.authdate AS date,
+to_char(a.authdate, 'HH24:MI:SS'::text) AS time
 FROM (radpostauth a
 JOIN radcheck b ON ((a.username = b.username)));
 
@@ -14,7 +15,8 @@ b.identity,
 b.users,
 a.username,
 a.acctterminatecause AS info,
-a.acctstoptime AS time
+a.acctstoptime AS date,
+to_char(a.acctstoptime, 'HH24:MI:SS'::text) AS time
 FROM (radacct a
 JOIN radcheck b ON ((a.username = b.username)))
 WHERE (a.acctstoptime IS NOT NULL)
@@ -68,7 +70,7 @@ c.groupname AS profile,
 a.attribute,
 a.value,
 d.value AS price,
-min(b.acctstarttime) AS time,
+to_char(min(b.acctstarttime), 'DD-MM-YYYY HH24:MI'::text) AS time,
 to_char(to_timestamp((date_part('epoch'::text, min(b.acctstarttime)) + ((a.value)::integer)::double precision)), 'YYYY-MM-DD HH24:MI'::text) AS expired
 FROM (((expiredcheck a
 JOIN radacct b ON ((a.username = b.username)))
@@ -84,7 +86,7 @@ c.groupname AS profile,
 a.attribute,
 a.value,
 d.value AS price,
-min(b.acctstarttime) AS time,
+to_char(min(b.acctstarttime), 'DD-MM-YYYY HH24:MI'::text) AS time,
 a.value AS expired
 FROM (((expiredcheck a
 JOIN radacct b ON ((a.username = b.username)))
@@ -109,3 +111,14 @@ JOIN radcheck b ON ((a.username = b.username)))
 LEFT JOIN radusergroup c ON ((a.username = c.username)))
 WHERE (a.acctstoptime IS NULL)
 GROUP BY a.radacctid, b.identity, b.users, a.username, c.groupname;
+
+DROP VIEW IF EXISTS resume;
+CREATE VIEW resume AS SELECT income.id,
+    income.identity,
+    income.users,
+    income.total,
+    income.value,
+    to_char(income.date, 'YYYY-MM-DD'::text) AS date,
+    income.date AS time,
+    to_char(income.date, 'Dy'::text) AS week
+   FROM income

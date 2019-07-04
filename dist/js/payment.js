@@ -20,7 +20,7 @@ function Tables() {
             method: "POST"
         },
         "columns": [{
-                "data": "time"
+                "data": "date"
             },
             {
                 "data": "total"
