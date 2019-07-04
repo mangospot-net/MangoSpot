@@ -2,7 +2,7 @@
 define("TYPE", "pgsql");
 define("DB_HOST", "localhost");
 define("DB_USER", "radius");
-define("DB_PASSWORD", "radius@p3l3m");
+define("DB_PASSWORD", "radius1234");
 define("DB_DATABASE", "radius");
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');

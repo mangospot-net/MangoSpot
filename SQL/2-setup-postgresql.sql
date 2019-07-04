@@ -1,4 +1,4 @@
-CREATE USER radius WITH PASSWORD 'radius@p3l3m';
+CREATE USER radius WITH PASSWORD 'radius1234';
 GRANT SELECT ON radcheck TO radius;
 GRANT SELECT ON radreply TO radius;
 GRANT SELECT ON radgroupcheck TO radius;
