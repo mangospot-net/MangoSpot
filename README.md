@@ -23,12 +23,12 @@ or
 ```
 Enable: htaccess, mcrypt, php-mcrypt, php-ssh2, libssh2-1
 ```
+Edit Username & Password ssh on [api/config.php](https://github.com/mangospot-net/MangoSpot/blob/master/api/config.php)
 
 ### Demo & Tutorial
-``` 
-https://www.youtube.com/watch?v=Df3jDXt7n3Y&list=PLBwbrrj11losuLh2W9t36YQmB9h0NG4Fc
+[Video Tutorial](https://www.youtube.com/watch?v=Df3jDXt7n3Y&list=PLBwbrrj11losuLh2W9t36YQmB9h0NG4Fc)
 ```
 - Username: admin
 - Password: admin
-
+```
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CRUEDLPLCFSQ)
