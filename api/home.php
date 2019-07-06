@@ -1,7 +1,7 @@
 <?php
 if(isset($_GET['radius'])){
     $radius = $Bsk->Tampil("nas", "count(*) as total", "identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true' ");
-    $client = $Bsk->Tampil("radcheck", "count(*) as total", "identity = '$Menu[identity]' and users = '$Menu[id]'");
+    $client = $Bsk->Tampil("radcheck", "count(*) as total", "identity = '$Menu[identity]' and users = '$Menu[id]' and attribute = 'Cleartext-Password'");
     $active = $Bsk->Tampil("active", "count(*) as total", "identity = '$Menu[identity]' and users = '$Menu[id]'");
     $show = array(
         "radius" => $radius['total'],
