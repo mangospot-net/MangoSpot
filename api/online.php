@@ -1,34 +1,37 @@
 <?php
 if(isset($_GET['data'])){
-    $signal = array();
-    $select = (empty($_GET['data']) ? "" : " and id = '".Rahmad($_GET['data'])."'");
+    $online = array();
+    $setData = (empty($_GET['data']) ? "" : " and id = '".Rahmad($_GET['data'])."'");
+    $setType = (empty($_GET['type']) ? false : Rahmad($_GET['type']));
     $routes = $Bsk->View(
         "nas", "id, identity, nasname, username, password, port, description", 
-        "identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true' ".$select, "id asc"
+        "identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true' ".$setData, "id asc"
     );
+    $setPPP = ($setType ? array("?service" => $setType) : false);
+    $setHSP = ($setType ? ($setType == 1 ? false : array("?address" => $setType)) : false);
     foreach ($routes as $trafic) {
         $ports = ($trafic['port'] ? ":".$trafic['port'] : "");
         if ($Router->connect($trafic['nasname'].$ports, $trafic['username'], $Auth->decrypt($trafic['password'], 'BSK-RAHMAD'))) {
-            $items = $Router->comm("/ip/hotspot/active/print");
-            $pppoe = $Router->comm("/ppp/active/print");
-            foreach ($items as $value) {
-                $signal[] = array(
+            $hspArr = $Router->comm("/ip/hotspot/active/print", $setHSP);
+            $pppArr = $Router->comm("/ppp/active/print", $setPPP);
+            foreach ($hspArr as $hspList) {
+                $online[] = array(
                     "identity"  => $trafic['identity'],
                     "server"    => $trafic['description'],
-                    "users"     => $value['user'],
-                    "type"      => $value['server'],
-                    "address"   => $value['address'],
-                    "id"        => $value['.id']
+                    "users"     => $hspList['user'],
+                    "type"      => $hspList['server'],
+                    "address"   => $hspList['address'],
+                    "id"        => $hspList['.id']
                 );
             }
-            foreach ($pppoe as $online) {
-                $signal[] = array(
+            foreach ($pppArr as $pppList) {
+                $online[] = array(
                     "identity"  => $trafic['identity'],
                     "server"    => $trafic['description'],
-                    "users"     => $online['name'],
-                    "type"      => $online['service'],
-                    "address"   => $online['address'],
-                    "id"        => $online['.id']
+                    "users"     => $pppList['name'],
+                    "type"      => $pppList['service'],
+                    "address"   => $pppList['address'],
+                    "id"        => $pppList['.id']
                 );
             }
         }
@@ -36,17 +39,17 @@ if(isset($_GET['data'])){
     $Router->disconnect();
     $json_data = array(
 		"draw"            => 1,
-		"recordsTotal"    => count($signal),
-		"recordsFiltered" => count($signal),
-        "data"            => $signal
+		"recordsTotal"    => count($online),
+		"recordsFiltered" => count($online),
+        "data"            => $online
 	);
     echo json_encode($json_data, true);
 }
 if(isset($_GET['server'])){
     $server = array();
     $querys = $Bsk->View("nas", "id, description as name", "identity = '$Menu[identity]' and users = '$Menu[id]' ", "id asc");
-    foreach ($querys as $values) {
-        $server[] = $values;
+    foreach ($querys as $hspLists) {
+        $server[] = $hspLists;
     }
     echo json_encode($server ? 
         array("status" => true, "message" => "success", "color" => "green", "data" => $server) : 
@@ -63,8 +66,9 @@ if(isset($_POST['delete'])){
         "id = '$getRout' and identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true'"
     );
     $getPort = ($raouter['port'] ? ":".$raouter['port'] : "");
+    $pppArray = array("pppoe", "pptp", "sstp", "l2tp", "ovpn");
     if ($Router->connect($raouter['nasname'].$getPort, $raouter['username'], $Auth->decrypt($raouter['password'], 'BSK-RAHMAD'))) {
-        $offline = ($getType == 'pppoe' ? '/ppp/active/remove' : '/ip/hotspot/active/remove');
+        $offline = (in_array($getType, $pppArray) ? '/ppp/active/remove' : '/ip/hotspot/active/remove');
         $Router->write($offline, false);
         $remove = $Router->write('=.id='.$getUser, true);
         $Router->read();

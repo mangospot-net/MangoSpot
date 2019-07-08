@@ -117,9 +117,12 @@ function Delete() {
     Action();
     Delete();
     $('#server').change(function () {
-        $('#tables').DataTable().ajax.url("./api/online?data=" + $(this).val()).load();
+        $('#tables').DataTable().ajax.url("./api/online?data=" + $(this).val() + "&type=" + $('#service').val()).load();
+    });
+    $('#service').change(function () {
+        $('#tables').DataTable().ajax.url("./api/online?data=" + $('#server').val() + "&type=" + $(this).val()).load();
     });
     setInterval(function () {
-        $('#tables').DataTable().ajax.url("./api/online?data=" + $('#server').find('option:selected').val()).load();
+        $('#tables').DataTable().ajax.url("./api/online?data=" + $('#server').find('option:selected').val() + "&type=" + $('#service').find('option:selected').val()).load();
     }, 10000);
 })();

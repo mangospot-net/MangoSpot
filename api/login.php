@@ -49,7 +49,7 @@ if(isset($_POST['qr_code'])){
 }
 if(isset($_POST['forgot'])){
 	$email = Rahmad($_POST['email']);
-	$forgot = $Bsk->Tampil("users", "id, email, name, times, pswd", "email = '$email' and identity = '$Identity[id]' and status = 'true'");
+	$forgot = $Bsk->Tampil("users", "id, email, name, pswd", "email = '$email' and identity = '$Identity[id]' and status = 'true'");
 	$theme = file_get_contents('../email/themes/forgot.html');
 	$theme = str_replace('[data]', $Identity['data'], $theme);
 	$theme = str_replace('[address]', $Identity['address'], $theme);
@@ -61,7 +61,7 @@ if(isset($_POST['forgot'])){
 	$theme = str_replace('[year]', date('Y'), $theme);
 	$theme = str_replace('[url]', $Http, $theme);
 	$sends = ($forgot ? SendMail($Config, array("data" => 'Reset Password | '.$Identity['data'], "email" => $forgot['email']), $theme) : false);
-	echo json_encode($sends ? 
+	echo json_encode($forgot ? 
 		array(
 			"status"	=> true, 
 			"message"	=> "success", 

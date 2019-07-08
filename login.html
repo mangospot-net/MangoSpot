@@ -16,11 +16,6 @@
     </div>
     <div class="hk-wrapper">
         <div class="hk-pg-wrapper hk-auth-wrapper">
-            <header class="d-flex align-center">
-                <a class="d-flex auth-brand" href="#">
-                    <img class="brand-img" src="dist/img/logo-dark.png" alt="brand" />
-                </a>
-            </header>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-8 pa-0">
@@ -28,8 +23,13 @@
                     </div>
                     <div class="col-xl-4 pa-0">
                         <div class="ma-30">
+                            <header class="text-center text-center mb-10">
+                                <a class="auth-brand" href="./">
+                                    <img class="brand-img" src="dist/img/logo-dark.png" alt="brand" />
+                                </a>
+                            </header>
                             <form id="form-login" method="POST" action="login" data-modal="false">
-                                <h2 class="display-4">Form Login</h2>
+                                <h2>Form Login</h2>
                                 <p class="mb-30">Sign in to your account</p>
                                 <div class="form-group">
                                     <input type="text" name="username" class="form-control"
@@ -48,13 +48,44 @@
                                 <div class="custom-control custom-checkbox mb-25">
                                     <input class="custom-control-input" name="remember" value="7" id="same-address"
                                         type="checkbox">
-                                    <label class="custom-control-label font-14" for="same-address">Keep me logged
-                                        in</label>
+                                    <label class="custom-control-label font-14" for="same-address">
+                                        Stay logged in
+                                    </label>
                                 </div>
                                 <button class="btn btn-primary btn-block" type="submit" name="login"
                                     value="true">Login</button>
                             </form>
+                            <p class="text-center mt-20">Having trouble logging in? <a href="#add-forgote"
+                                    data-toggle="modal">Forgote</a></p>
                         </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="add-forgote" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <form class="modal-content" id="form-forgote" method="POST" action="login">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Form Forgote</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="email">Email <span class="symbol required"></span></label>
+                                    <input type="text" class="form-control" id="email" name="email"
+                                        placeholder="Email Address" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="mr-auto">
+                                </div>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                        class="fa fa-close"></i>
+                                    Close</button>
+                                <button type="submit" name="forgot" value="true" class="btn btn-blue"> <i
+                                        class="fa fa-send"></i> Send</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

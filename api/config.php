@@ -14,17 +14,17 @@ if(isset($_POST['save'])){
     );
 }
 if(isset($_POST['command'])){
-    // if($ssh = ssh2_connect($_SERVER['SERVER_NAME'], 22)){
-    //     if(ssh2_auth_password($ssh, "root", "12345")) {
-    //         if($stream = ssh2_exec($ssh, '/etc/init.d/'.$_POST['command'].' '.$_POST['action'])){
-    //             stream_set_blocking($stream, true );
-    //             $data = "";
-    //             while( $buf = fread($stream, 4096)){
-    //                 $data .= $buf;
-    //                 echo "".$buf;                        
-    //             }
-    //             fclose($stream);
-    //         }
-    //     }
-    // } 
+    if($ssh = ssh2_connect($_SERVER['SERVER_NAME'], 22)){
+        if(ssh2_auth_password($ssh, "root", "12345")) {
+            if($stream = ssh2_exec($ssh, '/etc/init.d/'.$_POST['command'].' '.$_POST['action'])){
+                stream_set_blocking($stream, true );
+                $data = "";
+                while( $buf = fread($stream, 4096)){
+                    $data .= $buf;
+                    echo "".$buf;                        
+                }
+                fclose($stream);
+            }
+        }
+    } 
 }

@@ -105,30 +105,44 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <section class="hk-sec-wrapper">
-                            <div class="row mt-15">
-                                <div class="col-sm">
-                                    <select class="form-control" id="server">
-                                        <option value="">-- All Radius --</option>
-                                    </select>
-                                    <input type="hidden" id="chang" value="">
-                                    <div class="table-wrap mt-15">
-                                        <table id="tables" width="100%"
-                                            class="table table-hover table-striped dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>Radius</th>
-                                                    <th>User</th>
-                                                    <th>Server</th>
-                                                    <th>Address</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
+                        <div class="card">
+                            <div class="card-header">
+                                Table Online
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <select class="form-control" id="server">
+                                            <option value="">-- All Radius --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control" id="service">
+                                            <option value="">-- All Service --</option>
+                                            <option value="1">Hotspot</option>
+                                            <option value="pppoe">PPPoE</option>
+                                            <option value="pptp">PPTP</option>
+                                            <option value="sstp">SSTP</option>
+                                            <option value="l2tp">L2TP</option>
+                                            <option value="ovpn">OVPN</option>
+                                        </select>
                                     </div>
                                 </div>
+                                <div class="table-wrap mt-15">
+                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Radius</th>
+                                                <th>User</th>
+                                                <th>Service</th>
+                                                <th>Address</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
-                        </section>
+                        </div>
                     </div>
                 </div>
             </div>
