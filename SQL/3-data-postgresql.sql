@@ -20,7 +20,7 @@ INSERT INTO menu VALUES (17, 3, 'Online', 'online', NULL, 2, 't');
 INSERT INTO menu VALUES (18, 3, 'Wireless', 'wireless', NULL, 3, 't');
 INSERT INTO menu VALUES (19, 4, 'History', 'history', NULL, 1, 't');
 INSERT INTO menu VALUES (20, 4, 'Payment', 'payment', NULL, 2, 't');
-
+INSERT INTO config (id) VALUES (1);
 INSERT INTO level VALUES (1, 1, 0, 'Admin', '6,7,8,9,10,11,12,13,14,15,16,17,18,19,20', 't');
 INSERT INTO users VALUES (1, 1, 1, NULL, 'admin', '+DykVVGTPrsYdKbxoWh+ype3L6pBuRaQeoIa35Vhz3M=', 'Basuki Rahmad', 'mangospot.net@gmail.com', '85642311781', 'Pria', 'Islam', NULL, NULL, 'Dsn. Pelem Pulokulon 04/05', NULL, '', NULL, NULL, '', '2019-06-25 02:22:05', 't');
 INSERT INTO themes VALUES (1, 1, 0, 'Standar', '<table class="voucher" style="display:inline-block; border: 2px solid black; margin:3px;">
