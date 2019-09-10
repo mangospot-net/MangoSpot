@@ -5,7 +5,7 @@ require_once '../include/mikrotik.php';
 require_once '../email/PHPMailerAutoload.php';
 header("Access-Control-Allow-Origin: *");
 $Bsk    = new Basuki();
-$Router = new routeros_api();
+$Router = new RouterosAPI();
 $Auth   = new Cipher(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
 $Header = getallheaders();
 $Host   = (isset($Header['Token']) ? Rahmad($Header['Token']) : (isset($Header['token']) ? Rahmad($Header['Token']) : md5($_SERVER['SERVER_NAME'])));
