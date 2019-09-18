@@ -90,68 +90,78 @@
         <div class="hk-pg-wrapper">
             <nav class="hk-breadcrumb" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light bg-transparent">
-                    <li class="breadcrumb-item"><a href="#">Master</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Level</li>
+                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Packet</li>
                 </ol>
             </nav>
             <div class="container">
                 <div class="hk-pg-header">
                     <h4 class="hk-pg-title">
                         <span class="pg-title-icon">
-                            <span class="feather-icon"><i data-feather="layers"></i></span>
+                            <span class="feather-icon"><i data-feather="package"></i></span>
                         </span>
-                        Level
+                        Packet Client
                     </h4>
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <section class="hk-sec-wrapper">
-                            <a href="#add-data" class="btn btn-info" data-toggle="modal" data-value="0">
-                                <i class="fa fa-plus"></i>
-                                <span class="hidden-xs">Add Data</span>
-                            </a>
-                            <div class="row mt-15">
-                                <div class="col-sm">
-                                    <div class="table-wrap">
-                                        <table id="tables" width="100%"
-                                            class="table table-hover table-striped dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Data</th>
-                                                    <th>Radius</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="#add-data" class="btn btn-info" data-toggle="modal" data-value="0">
+                                    <i class="fa fa-plus"></i>
+                                    <span class="hidden-xs">Add Data</span>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-wrap">
+                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Client</th>
+                                                <th>Profile</th>
+                                                <th>Price</th>
+                                                <th>Total</th>
+                                                <th>Voucher</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
                                 </div>
                             </div>
-                        </section>
+                        </div>
                         <div class="modal fade" id="add-data" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                                <form class="modal-content" id="form-data" method="POST" action="level">
+                                <form class="modal-content" id="form-data" method="POST" action="packet">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Form Level</h5>
+                                        <h5 class="modal-title">Form Packet</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label for="nasname">Name <span class="symbol required"></span></label>
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                placeholder="Level Name" required>
+                                            <label for="client">Client <span class="symbol required"></span></label>
+                                            <select class="form-control" id="client" name="client" required>
+                                                <option value="">-- Select client --</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="value">Data <span class="symbol required"></span></label>
-                                            <select class="form-control select2" multiple id="value" name="value[]"
-                                                required></select>
+                                            <label for="groupname">Profile <span class="symbol required"></span></label>
+                                            <select class="form-control" id="groupname" name="groupname" required>
+                                                <option value="">-- Select Profile --</option>
+                                            </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="data">Radius </label>
-                                            <select class="form-control select2" multiple id="data"
-                                                name="data[]"></select>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="price">Price <span class="symbol required"></span></label>
+                                                <input type="number" min="0" class="form-control" id="price"
+                                                    name="price" placeholder="Price" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="total">Total <span class="symbol required"></span></label>
+                                                <input type="number" min="0" class="form-control" id="total"
+                                                    name="total" placeholder="Total Voucher" required>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -186,13 +196,12 @@
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="vendors/select2/js/select2.min.js"></script>
     <script src="dist/js/dropdown-bootstrap-extended.js"></script>
     <script src="dist/js/jquery.slimscroll.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>
-    <script src="dist/js/level.js"></script>
+    <script src="dist/js/packet.js"></script>
 
 </body>
 

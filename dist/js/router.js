@@ -28,7 +28,10 @@ function Tables() {
                 "data": "id",
                 className: 'dt-body-right',
                 render: function (data, type, row) {
-                    return '<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#add-data" data-value="' + row.id + '" title="Edit"><i class="fa fa-edit"></i> Edit</button>';
+                    return '<div class="btn-group">' +
+                        '<button class="btn btn-warning btn-sm reboot" value="' + row.id + '" title="Reboot"><i class="fa fa-power-off"></i></button>' +
+                        '<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#add-data" data-value="' + row.id + '" title="Edit"><i class="fa fa-edit"></i></button>' +
+                        '</div>';
                 }
             }
         ],
@@ -104,6 +107,43 @@ function Action() {
             },
             success: function (testing) {
                 $('.badge').html('').addClass(testing.data ? 'badge-success' : 'badge-secondary');
+            }
+        });
+    });
+    $('body').on('click', 'button.reboot', function () {
+        var id_reboot = $(this).val();
+        swal({
+            title: "Are you sure!",
+            text: "Reboot this router?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, reboot it!",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: "./api/router",
+                    headers: {
+                        "Api": $.cookie("BSK_API"),
+                        "Key": $.cookie("BSK_KEY"),
+                        "Accept": "application/json"
+                    },
+                    method: "POST",
+                    dataType: "JSON",
+                    data: {
+                        'reboot': id_reboot
+                    },
+                    success: function (reboot) {
+                        swal({
+                            title: "Reboot!",
+                            text: reboot.data,
+                            timer: 2000,
+                            type: reboot.message
+                        });
+                    }
+                })
             }
         });
     });

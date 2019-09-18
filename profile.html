@@ -153,16 +153,21 @@
                             <div class="tab-content block mt-20">
                                 <form class="tab-pane active" id="form-profile" action="profile" method="POST"
                                     data-modal="false" data-reset="false">
+                                    <div class="form-group">
+                                        <label for="name">Full Name <span class="symbol required"></span></label>
+                                        <input type="text" id="name" name="name" class="form-control"
+                                            placeholder="Full Name" required>
+                                    </div>
                                     <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="name">Full Name <span class="symbol required"></span></label>
-                                            <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="Full Name" required>
-                                        </div>
                                         <div class="form-group col-md-6">
                                             <label for="phone">Phone <span class="symbol required"></span></label>
                                             <input type="text" id="phone" name="phone" class="form-control"
                                                 placeholder="Phone Number" value="" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="email">Email </label>
+                                            <input type="email" id="email" name="email" class="form-control"
+                                                placeholder="Email Address" value="">
                                         </div>
                                     </div>
                                     <div class="row">

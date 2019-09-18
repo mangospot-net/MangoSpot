@@ -1,0 +1,18 @@
+{
+    "bitwise": true,
+    "browser": true,
+    "curly": true,
+    "eqeqeq": true,
+    "latedef": false,
+    "noarg": true,
+    "node": true,
+    "strict": true,
+    "undef": false,
+    "unused": true,
+	"-W117": true,
+    "eqnull": true,
+    "boss": true,
+    "expr": true,
+    "noarg": true,
+    "node": true
+}

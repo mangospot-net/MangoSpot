@@ -1,6 +1,6 @@
 function Select() {
     $.ajax({
-        url: "./api/client",
+        url: "./api/shop",
         headers: {
             "Api": $.cookie("BSK_API"),
             "Key": $.cookie("BSK_KEY"),
@@ -8,12 +8,20 @@ function Select() {
         },
         method: "GET",
         dataType: "JSON",
-        data: "level",
+        data: "packet",
         success: function (response) {
             $.each(response.data, function (i, val) {
-                $('#level').append('<option value="' + val.id + '">' + val.name + '</option>');
+                $('#packet').append('<option value="' + val.id + '" data-price="' + val.value + '">' + val.name + '</option>');
             });
         }
+    });
+    $('#packet').change(function () {
+        $('#total').val(1);
+        $('#price, #values').val($(this).find(':selected').data('price'));
+    });
+    $('#total').change(function () {
+        var price = $('#values').val();
+        $('#price').val(price * $(this).val());
     });
 };
 
@@ -23,7 +31,7 @@ function Tables() {
         "processing": true,
         "serverSide": true,
         "ajax": {
-            url: "./api/client?data",
+            url: "./api/shop?data",
             headers: {
                 "Api": $.cookie("BSK_API"),
                 "Key": $.cookie("BSK_KEY"),
@@ -32,30 +40,32 @@ function Tables() {
             method: "POST"
         },
         "columns": [{
-                "data": "username"
+                "data": "packet",
             },
             {
-                "data": "name",
+                "data": "total"
             },
             {
-                "data": "level"
+                "data": "price"
             },
             {
-                "data": "phone"
+                "data": "date"
             },
             {
                 "data": "id",
                 className: 'dt-body-right',
                 render: function (data, type, row) {
-                    var btn = (row.status == 1 || row.status == 'true' ?
-                        '<button name="active" data-target="client" class="btn btn-success btn-sm" title="On" value="' + row.id + '"><i class="fa fa-eye"></i></button>' :
-                        '<button name="active" data-target="client" class="btn btn-danger btn-sm" title="Off" value="' + row.id + '"><i class="fa fa-eye-slash"></i></button>');
-                    return '<div class="btn-group">' + btn + '<button data-toggle="dropdown" class="btn btn-info btn-sm"><i class="fa fa-cog"></i></button>' +
+                    return (row.status == 1 || row.status == 'true' ?
+                        '<button class="btn btn-success btn-sm" title="Approve"><i class="fa fa-check"></i> Approve</button>' :
+                        '<div class="btn-group">' +
+                        '<button class="btn btn-warning btn-sm" title="Pending"><i class="fa fa-hourglass-half"></i></button>' +
+                        '<button data-toggle="dropdown" class="btn btn-primary btn-sm"><i class="fa fa-cog"></i></button>' +
                         '<div role="menu" class="dropdown-menu dropdown-menu-right">' +
                         '<a class="dropdown-item" data-toggle="modal" href="#add-data" data-value="' + row.id + '" title="Edit"><i class="fa fa-edit"></i> Edit</a>' +
-                        '<a class="dropdown-item" data-toggle="modal"  href="#delete" data-value="' + row.id + '" data-target="client" title="Delete"><i class="fa fa-trash"></i> Delete</a>' +
+                        '<a class="dropdown-item" data-toggle="modal"  href="#delete" data-value="' + row.id + '" data-target="shop" title="Delete"><i class="fa fa-trash"></i> Delete</a>' +
                         '</div>' +
-                        '</div>';
+                        '</div>'
+                    );
                 }
             }
         ],
@@ -84,9 +94,8 @@ function Action() {
         var id_data = $(this).data('value');
         $('#id').val(id_data);
         $('#form-data').trigger('reset');
-        $('#pswd').attr('type', 'password');
         $.ajax({
-            url: "./api/client",
+            url: "./api/shop",
             headers: {
                 "Api": $.cookie("BSK_API"),
                 "Key": $.cookie("BSK_KEY"),
@@ -102,13 +111,10 @@ function Action() {
                     $.each(detail.data, function (i, show) {
                         $('#' + i).val(show);
                     });
-                    $('#status').bootstrapToggle(detail.data.status ? 'on' : 'off');
                 }
+                $('#values').val($('#packet').find(':selected').data('price'));
             }
         });
-    });
-    $('#show_paswd').click(function () {
-        $('#pswd').attr('type', $(this).is(":checked") ? 'text' : 'password');
     });
 };
 

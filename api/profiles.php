@@ -136,6 +136,21 @@ if(isset($_POST['groupname'])){
     } else {
         $Bsk->Hapus("price", array("groupname" => $post_profile, "identity" => $Menu['identity'], "users" => $Menu['id']));
     }
+    $check_ppp = $Bsk->Tampil(
+        "radgroupreply", "groupname", 
+        "groupname = '$post_profile' and attribute = 'Framed-Protocol' and identity = '$Menu[identity]'"
+    );
+    if(!$check_ppp){
+        $Bsk->Tambah("radgroupreply", array(
+            "identity"   => $Menu['identity'],
+            "users"      => $Menu['id'],
+            "groupname"  => $groupname,
+            "attribute"  => 'Framed-Protocol', 
+            "op"         => "!",
+            "value"      => "PPP",
+            "description"=> $_POST['description']
+        ));
+    }
     echo json_encode($groupname ? 
         array("status" => true, "message" => "success", "color" => "green", "data" => "Proccess data success") : 
         array("status" => false, "message" => "error", "color" => "red", "data" => "Proccess data failed!"), true

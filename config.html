@@ -122,6 +122,12 @@
                                         </a>
                                     </li>
                                     <li role="presentation" class="nav-item">
+                                        <a href="#form-notify" class="nav-link" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-bell"></i>
+                                            <span class="d-none d-sm-block">OneSignal</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="nav-item">
                                         <a href="#form-google" class="nav-link" data-toggle="tab" aria-expanded="false">
                                             <i class="fa fa-google"></i>
                                             <span class="d-none d-sm-block">Google</span>
@@ -148,7 +154,7 @@
                                         data-modal="false" data-reset="false">
                                         <h5>Email SMTP</h5>
                                         <span>
-                                            Konfigurasi Email dengan SMTP (Simple Mail Transfer Protocol)
+                                            Config Email with SMTP (Simple Mail Transfer Protocol)
                                         </span>
                                         <hr />
                                         <div class="row">
@@ -215,9 +221,16 @@
                                         data-modal="false" data-reset="false">
                                         <h5>Code</h5>
                                         <span>
-                                            Konfigurasi Code &amp; API (Application Programming Interface)
+                                            Config Code &amp; API (Application Programming Interface)
                                         </span>
                                         <hr>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                DNS Wifi
+                                            </label>
+                                            <input type="url" placeholder="https://wifi.mangospot.net"
+                                                class="form-control" id="sosmed" name="sosmed">
+                                        </div>
                                         <div class="form-group">
                                             <label class="control-label">
                                                 API Google Map
@@ -241,11 +254,35 @@
                                         </div>
                                         <input type="hidden" name="save" value="true">
                                     </form>
+                                    <form id="form-notify" class="tab-pane" method="POST" action="config"
+                                        data-modal="false" data-reset="false">
+                                        <h5>OneSignal</h5>
+                                        <span>
+                                            Create API on <a href="https://app.onesignal.com"
+                                                target="_blank">OneSignal</a>
+                                        </span>
+                                        <hr>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                APP ID
+                                            </label>
+                                            <input type="text" placeholder="OneSignal APP ID" class="form-control"
+                                                id="on_api" name="on_api">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                REST API KEY
+                                            </label>
+                                            <input type="text" placeholder="REST API KEY" class="form-control"
+                                                id="on_key" name="on_key">
+                                        </div>
+                                        <input type="hidden" name="save" value="true">
+                                    </form>
                                     <form id="form-google" class="tab-pane" method="POST" action="config"
                                         data-modal="false" data-reset="false">
                                         <h5>API Google</h5>
                                         <span>
-                                            Silahkan buat API di <a href="https://console.developers.google.com"
+                                            Create API on <a href="https://console.developers.google.com"
                                                 target="_blank">Google Developers</a>
                                         </span>
                                         <hr>
@@ -276,7 +313,7 @@
                                         data-modal="false" data-reset="false">
                                         <h5>API Facebook</h5>
                                         <span>
-                                            Silahkan buat API di <a href="https://developers.facebook.com/"
+                                            Create API on <a href="https://developers.facebook.com/"
                                                 target="_blank">Facebook Developers</a>
                                         </span>
                                         <hr>

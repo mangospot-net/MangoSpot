@@ -7,7 +7,7 @@ if(isset($_GET['data'])){
 }
 if(isset($_GET['type'])){
     $type = array();
-    $query_type = $Bsk->View("type", "id, name", "type = 'nas' and status = 'true'");
+    $query_type = $Bsk->View("type", "name as id, name", "type = 'nas' and status = 'true'");
     foreach ($query_type as $show_type) {
         $type[] = $show_type;
     }
@@ -27,14 +27,15 @@ if(isset($_GET['detail'])){
 if(isset($_POST['nasname'])){
     $id_post = Rahmad($_POST['id']);
     unset($_POST['id']);
+    $check_nast = $Bsk->Tampil("nas", "id", "nasname = '".Rahmad($_POST['nasname'])."'");
     $check_post = $Bsk->Tampil("nas", "id", "id = '$id_post' and identity = '$Menu[identity]' and users = '$Menu[id]'");
     $data_post = array_replace(
         $_POST, 
         array("status" => (isset($_POST['status']) ? 'true' : 'false'))
     );
     $query_post = ($check_post ? 
-        $Bsk->Ubah("nas", $data_post, "id = '$check_post[id]'") : 
-        $Bsk->Tambah("nas", array_merge($data_post, array("identity" => $Menu['identity'], "users" => $Menu['id'])))
+        $Bsk->Ubah("nas", $data_post, "id = '$check_post[id]'") : ($check_nast ? false :
+        $Bsk->Tambah("nas", array_merge($data_post, array("identity" => $Menu['identity'], "users" => $Menu['id']))))
     );
     echo json_encode($query_post ? 
 		array("status" => true, "message" => "success", "color" => "green", "data" => "Proccess data success") : 

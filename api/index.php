@@ -3,9 +3,14 @@ require_once "../include/config.php";
 require_once '../include/cipher.php';
 require_once '../include/mikrotik.php';
 require_once '../email/PHPMailerAutoload.php';
+require_once ('../include/onesignal/OneSignal.php');
+require_once ('../include/onesignal/Notification.php');
+require_once ('../include/onesignal/Device.php');
+require_once ('../include/onesignal/CURL.php');
+use  CWG \ OneSignal \ OneSignal ;
 header("Access-Control-Allow-Origin: *");
 $Bsk    = new Basuki();
-$Router = new routeros_api();
+$Router = new RouterosAPI();
 $Auth   = new Cipher(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
 $Header = getallheaders();
 $Host   = (isset($Header['Token']) ? Rahmad($Header['Token']) : (isset($Header['token']) ? Rahmad($Header['Token']) : md5($_SERVER['SERVER_NAME'])));
@@ -15,10 +20,11 @@ $Page   = (isset($_GET['pages'])? Rahmad($_GET['pages']) : false);
 $Http   = (isset($_SERVER['HTTPS'])? 'https://' : 'http://').$_SERVER['SERVER_NAME'];
 $Identity = $Bsk->Tampil("identity", "*", "status = 'true'");
 $Config = $Bsk->Tampil("config", "*", "id = '$Identity[id]' ");
+$Signal =  new OneSignal($Config['on_api'], $Config['on_key']);
 $Users  = $Bsk->Tampil("users", "*", "id = '$Api' and md5(pswd) = '$Key' and status = 'true'");
 $Menu   = $Bsk->Tampil(
     "users a left join level b on a.level = b.id",
-    "a.id, a.identity, a.level, b.value",
+    "a.id, a.identity, a.level, b.value, b.data",
     "a.id = '$Api' and md5(a.pswd) = '$Key' and a.identity = '$Identity[id]' and a.status = 'true' and b.status = 'true'"
 );
 $Access = $Bsk->Tampil(

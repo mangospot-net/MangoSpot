@@ -1,7 +1,7 @@
 INSERT INTO identity VALUES (1, 0, '', 'MangoSpot', 'Networking', 'mangospot.net', 'mangospot.net', 'mangospot.net@gmail.com', '085642311781', '085642311781', 'Dsn. Pelem Pulokulon 04/05', 57771, 'dist/img/favicon.png', 'dist/img/logo-dark.png', '[{"title":"","info":"","image":"dist\/img\/bg\/bg1.png"},{"title":"MangoSpot","info":"Network & Software House Development","image":"dist\/img\/bg\/bg2.jpg"}]', '-7.561122387074532', '110.86817470262451', '2019-10-10 00:00:00', '2020-10-10 00:00:00', '', 'false', 'true');
 
 INSERT INTO menu VALUES (1, 0, 'Master', '', 'tune', 1, 'true');
-INSERT INTO menu VALUES (2, 0, 'Hotspot', '', 'wifi', 2, 'true');
+INSERT INTO menu VALUES (2, 0, 'Radius', '', 'wifi_tethering', 2, 'true');
 INSERT INTO menu VALUES (3, 0, 'MikroTik', '', 'router', 3, 'true');
 INSERT INTO menu VALUES (4, 0, 'Report', '', 'list_alt', 4, 'true');
 INSERT INTO menu VALUES (5, 0, 'Other', '', 'more', 5, 'true');
@@ -9,20 +9,26 @@ INSERT INTO menu VALUES (6, 1, 'Identity', 'identity', NULL, 1, 'true');
 INSERT INTO menu VALUES (7, 1, 'Config', 'config', NULL, 2, 'true');
 INSERT INTO menu VALUES (8, 1, 'Level', 'level', NULL, 3, 'true');
 INSERT INTO menu VALUES (9, 1, 'Client', 'client', NULL, 4, 'true');
-INSERT INTO menu VALUES (10, 1, 'Radius', 'radius', NULL, 5, 'true');
-INSERT INTO menu VALUES (11, 1, 'Themes', 'themes', NULL, 6, 'true');
-INSERT INTO menu VALUES (12, 2, 'Active', 'active', NULL, 1, 'true');
-INSERT INTO menu VALUES (13, 2, 'Profiles', 'profiles', NULL, 2, 'true');
-INSERT INTO menu VALUES (14, 2, 'Users', 'users', NULL, 3, 'true');
-INSERT INTO menu VALUES (15, 2, 'Expired', 'expired', NULL, 4, 'true');
-INSERT INTO menu VALUES (16, 3, 'Router', 'router', NULL, 1, 'true');
-INSERT INTO menu VALUES (17, 3, 'Online', 'online', NULL, 2, 'true');
-INSERT INTO menu VALUES (18, 3, 'Wireless', 'wireless', NULL, 3, 'true');
-INSERT INTO menu VALUES (19, 4, 'History', 'history', NULL, 1, 'true');
-INSERT INTO menu VALUES (20, 4, 'Payment', 'payment', NULL, 2, 'true');
+INSERT INTO menu VALUES (10, 1, 'Themes', 'themes', NULL, 5, 'true');
+INSERT INTO menu VALUES (11, 2, 'Radius', 'radius', 'ion-ios-radio', 1, 'true');
+INSERT INTO menu VALUES (12, 2, 'Active', 'active', 'ion-logo-rss', 2, 'true');
+INSERT INTO menu VALUES (13, 2, 'Profiles', 'profiles', 'ion-ios-paper', 3, 'true');
+INSERT INTO menu VALUES (14, 2, 'Users', 'users', 'ion-ios-person-add', 4, 'true');
+INSERT INTO menu VALUES (15, 2, 'Voucher', 'voucher', 'ion-ios-barcode', 5, 'true');
+INSERT INTO menu VALUES (16, 2, 'Expired', 'expired', 'ion-ios-timer', 6, 'true');
+INSERT INTO menu VALUES (17, 3, 'Router', 'router', 'ion-ios-easel', 1, 'true');
+INSERT INTO menu VALUES (18, 3, 'Interface', 'interface', NULL, 2, 'true');
+INSERT INTO menu VALUES (19, 3, 'Address', 'address', NULL, 3, 'true');
+INSERT INTO menu VALUES (20, 3, 'Pool', 'pool', NULL, 4, 'true');
+INSERT INTO menu VALUES (21, 3, 'Route', 'route', NULL, 5, 'true');
+INSERT INTO menu VALUES (22, 3, 'DHCP', 'DHCP', NULL, 6, 'true');
+INSERT INTO menu VALUES (23, 3, 'Online', 'online', 'ion-ios-cellular', 7, 'true');
+INSERT INTO menu VALUES (24, 3, 'Wireless', 'wireless', 'ion-ios-wifi', 8, 'true');
+INSERT INTO menu VALUES (25, 4, 'History', 'history', 'ion-md-time', 1, 'true');
+INSERT INTO menu VALUES (26, 4, 'Payment', 'payment', 'ion-ios-cash', 2, 'true');
 INSERT INTO config (id) VALUES (1);
-INSERT INTO level VALUES (1, 1, 0, 'Admin', '6,7,8,9,10,11,12,13,14,15,16,17,18,19,20', 'true');
-INSERT INTO users VALUES (1, 1, 1, NULL, 'admin', '+DykVVGTPrsYdKbxoWh+ype3L6pBuRaQeoIa35Vhz3M=', 'Basuki Rahmad', 'mangospot.net@gmail.com', '85642311781', 'Pria', 'Islam', NULL, NULL, 'Dsn. Pelem Pulokulon 04/05', NULL, '', NULL, NULL, '', '2019-06-25 02:22:05', 'true');
+INSERT INTO level VALUES (1, 1, 0, 'Admin', '6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26', 'true');
+INSERT INTO users VALUES (1, 1, 1, NULL, 'admin', '+DykVVGTPrsYdKbxoWh+ype3L6pBuRaQeoIa35Vhz3M=', 'MangoSpot', 'mangospot.net@gmail.com', '85642311781', 'Pria', '', NULL, NULL, 'Dsn. Pelem Pulokulon 04/05', NULL, '', NULL, NULL, '', '2019-06-25 02:22:05', 'true');
 INSERT INTO themes VALUES (1, 1, 0, 'Standar', '<table class="voucher" style="display:inline-block; border: 2px solid black; margin:3px;">
 <tbody>
 <tr>

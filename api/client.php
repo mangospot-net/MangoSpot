@@ -2,9 +2,9 @@
 if(isset($_GET['data'])){
     $client = DataTable(
         "users a inner join level b on a.level = b.id", 
-        "a.id, a.username, a.name, a.email, a.phone, a.status", 
+        "a.id, a.username, a.name, b.name as level, a.phone, a.status", 
         "a.identity = '$Menu[identity]' and b.slug = '$Menu[level]'", 
-        array("a.username", "a.name", "a.email", "a.phone", "a.id")
+        array("a.username", "a.name", "b.name", "a.phone", "a.id")
 	);
 	echo json_encode($client, true);
 }
@@ -31,6 +31,7 @@ if(isset($_POST['username'])){
     $id_post = Rahmad($_POST['id']);
     unset($_POST['id']);
     $check_post = $Bsk->Tampil("users", "id", "id = '$id_post' and identity = '$Menu[identity]' ");
+    $check_user = $Bsk->Tampil("users", "id", "(username = '".Rahmad($_POST['username'])."' or email = '".Rahmad($_POST['email'])."') and identity = '$Menu[identity]' ");
     $data_post = array_replace(
         $_POST, 
         array(
@@ -39,8 +40,8 @@ if(isset($_POST['username'])){
         )
     );
     $query_post = ($check_post ? 
-        $Bsk->Ubah("users", $data_post, "id = '$check_post[id]'") : 
-        $Bsk->Tambah("users", array_merge($data_post, array("identity" => $Menu['identity'], "date" => date('Y-m-d H:i:s'))))
+        $Bsk->Ubah("users", $data_post, "id = '$check_post[id]'") : ($check_user ? false :
+        $Bsk->Tambah("users", array_merge($data_post, array("identity" => $Menu['identity'], "date" => date('Y-m-d H:i:s')))))
     );
     echo json_encode($query_post ? 
 		array("status" => true, "message" => "success", "color" => "green", "data" => "Proccess data success") : 

@@ -203,7 +203,7 @@ $('body').on('click', 'button[name="active"]', function () {
             "active": $(this).val()
         },
         success: function (active) {
-            $('#tables').DataTable().ajax.reload();
+            $('.dataTable').DataTable().ajax.reload();
         }
     });
 });
@@ -236,10 +236,10 @@ $('body').on('click', '[href="#delete"]', function () {
                 success: function (remove) {
                     $('.dataTable').DataTable().ajax.reload();
                     swal({
-                        title: "Success!",
+                        title: "Delete!",
                         text: remove.data,
                         timer: 2000,
-                        type: 'success'
+                        type: remove.message
                     });
                 }
             })

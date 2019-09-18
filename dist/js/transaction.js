@@ -1,6 +1,6 @@
 function Select() {
     $.ajax({
-        url: "./api/client",
+        url: "./api/transaction",
         headers: {
             "Api": $.cookie("BSK_API"),
             "Key": $.cookie("BSK_KEY"),
@@ -8,14 +8,50 @@ function Select() {
         },
         method: "GET",
         dataType: "JSON",
-        data: "level",
+        data: "client",
         success: function (response) {
             $.each(response.data, function (i, val) {
-                $('#level').append('<option value="' + val.id + '">' + val.name + '</option>');
+                $('#client').append('<option value="' + val.id + '">' + val.name + '</option>');
             });
         }
     });
+    $('#client').change(function () {
+        Options($(this).val(), '');
+    });
+    $('#packet').change(function () {
+        $('#price, #values').val($(this).find(':selected').data('price'));
+    });
+    $('#total').change(function () {
+        var price = $('#values').val();
+        $('#price').val(price * $(this).val());
+    });
 };
+
+function Options(data, value) {
+    $.ajax({
+        url: "./api/transaction",
+        headers: {
+            "Api": $.cookie("BSK_API"),
+            "Key": $.cookie("BSK_KEY"),
+            "Accept": "application/json"
+        },
+        method: "GET",
+        dataType: "JSON",
+        data: {
+            "packet": data
+        },
+        beforeSend: function () {
+            $('#total').val(1);
+            $('#packet').empty();
+        },
+        success: function (response) {
+            $('#packet').append('<option value="">-- Select packet --</option>').val(value);
+            $.each(response.data, function (i, val) {
+                $('#packet').append('<option value="' + val.id + '" data-price="' + val.value + '">' + val.name + '</option>').val(value);
+            });
+        }
+    });
+}
 
 function Tables() {
     var Table = $('#tables').DataTable({
@@ -23,7 +59,7 @@ function Tables() {
         "processing": true,
         "serverSide": true,
         "ajax": {
-            url: "./api/client?data",
+            url: "./api/transaction?data",
             headers: {
                 "Api": $.cookie("BSK_API"),
                 "Key": $.cookie("BSK_KEY"),
@@ -32,28 +68,34 @@ function Tables() {
             method: "POST"
         },
         "columns": [{
-                "data": "username"
+                "data": "name"
             },
             {
-                "data": "name",
+                "data": "groupname",
             },
             {
-                "data": "level"
+                "data": "total"
             },
             {
-                "data": "phone"
+                "data": "price"
+            },
+            {
+                "data": "info"
+            },
+            {
+                "data": "date"
             },
             {
                 "data": "id",
                 className: 'dt-body-right',
                 render: function (data, type, row) {
                     var btn = (row.status == 1 || row.status == 'true' ?
-                        '<button name="active" data-target="client" class="btn btn-success btn-sm" title="On" value="' + row.id + '"><i class="fa fa-eye"></i></button>' :
-                        '<button name="active" data-target="client" class="btn btn-danger btn-sm" title="Off" value="' + row.id + '"><i class="fa fa-eye-slash"></i></button>');
-                    return '<div class="btn-group">' + btn + '<button data-toggle="dropdown" class="btn btn-info btn-sm"><i class="fa fa-cog"></i></button>' +
+                        '<button name="active" data-target="transaction" class="btn btn-success btn-sm" title="Approve" value="' + row.id + '"><i class="fa fa-check"></i></button>' :
+                        '<button name="active" data-target="transaction" class="btn btn-warning btn-sm" title="Pending" value="' + row.id + '"><i class="fa fa-question-circle"></i></button>');
+                    return '<div class="btn-group">' + btn + '<button data-toggle="dropdown" class="btn btn-primary btn-sm"><i class="fa fa-cog"></i></button>' +
                         '<div role="menu" class="dropdown-menu dropdown-menu-right">' +
                         '<a class="dropdown-item" data-toggle="modal" href="#add-data" data-value="' + row.id + '" title="Edit"><i class="fa fa-edit"></i> Edit</a>' +
-                        '<a class="dropdown-item" data-toggle="modal"  href="#delete" data-value="' + row.id + '" data-target="client" title="Delete"><i class="fa fa-trash"></i> Delete</a>' +
+                        '<a class="dropdown-item" data-toggle="modal"  href="#delete" data-value="' + row.id + '" data-target="transaction" title="Delete"><i class="fa fa-trash"></i> Delete</a>' +
                         '</div>' +
                         '</div>';
                 }
@@ -73,7 +115,7 @@ function Tables() {
             [5, 10, 15, 20, 50, 75, "All"]
         ],
         order: [
-            [4, 'desc']
+            [6, 'desc']
         ],
         iDisplayLength: 10
     });
@@ -84,9 +126,8 @@ function Action() {
         var id_data = $(this).data('value');
         $('#id').val(id_data);
         $('#form-data').trigger('reset');
-        $('#pswd').attr('type', 'password');
         $.ajax({
-            url: "./api/client",
+            url: "./api/transaction",
             headers: {
                 "Api": $.cookie("BSK_API"),
                 "Key": $.cookie("BSK_KEY"),
@@ -99,16 +140,14 @@ function Action() {
             },
             success: function (detail) {
                 if (detail.status) {
+                    Options(detail.data.client, detail.data.packet);
                     $.each(detail.data, function (i, show) {
                         $('#' + i).val(show);
                     });
-                    $('#status').bootstrapToggle(detail.data.status ? 'on' : 'off');
+                    $('#values').val(detail.data.price / detail.data.total);
                 }
             }
         });
-    });
-    $('#show_paswd').click(function () {
-        $('#pswd').attr('type', $(this).is(":checked") ? 'text' : 'password');
     });
 };
 
