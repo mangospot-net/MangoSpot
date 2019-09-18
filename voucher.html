@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>
+    <div class="hk-wrapper hk-vertical-nav">
+        <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar">
+            <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span
+                    class="feather-icon"><i data-feather="menu"></i></span></a>
+            <a class="navbar-brand" href="./">
+                <img class="brand-img d-inline-block" src="dist/img/logo-light.png" alt="brand" height="40" />
+            </a>
+            <ul class="navbar-nav hk-navbar-content">
+                <li class="nav-item dropdown dropdown-authentication">
+                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar">
+                                    <img src="dist/img/users/no_foto.jpg" alt="user"
+                                        class="avatar-img rounded-circle user-image">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <span><span class="user_users"></span> <i class="zmdi zmdi-chevron-down"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX"
+                        data-dropdown-out="flipOutX">
+                        <a class="dropdown-item" href="profile.html">
+                            <i class="dropdown-icon zmdi zmdi-account"></i>
+                            <span>Profile</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item logout" href="javascript:void(0);"><i
+                                class="dropdown-icon zmdi zmdi-power"></i><span>Logout</span></a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <nav class="hk-nav hk-nav-light">
+            <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i
+                        data-feather="x"></i></span></a>
+            <div class="nicescroll-bar">
+                <div class="navbar-nav-wrap">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./">
+                                <i class="material-icons">home</i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse"
+                                data-target="#page_account">
+                                <i class="material-icons">account_box</i>
+                                <span class="nav-link-text">My Account</span>
+                            </a>
+                            <ul id="page_account" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="profile.html">Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link logout" href="javascript:void(0);">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <hr class="nav-separator">
+                    <div id="list-menu"></div>
+                </div>
+            </div>
+        </nav>
+        <div id="hk_nav_backdrop" class="hk-nav-backdrop"></div>
+        <div class="hk-pg-wrapper">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">Radius</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Form Voucher</li>
+                </ol>
+            </nav>
+            <div class="container">
+                <div class="hk-pg-header">
+                    <h4 class="hk-pg-title">
+                        <span class="pg-title-icon">
+                            <span class="feather-icon"><i data-feather="credit-card"></i></span>
+                        </span>
+                        Data Voucher
+                    </h4>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <a class="btn btn-info" href="#add-batch" data-toggle="modal">
+                                            <i class="fa fa-users"></i> Voucher
+                                        </a>
+                                    </div>
+                                    <select class="form-control profiles" id="profile">
+                                        <option value="">-- All Profile --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form class="table-wrap" method="POST" id="removed">
+                                    <table id="tables" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%"><input type="checkbox" id="CheckAll"></th>
+                                                <th>Username</th>
+                                                <th>Profile</th>
+                                                <th>Price</th>
+                                                <th>Time</th>
+                                                <th>Act</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="add-batch" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <form class="modal-content" id="form-batch" method="POST" action="voucher">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Form Voucher</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="groupname">Profile <span class="symbol required"></span></label>
+                                            <select class="form-control profiles" name="groupname" required>
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="qty">Qty <span class="symbol required"></span></label>
+                                                <input type="number" min="1" max="0" class="form-control normal"
+                                                    name="qty" placeholder="Qty" value="5" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="mode">Mode </label>
+                                                <select class="form-control" name="mode">
+                                                    <option value="true">Username & Password</option>
+                                                    <option value="false">Username = Password</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="length">Length <span class="symbol required"></span></label>
+                                                <input type="number" min="3" max="10" class="form-control" name="length"
+                                                    value="3" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="prefix">Prefix </label>
+                                                <input type="text" class="form-control" name="prefix"
+                                                    placeholder="Prefix">
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <label for="charecter">Charecter </label>
+                                                <select class="form-control" name="charecter" required>
+                                                    <option value="1">abcd</option>
+                                                    <option value="2">ABCD</option>
+                                                    <option value="3">aBcD</option>
+                                                    <option value="4">1abc2de</option>
+                                                    <option value="5">1ABC2DE</option>
+                                                    <option value="6">1aBc2dE</option>
+                                                    <option value="7">1#aB3&D</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="descriptions">Description</label>
+                                            <textarea class="form-control" name="description"
+                                                placeholder="Description..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" id="create" name="created" value="">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                                class="fa fa-close"></i>
+                                            Close</button>
+                                        <button type="submit" class="btn btn-blue"> <i class="fa fa-save"></i>
+                                            Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="print" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Print View</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>Themes</label>
+                                            <select id="theme" class="form-control"></select>
+                                            <input type="hidden" id="data">
+                                            <input type="hidden" id="type">
+                                        </div>
+                                        <div id="print-content"></div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            <i class="fa fa-close"></i> Close
+                                        </button>
+                                        <button type="submit" class="btn btn-blue print" value="print-content">
+                                            <i class="fa fa-print"></i> Print
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hk-footer-wrap container" data-include="menu/footer.html"></div>
+        </div>
+    </div>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.dataTables.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.buttons.min.js"></script>
+    <script src="vendors/datatables/js/buttons.bootstrap4.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.responsive.min.js"></script>
+    <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
+    <script src="vendors/validation/jquery.validate.min.js"></script>
+    <script src="vendors/validation/additional-methods.min.js"></script>
+    <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
+    <script src="vendors/jquery-toast/jquery.toast.js"></script>
+    <script src="vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="vendors/moment/moment.js"></script>
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="dist/js/jquery-qrcode.min.js"></script>
+    <script src="dist/js/feather.min.js"></script>
+    <script src="dist/js/controls.js"></script>
+    <script src="dist/js/init.js"></script>
+    <script src="dist/js/voucher.js"></script>
+
+</body>
+
+</html>

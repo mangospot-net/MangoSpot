@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" href="dist/css/style.css" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>
+    <div class="hk-wrapper hk-vertical-nav">
+        <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar">
+            <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span
+                    class="feather-icon"><i data-feather="menu"></i></span></a>
+            <a class="navbar-brand" href="./">
+                <img class="brand-img d-inline-block" src="dist/img/logo-light.png" alt="brand" height="40" />
+            </a>
+            <ul class="navbar-nav hk-navbar-content">
+                <li class="nav-item dropdown dropdown-authentication">
+                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar">
+                                    <img src="dist/img/users/no_foto.jpg" alt="user"
+                                        class="avatar-img rounded-circle user-image">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <span><span class="user_users"></span> <i class="zmdi zmdi-chevron-down"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX"
+                        data-dropdown-out="flipOutX">
+                        <a class="dropdown-item" href="profile.html">
+                            <i class="dropdown-icon zmdi zmdi-account"></i>
+                            <span>Profile</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item logout" href="javascript:void(0);"><i
+                                class="dropdown-icon zmdi zmdi-power"></i><span>Logout</span></a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <nav class="hk-nav hk-nav-light">
+            <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i
+                        data-feather="x"></i></span></a>
+            <div class="nicescroll-bar">
+                <div class="navbar-nav-wrap">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./">
+                                <i class="material-icons">home</i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse"
+                                data-target="#page_account">
+                                <i class="material-icons">account_box</i>
+                                <span class="nav-link-text">My Account</span>
+                            </a>
+                            <ul id="page_account" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="profile.html">Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link logout" href="javascript:void(0);">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <hr class="nav-separator">
+                    <div id="list-menu"></div>
+                </div>
+            </div>
+        </nav>
+        <div id="hk_nav_backdrop" class="hk-nav-backdrop"></div>
+        <div class="hk-pg-wrapper">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">MikroTik</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">DHCP</li>
+                </ol>
+            </nav>
+            <div class="container">
+                <div class="hk-pg-header">
+                    <h4 class="hk-pg-title">
+                        <span class="pg-title-icon">
+                            <span class="feather-icon"><i data-feather="sliders"></i></span>
+                        </span>
+                        DHCP
+                    </h4>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header p-0">
+                                <ul class="nav nav-tabs text-center" role="tablist">
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#page-server" class="nav-link active" data-toggle="tab"
+                                            aria-expanded="true">
+                                            <i class="fa fa-server"></i>
+                                            <span class="d-none d-sm-block">Server</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#page-client" class="nav-link" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-universal-access"></i>
+                                            <span class="d-none d-sm-block">Client</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#form-dns" class="nav-link" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-globe"></i>
+                                            <span class="d-none d-sm-block">DNS</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="servers">Router </label>
+                                    <select class="form-control" id="server">
+                                        <option value="">-- All Router --</option>
+                                    </select>
+                                </div>
+                                <div class="tab-content block">
+                                    <div class="table-wrap tab-pane active mt-15" id="page-server">
+                                        <table id="tables-server" width="100%"
+                                            class="table table-hover table-striped dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Router</th>
+                                                    <th>Interface</th>
+                                                    <th>Name</th>
+                                                    <th>Lease</th>
+                                                    <th>Pool</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="table-wrap tab-pane mt-15" id="page-client">
+                                        <table id="tables-client" width="100%"
+                                            class="table table-hover table-striped dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Router</th>
+                                                    <th>Interface</th>
+                                                    <th>Address</th>
+                                                    <th>DNS/Route</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <form class="tab-pane" id="form-dns" method="POST" action="dhcp" data-modal="false"
+                                        data-reset="false">
+                                        <div class="form-group">
+                                            <label for="servers">DNS Server <span
+                                                    class="symbol required"></span></label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="servers" name="servers"
+                                                    placeholder="8.8.8.8,8.8.4.4" required>
+                                                <div class="input-group-append">
+                                                    <label class="input-group-text">
+                                                        <input type="checkbox" id="remote" name="remote"
+                                                            value="yes">&nbsp;
+                                                        Requests
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="udp">Max UDP Packet <span
+                                                        class="symbol required"></span></label>
+                                                <input type="number" class="form-control" id="udp"
+                                                    name="max-udp-packet-size" min="100"
+                                                    placeholder="Max UDP Packet Size" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="query-server">Query Server Timeout <span
+                                                        class="symbol required"></span></label>
+                                                <input type="text" class="form-control" id="query-server"
+                                                    name="query-server-timeout" placeholder="Query Server Timeout"
+                                                    required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="query-total">Query Total Timeout <span
+                                                        class="symbol required"></span></label>
+                                                <input type="text" class="form-control" id="query-total"
+                                                    name="query-total-timeout" placeholder="Query Total Timeout"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="concurrent">Max Concurrent Queries <span
+                                                        class="symbol required"></span></label>
+                                                <input type="number" class="form-control" id="concurrent"
+                                                    name="max-concurrent-queries" min="1"
+                                                    placeholder="Max Concurrent Queries" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="concurrent-tcp">Max Concurrent TCP <span
+                                                        class="symbol required"></span></label>
+                                                <input type="number" class="form-control" id="concurrent-tcp"
+                                                    name="max-concurrent-tcp-sessions" min="0"
+                                                    placeholder="Max Concurrent TCP Sessions" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="cache-ttl">Cache Max TTL <span
+                                                        class="symbol required"></span></label>
+                                                <input type="text" class="form-control" id="cache-ttl"
+                                                    name="cache-max-ttl" placeholder="Cache Max TTL" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mr-auto">
+                                                <input type="hidden" id="id_dns" name="dns-server" required>
+                                            </div>
+                                            <div class="form-group mr-15">
+                                                <button type="reset" class="btn btn-secondary mr-5">
+                                                    <i class="fa fa-close"></i> Cancel
+                                                </button>
+                                                <button type="submit" class="btn btn-info">
+                                                    <i class="fa fa-save"></i> Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="add-server" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <form class="modal-content" id="form-server" method="POST" action="dhcp">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Form DHCP Server</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="router">Router <span class="symbol required"></span></label>
+                                    <select class="form-control" id="router" name="router" required>
+                                        <option value="">-- Select Data --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="interface">Interface <span class="symbol required"></span></label>
+                                    <select class="form-control" id="interface" name="interface" required>
+                                        <option value="">-- Select Data --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Name <span class="symbol required"></span></label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        placeholder="DHCP Name" required>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label for="lease">Lease Time <span class="symbol required"></span></label>
+                                        <input type="text" class="form-control" id="lease" name="lease-time" value="10m"
+                                            required>
+                                    </div>
+                                    <div class="form-group col-md-8">
+                                        <label for="scope">Pool <span class="symbol required"></span></label>
+                                        <select class="form-control" id="pool" name="address-pool" required>
+                                            <option value="static-only">Static Only</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="mr-auto">
+                                    <input type="checkbox" id="status" name="status" checked data-toggle="toggle"
+                                        data-size="small" data-onstyle="success" data-offstyle="danger" value="true">
+                                </div>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                        class="fa fa-close"></i>
+                                    Close</button>
+                                <button type="submit" id="id" name="id" value="0" class="btn btn-blue"> <i
+                                        class="fa fa-save"></i> Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal fade" id="add-client" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <form class="modal-content" id="form-client" method="POST" action="dhcp">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Form DHCP Client</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="router">Router <span class="symbol required"></span></label>
+                                    <select class="form-control" id="routers" name="router" required>
+                                        <option value="">-- Select Data --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="interface">Interface <span class="symbol required"></span></label>
+                                    <select class="form-control" id="interfaces" name="interface" required>
+                                        <option value="">-- Select Data --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="dns" name="dns"
+                                            value="true" checked>
+                                        <label class="custom-control-label" for="dns">Use Peer DNS</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ntp" name="ntp"
+                                            value="true" checked>
+                                        <label class="custom-control-label" for="ntp">Use Peer NTP</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="route">Default Route <span class="symbol required"></span></label>
+                                    <select class="form-control" id="route" name="add-default-route" required>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="special-classless">Special Classless</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment">Comment </label>
+                                    <textarea class="form-control" id="comment" name="comment"
+                                        placeholder="Comment..."></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="mr-auto">
+                                    <input type="checkbox" id="active" name="active" checked data-toggle="toggle"
+                                        data-size="small" data-onstyle="success" data-offstyle="danger" value="true">
+                                </div>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                        class="fa fa-close"></i>
+                                    Close</button>
+                                <button type="submit" id="client" name="client" value="0" class="btn btn-blue"> <i
+                                        class="fa fa-save"></i> Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="hk-footer-wrap container" data-include="menu/footer.html"></div>
+        </div>
+    </div>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.buttons.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.responsive.min.js"></script>
+    <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
+    <script src="vendors/validation/jquery.validate.min.js"></script>
+    <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
+    <script src="vendors/jquery-toast/jquery.toast.js"></script>
+    <script src="vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
+    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="dist/js/feather.min.js"></script>
+    <script src="dist/js/controls.js"></script>
+    <script src="dist/js/init.js"></script>
+    <script src="dist/js/dhcp.js"></script>
+
+</body>
+
+</html>
