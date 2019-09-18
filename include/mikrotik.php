@@ -417,4 +417,8 @@ class RouterosAPI
     {
         $this->disconnect();
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9ad14bdfc1a4a24385cfa1568dd82eb7494db770
