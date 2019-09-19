@@ -203,7 +203,7 @@ $('body').on('click', 'button[name="active"]', function () {
             "active": $(this).val()
         },
         success: function (active) {
-            $('#tables').DataTable().ajax.reload();
+            $('.dataTable').DataTable().ajax.reload();
         }
     });
 });
