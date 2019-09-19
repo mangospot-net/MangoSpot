@@ -2,20 +2,15 @@
 if(isset($_GET['data'])){
     $details = array();
     $levels = DataTable("level", "*", "identity = '$Menu[identity]' and slug = '$Menu[level]'", 
-        array("name", "value", "data", "status", "id")
+        array("name", "value", "status", "id")
     );
     foreach($levels['data'] as $list){
-        $vim[$list['id']] = array();
-        $rds[$list['id']] = array();
+		$vim[$list['id']] = array();
 		foreach(explode(',', $list['value']) as $mnv){
 			$mno = $Bsk->Tampil("menu","name","id = '$mnv' and status = 'true'");
 			$vim[$list['id']][] = $mno['name'];
-        }
-        foreach(explode(',', $list['data']) as $nas){
-			$router = $Bsk->Tampil("nas","description","id = '$nas' and status = 'true'");
-			$rds[$list['id']][] = $router['description'];
 		}
-		$details[] = array_replace($list, array("value" => implode(', ', $vim[$list['id']]), "data" => $rds[$list['id']]));
+		$details[] = array_replace($list, array("value" => implode(', ', $vim[$list['id']])));
 	}
     echo json_encode(array_replace($levels, array("data" => $details)), true);
 }
@@ -30,20 +25,9 @@ if(isset($_GET['type'])){
 		array("status" => false, "message" => "error", "data" => false), true
 	);
 }
-if(isset($_GET['radius'])){
-    $radius = array();
-    $nasnam = $Bsk->View("nas", "id, description as name", "identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true'");
-    foreach ($nasnam as $rad) {
-        $radius[] = $rad;
-    }
-    echo json_encode($radius ? 
-		array("status" => true, "message" => "success", "data" => $radius) : 
-		array("status" => false, "message" => "error", "data" => false), true
-	);
-}
 if(isset($_GET['detail'])){
     $id_detail = Rahmad($_GET['detail']);
-    $query_detail = $Bsk->Tampil("level", "id, name, value, data, status", "id = '$id_detail' and identity = '$Menu[identity]' and slug = '$Menu[id]'");
+    $query_detail = $Bsk->Tampil("level", "id, name, value, status", "id = '$id_detail' and identity = '$Menu[identity]' and slug = '$Menu[id]'");
     echo json_encode($query_detail ? 
 		array("status" => true, "message" => "success", "data" => $query_detail) : 
 		array("status" => false, "message" => "error", "data" => false), true
@@ -55,11 +39,7 @@ if(isset($_POST['name'])){
     $check_post = $Bsk->Tampil("level", "id", "id = '$id_post' and identity = '$Menu[identity]' and slug = '$Menu[level]' ");
     $data_post = array_replace(
         $_POST, 
-        array(
-            "value" => implode(',', $_POST['value']), 
-            "data"  => implode(',', $_POST['data']),
-            "status" => (isset($_POST['status']) ? 'true' : 'false')
-        )
+        array("value" => implode(',', $_POST['value']), "status" => (isset($_POST['status']) ? 'true' : 'false'))
     );
     $query_post = ($check_post ? 
         $Bsk->Ubah("level", $data_post, "id = '$check_post[id]'") : 

@@ -23,17 +23,10 @@ function Tables() {
                 "data": "username"
             },
             {
-                "data": "profile"
-            },
-            {
                 "data": "reply"
             },
             {
-                "data": "date",
-                render: function (data, type, row) {
-                    var time = row.date.split('.');
-                    return time[0];
-                }
+                "data": "date"
             }
         ],
         oLanguage: {
@@ -50,7 +43,7 @@ function Tables() {
             [5, 10, 15, 20, 50, 75, "All"]
         ],
         order: [
-            [4, 'desc']
+            [3, 'desc']
         ],
         iDisplayLength: 10
     });

@@ -31,22 +31,6 @@ function Select() {
             });
         }
     });
-    $.ajax({
-        url: "./api/users",
-        headers: {
-            "Api": $.cookie("BSK_API"),
-            "Key": $.cookie("BSK_KEY"),
-            "Accept": "application/json"
-        },
-        method: "GET",
-        dataType: "JSON",
-        data: "level",
-        success: function (level) {
-            $.each(level.data, function (o, lev) {
-                $('select#reseller').append('<option value="' + lev.id + '">' + lev.name + '</option>');
-            });
-        }
-    });
 };
 
 function Tables(params) {
@@ -307,7 +291,7 @@ function Prints(data, type, theme) {
                         .replace('[username]', param.username)
                         .replace('[password]', param.password)
                         .replace('[price]', param.price)
-                        .replace('[QR-Code]', '<div class="qr-' + param.username + '" data-text="' + param.url + '/login?username=' + param.username + '&password=' + param.password + '"></div>');
+                        .replace('[QR-Code]', '<div class="qr-' + param.username + '" data-text="https://wifi.mangospot.net/login?username=' + param.username + '&password=' + param.password + '"></div>');
                 }).find('.qr-' + param.username).qrcode({
                     render: "image",
                     size: 75,
@@ -369,10 +353,7 @@ function Action(params) {
         $('#passwd').attr('type', $(this).is(":checked") ? 'text' : 'password');
     });
     $('#profile').change(function () {
-        $('#tables').DataTable().ajax.url("./api/users?data=" + $(this).val() + "&users=" + $('#reseller').val()).load();
-    });
-    $('#reseller').change(function () {
-        $('#tables').DataTable().ajax.url("./api/users?data=" + $('#profile').val() + "&users=" + $(this).val()).load();
+        $('#tables').DataTable().ajax.url("./api/users?data=" + $(this).val()).load();
     });
     $('#quota').keyup(function () {
         $('#valume').val($(this).val());

@@ -241,10 +241,10 @@ function DataTable($table, $from, $where, $columns, $group = null){
 	}
 	$query = $Bsk->Tampil($table, "count(*) as total", $sql);
 	$totalFiltered = $query['total'];
-	if(is_array($requestData['order'])){
+	if(!empty($requestData['order'][0]['column'])){
 		$order = (array_key_exists($requestData['order'][0]['column'], $columns) ? $columns[$requestData['order'][0]['column']]." ".$requestData['order'][0]['dir'] : "");
 	} else {
-		$order = (!empty($requestData['order']) ? $requestData['order']." ".$requestData['dir'] : "");
+		$order = (!empty($requestData['order']) ? $columns[$requestData['order'][0]['column']]." ".$requestData['order'][0]['dir'] : "");
 	}
 	$limit = ($requestData['length'] != '-1' ? $requestData['length']." OFFSET ".$requestData['start']." " : "");
 	$users = $Bsk->View($table, $from, $sql, $order, $limit);
@@ -255,7 +255,7 @@ function DataTable($table, $from, $where, $columns, $group = null){
 	$json_data = array(
 		"draw"            => intval((!empty($requestData['draw']) ? $requestData['draw'] : 0) ),
 		"recordsTotal"    => intval( $totalData['total'] ),
-		"recordsFiltered" => intval( $totalFiltered ),
+		"recordsFiltered" => intval($totalFiltered),
 		"data"            => $data
 	);
 	return $json_data;
@@ -327,15 +327,12 @@ function random_str($lengt=null, $key=null){
 		$characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		break;
 		case 4:
-		$characters = '0123456789';
-		break;
-		case 5:
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
 		break;
-		case 6:
+		case 5:
 		$characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		break;
-		case 7:
+		case 6:
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		break;
 		default:

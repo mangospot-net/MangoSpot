@@ -1,10 +1,10 @@
 <?php
 if(isset($_GET['data'])){
     $query = DataTable(
-        "radpostauth a inner join radcheck b on a.username = b.username left join radusergroup c on a.username = c.username", 
-        "a.id, a.username, c.groupname as profile, a.authdate as date, a.reply", 
-        "a.username is not null and b.identity = '$Menu[identity]' and b.users = '$Menu[id]'", 
-        array("a.id", "a.username", "c.groupname", "a.reply", "a.authdate")
+        "radpostauth a inner join radcheck b on a.username = b.username", 
+        "a.id, a.username, a.authdate as date, a.reply", 
+        "a.username is not null and identity = '$Menu[identity]' and users = '$Menu[id]'", 
+        array("a.id", "a.username", "a.reply", "a.authdate")
     );
         echo json_encode($query, true);
 }

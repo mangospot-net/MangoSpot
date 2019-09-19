@@ -71,22 +71,6 @@ function Select() {
             });
         }
     });
-    $.ajax({
-        url: "./api/expired",
-        headers: {
-            "Api": $.cookie("BSK_API"),
-            "Key": $.cookie("BSK_KEY"),
-            "Accept": "application/json"
-        },
-        data: "level",
-        method: "GET",
-        dataType: "JSON",
-        success: function (level) {
-            $.each(level.data, function (i, lev) {
-                $('#reseller').append('<option value="' + lev.id + '">' + lev.name + '</option>').val(level.value);
-            });
-        }
-    });
     $('#CheckAll').click(function (e) {
         var table = $(e.target).closest('table');
         $('td input:checkbox', table).prop('checked', this.checked);
@@ -96,7 +80,7 @@ function Select() {
         var reverse = data.toString().split('').reverse().join(''),
             rupiah = reverse.match(/\d{1,3}/g);
         rupiah = rupiah.join('.').split('').reverse().join('');
-        return rupiah;
+        return 'Rp. ' + rupiah;
     }
 
     $('body').on('click', 'input[type=checkbox]', function () {
@@ -110,10 +94,7 @@ function Select() {
         $('#total').val(Rp(total));
     });
     $('#profile').change(function () {
-        $('#tables').DataTable().ajax.url("./api/expired?data=" + $(this).val() + "&users=" + $('#reseller').val()).load();
-    });
-    $('#reseller').change(function () {
-        $('#tables').DataTable().ajax.url("./api/expired?data=" + $('#profile').val() + "&users=" + $(this).val()).load();
+        $('#tables').DataTable().ajax.url("./api/expired?data=" + $(this).val()).load();
     });
 };
 

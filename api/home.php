@@ -1,15 +1,12 @@
 <?php
-$rad = ($Menu['data'] ? "and id in($Menu[data])" : "and users = '$Menu[id]'");
 if(isset($_GET['radius'])){
-    $radius = $Bsk->Tampil("nas", "count(*) as total", "identity = '$Menu[identity]' and status = 'true' ".$rad);
+    $radius = $Bsk->Tampil("nas", "count(*) as total", "identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true' ");
     $client = $Bsk->Tampil("radcheck", "count(*) as total", "identity = '$Menu[identity]' and users = '$Menu[id]' and attribute = 'Cleartext-Password'");
     $active = $Bsk->Tampil("active", "count(*) as total", "identity = '$Menu[identity]' and users = '$Menu[id]'");
-    $voucer = $Bsk->Tampil("packet", "sum(voucher) as total", "identity = '$Menu[identity]' and client = '$Menu[id]'");
     $show = array(
         "radius" => $radius['total'],
         "client" => $client['total'],
-        "active" => $active['total'],
-        "voucher"=> $voucer ? $voucer['total'] : 0,
+        "active" => $active['total']
     );
     echo json_encode($show ? 
 		array("status" => true, "message" => "success", "data" => $show) : 
@@ -19,7 +16,7 @@ if(isset($_GET['radius'])){
 if(isset($_GET['pie'])){
     $pie = array();
     $lgn = array();
-    $nas = $Bsk->View("nas", "nasname, description", "identity = '$Menu[identity]' ".$rad);
+    $nas = $Bsk->View("nas", "nasname, description", "identity = '$Menu[identity]' and users = '$Menu[id]'");
     foreach($nas as $key){
         $sum = $Bsk->Tampil("active", "count(*) as total", "nasname = '$key[nasname]' and identity = '$Menu[identity]' and users = '$Menu[id]'");
         $lgn[] = $key['description'];
@@ -81,7 +78,7 @@ if(isset($_GET['traffic'])){
     $datapc = array();
     $routes = $Bsk->View(
         "nas", "id, nasname, username, password, port, description", 
-        "identity = '$Menu[identity]' and status = 'true' ".$rad, "id asc"
+        "identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true'", "id asc"
     );
     foreach ($routes as $trafic) {
         $ports = ($trafic['port'] ? ":".$trafic['port'] : "");
@@ -109,5 +106,9 @@ if(isset($_GET['traffic'])){
 		array("status" => true, "message" => "success", "data" => $return) : 
 		array("status" => false, "message" => "error", "data" => false), JSON_NUMERIC_CHECK
     );
+}
+
+if(isset($_GET['acme'])){
+
 }
 ?>

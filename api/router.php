@@ -1,5 +1,4 @@
 <?php
-$rad = ($Menu['data'] ? "and id in($Menu[data])" : "and users = '$Menu[id]'");
 if(isset($_GET['data'])){
     $nas = DataTable("nas", 
         "id, description, nasname, username, port", 
@@ -30,7 +29,7 @@ if(isset($_POST['username'])){
     );
     $query_post = $Bsk->Ubah("nas", $data_post, "id = '$check_post[id]' and users = '$Menu[id]'");
     echo json_encode($query_post ? 
-		array("status" => true, "message" => "success", "color" => "green", "data" => "Proccess data successfully.") : 
+		array("status" => true, "message" => "success", "color" => "green", "data" => "Proccess data success") : 
 		array("status" => false, "message" => "error", "color" => "red", "data" => "Proccess data failed!"), true
 	);
 }
@@ -48,22 +47,5 @@ if(isset($_POST['test'])){
     echo json_encode($test ? 
 		array("status" => true, "message" => "success", "color" => "green", "data" => $testing) : 
 		array("status" => false, "message" => "error", "color" => "red", "data" => $testing), true
-    );
-}
-if(isset($_POST['reboot'])){
-    $getIde = Rahmad($_POST['reboot']);
-    $getNas = $Bsk->Tampil(
-        "nas", "nasname, username, password, port", 
-        "id = '$getIde' and identity = '$Menu[identity]' and status = 'true' ".$rad
-    );
-    if ($Router->connect($getNas['nasname'].":".$getNas['port'], $getNas['username'], $getNas['password'])) {
-        $return = $Router->comm("/system/reboot");
-    } else {
-        $return = false;
-    }
-    $Router->disconnect();
-    echo json_encode($return ? 
-		array("status" => true, "message" => "success", "color" => "green", "data" => "Reboot router successfully.") : 
-		array("status" => false, "message" => "error", "color" => "red", "data" => "Reboot router failed!"), true
     );
 }

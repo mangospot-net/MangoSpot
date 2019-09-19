@@ -48,7 +48,7 @@ function Tables() {
     });
 };
 
-function Options() {
+function Action(data) {
     $.ajax({
         url: "./api/active",
         headers: {
@@ -59,46 +59,28 @@ function Options() {
         method: "GET",
         dataType: "JSON",
         data: "server",
+        beforeSend: function () {
+            $('select#server').empty().append('<option value="">-- All Server --</option>').val(data);
+        },
         success: function (response) {
             $.each(response.data, function (i, param) {
-                $('select#server').append('<option value="' + param.name + '">' + param.name + '</option>');
+                $('select#server').append('<option value="' + param.name + '">' + param.name + '</option>').val(data);
             });
         }
-    });
-    $.ajax({
-        url: "./api/active",
-        headers: {
-            "Api": $.cookie("BSK_API"),
-            "Key": $.cookie("BSK_KEY"),
-            "Accept": "application/json"
-        },
-        method: "GET",
-        dataType: "JSON",
-        data: "level",
-        success: function (respons) {
-            $.each(respons.data, function (e, level) {
-                $('select#seller').append('<option value="' + level.id + '">' + level.name + '</option>');
-            });
-        }
-    });
-}
-
-function Action() {
-    $('#server').change(function () {
-        $('#tables').DataTable().ajax.url("./api/active?data=" + $(this).val() + "&users=" + $('#seller').val()).load();
-    });
-    $('#seller').change(function () {
-        $('#tables').DataTable().ajax.url("./api/active?data=" + $('#server').val() + "&users=" + $(this).val()).load();
     });
 }
 (function () {
     'use strict';
     Tables();
-    Options();
     Action();
+    $('#server').change(function () {
+        $('#chang').val($(this).val());
+        $('#tables').DataTable().ajax.url("./api/active?data=" + $(this).val()).load();
+    });
 
     function Refreh() {
-        $('#tables').DataTable().ajax.url("./api/active?data=" + $('#server').val() + "&users=" + $('#seller').val()).load();
+        Action($('#chang').val());
+        $('#tables').DataTable().ajax.reload();
     }
     setInterval(Refreh, 10000);
 })();

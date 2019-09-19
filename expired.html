@@ -90,7 +90,7 @@
         <div class="hk-pg-wrapper">
             <nav class="hk-breadcrumb" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light bg-transparent">
-                    <li class="breadcrumb-item"><a href="#">Radius</a></li>
+                    <li class="breadcrumb-item"><a href="#">Hotspot</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Users Expired</li>
                 </ol>
             </nav>
@@ -105,49 +105,37 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <form class="card" method="POST" id="removed">
-                            <div class="card-header">
-                                Table Expired
+                        <section class="hk-sec-wrapper">
+                            <div class="form-group">
+                                <label for="nasname">Profile <span class="symbol required"></span></label>
+                                <select class="form-control" id="profile">
+                                    <option value="">-- All --</option>
+                                </select>
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <label for="nasname">Profile </label>
-                                        <select class="form-control" id="profile">
-                                            <option value="">-- All --</option>
-                                        </select>
+                            <form class="table-wrap" method="POST" id="removed">
+                                <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%"><input type="checkbox" id="CheckAll"></th>
+                                            <th>Profile</th>
+                                            <th>Username</th>
+                                            <th>Start</th>
+                                            <th>Expired</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="input-group mt-15">
+                                    <input type="hidden" id="price" name="price" value="">
+                                    <div class="btn-group input-group-prepend">
+                                        <button type="submit" id="action" class="btn btn-danger" disabled><i
+                                                class="fa fa-trash"></i>
+                                            Delete</i></button>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="reseller">Reseller <span class="symbol required"></span></label>
-                                        <select class="form-control" name="client" id="reseller" required>
-                                        </select>
-                                    </div>
+                                    <input class="form-control text-right" id="total" disabled>
                                 </div>
-                                <div class="table-wrap">
-                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
-                                        <thead>
-                                            <tr>
-                                                <th width="5%"><input type="checkbox" id="CheckAll"></th>
-                                                <th>Profile</th>
-                                                <th>Username</th>
-                                                <th>Start</th>
-                                                <th>Expired</th>
-                                                <th>Price</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                    <div class="input-group mt-15">
-                                        <input type="hidden" id="price" name="price" value="">
-                                        <div class="btn-group input-group-prepend">
-                                            <button type="submit" id="action" class="btn btn-danger" disabled><i
-                                                    class="fa fa-trash"></i>
-                                                Delete</i></button>
-                                        </div>
-                                        <input class="form-control text-right" id="total" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </section>
                     </div>
                 </div>
             </div>

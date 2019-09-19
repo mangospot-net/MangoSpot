@@ -90,7 +90,7 @@
         <div class="hk-pg-wrapper">
             <nav class="hk-breadcrumb" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light bg-transparent">
-                    <li class="breadcrumb-item"><a href="#">Radius</a></li>
+                    <li class="breadcrumb-item"><a href="#">Hotspot</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Form Users</li>
                 </ol>
             </nav>
@@ -105,11 +105,11 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
+                        <section class="hk-sec-wrapper">
+                            <div class="input-group mb-15">
                                 <div class="btn-group input-group-prepend">
                                     <button aria-expanded="false" data-toggle="dropdown"
-                                        class="btn btn-info btn-sm dropdown-toggle" type="button">
+                                        class="btn btn-info dropdown-toggle" type="button">
                                         <span class="icon-label"><i class="fa fa-plus"></i></span> Add
                                         <span class="caret"></span>
                                     </button>
@@ -125,38 +125,27 @@
                                         </a>
                                     </div>
                                 </div>
+                                <select class="form-control profiles" id="profile">
+                                    <option value="">-- All Profile --</option>
+                                </select>
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <select class="form-control profiles" id="profile">
-                                            <option value="">-- All Profile --</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <select class="form-control reseller" id="reseller">
-                                            <option value="">-- All Reseller --</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <form class="table-wrap" method="POST" id="removed">
-                                    <table id="tables" class="table table-hover table-striped dataTable">
-                                        <thead>
-                                            <tr>
-                                                <th width="5%"><input type="checkbox" id="CheckAll"></th>
-                                                <th>Username</th>
-                                                <th>Profile</th>
-                                                <th>Shared</th>
-                                                <th>Rate</th>
-                                                <th>Expired</th>
-                                                <th>Created</th>
-                                                <th>Act</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </form>
-                            </div>
-                        </div>
+                            <form class="table-wrap" method="POST" id="removed">
+                                <table id="tables" class="table table-hover table-striped dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%"><input type="checkbox" id="CheckAll"></th>
+                                            <th>Username</th>
+                                            <th>Profile</th>
+                                            <th>Shared</th>
+                                            <th>Rate</th>
+                                            <th>Expired</th>
+                                            <th>Created</th>
+                                            <th>Act</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
+                        </section>
                         <div class="modal fade" id="add-one" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <form class="modal-content" id="form-one" method="POST" action="users">
@@ -306,11 +295,10 @@
                                                     <option value="1">abcd</option>
                                                     <option value="2">ABCD</option>
                                                     <option value="3">aBcD</option>
-                                                    <option value="4">1234</option>
-                                                    <option value="5">1abc2de</option>
-                                                    <option value="6">1ABC2DE</option>
-                                                    <option value="7">1aBc2dE</option>
-                                                    <option value="8">1#aB3&D</option>
+                                                    <option value="4">1abc2de</option>
+                                                    <option value="5">1ABC2DE</option>
+                                                    <option value="6">1aBc2dE</option>
+                                                    <option value="7">1#aB3&D</option>
                                                 </select>
                                             </div>
                                         </div>

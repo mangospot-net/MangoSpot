@@ -12,9 +12,7 @@ if(isset($_POST['login'])){
 			"data"		=> array(
 				"token" => md5($Identity['url']), 
 				"api"	=> $Auth->encrypt($login['id'], $Host), 
-				"key"	=> $Auth->encrypt(md5($login['pswd']), $Host),
-				"auth"	=> md5($login['id']),
-				"signal"=> $Config['on_api'],
+				"key"	=> $Auth->encrypt(md5($login['pswd']), $Host), 
 				"exp"	=> $expi
 			)
 		) : 

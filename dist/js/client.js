@@ -38,7 +38,7 @@ function Tables() {
                 "data": "name",
             },
             {
-                "data": "level"
+                "data": "email"
             },
             {
                 "data": "phone"

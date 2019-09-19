@@ -90,7 +90,7 @@
         <div class="hk-pg-wrapper">
             <nav class="hk-breadcrumb" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light bg-transparent">
-                    <li class="breadcrumb-item"><a href="#">Radius</a></li>
+                    <li class="breadcrumb-item"><a href="#">Hotspot</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Users Active</li>
                 </ol>
             </nav>
@@ -105,38 +105,30 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header">
-                                Table Active
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                        <select class="form-control" id="server">
-                                            <option value="">-- All Server --</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <select class="form-control" id="seller">
-                                            <option value="">-- All Reseller --</option>
-                                        </select>
+                        <section class="hk-sec-wrapper">
+                            <div class="row mt-15">
+                                <div class="col-sm">
+                                    <select class="form-control" id="server">
+                                        <option value="">-- All Server --</option>
+                                    </select>
+                                    <input type="hidden" id="chang" value="">
+                                    <div class="table-wrap mt-15">
+                                        <table id="tables" width="100%"
+                                            class="table table-hover table-striped dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Server</th>
+                                                    <th>User</th>
+                                                    <th>Profile</th>
+                                                    <th>Address</th>
+                                                    <th>Time</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
                                     </div>
                                 </div>
-                                <div class="table-wrap mt-15">
-                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Server</th>
-                                                <th>User</th>
-                                                <th>Profile</th>
-                                                <th>Address</th>
-                                                <th>Time</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
                             </div>
-                        </div>
+                        </section>
                     </div>
                 </div>
             </div>
