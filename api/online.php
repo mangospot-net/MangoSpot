@@ -1,11 +1,12 @@
 <?php
+$radius = ($Menu['data'] ? "and id in('$Menu[data]')" : "and users = '$Menu[id]'");
 if(isset($_GET['data'])){
     $online = array();
     $setData = (empty($_GET['data']) ? "" : " and id = '".Rahmad($_GET['data'])."'");
     $setType = (empty($_GET['type']) ? false : Rahmad($_GET['type']));
-    $routes = $Bsk->View(
+    $routes = $Bsk->Select(
         "nas", "id, identity, nasname, username, password, port, description", 
-        "identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true' ".$setData, "id asc"
+        "identity = '$Menu[identity]' and status = 'true' $radius ".$setData, "id asc"
     );
     $setPPP = ($setType ? array("?service" => $setType) : false);
     $setHSP = ($setType ? ($setType == 1 ? false : array("?address" => $setType)) : false);
@@ -47,7 +48,7 @@ if(isset($_GET['data'])){
 }
 if(isset($_GET['server'])){
     $server = array();
-    $querys = $Bsk->View("nas", "id, description as name", "identity = '$Menu[identity]' and users = '$Menu[id]' ", "id asc");
+    $querys = $Bsk->Select("nas", "id, description as name", "identity = '$Menu[identity]' ".$radius, "id asc");
     foreach ($querys as $hspLists) {
         $server[] = $hspLists;
     }
@@ -61,9 +62,9 @@ if(isset($_POST['delete'])){
     $getUser = Rahmad($_POST['id']);
     $getType = Rahmad($_POST['type']);
     $getRout = Rahmad($_POST['delete']);
-    $raouter = $Bsk->Tampil(
+    $raouter = $Bsk->Show(
         "nas", "nasname, username, password, port", 
-        "id = '$getRout' and identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true'"
+        "id = '$getRout' and identity = '$Menu[identity]' and status = 'true' ".$radius
     );
     $getPort = ($raouter['port'] ? ":".$raouter['port'] : "");
     $pppArray = array("pppoe", "pptp", "sstp", "l2tp", "ovpn");

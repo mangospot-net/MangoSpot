@@ -1,12 +1,9 @@
 function Change() {
     $('#smtp').change(function () {
-        if ($(this).val() == 'ssl') {
-            $('#port').val('465');
-        } else if ($(this).val() == 'tls') {
-            $('#port').val('587');
-        } else {
-            $('#port').val('');
-        }
+        $('#port').val($('#smtp').find('option:selected').data('value'));
+    });
+    $('#imap').change(function () {
+        $('#ports').val($('#imap').find('option:selected').data('value'));
     });
     $('#show_paswd').click(function () {
         $('#pswd').attr('type', $(this).is(":checked") ? 'text' : 'password');
@@ -27,9 +24,54 @@ function Change() {
             });
         }
     });
+    $.ajax({
+        url: "./api/config",
+        headers: {
+            "Api": $.cookie("BSK_API"),
+            "Key": $.cookie("BSK_KEY"),
+            "Accept": "application/json"
+        },
+        method: "GET",
+        dataType: "JSON",
+        data: "service",
+        success: function (service) {
+            $.each(service.data, function (i, val) {
+                $('#command').append('<option value="' + val + '">' + ucword(val) + '</option>');
+            });
+        }
+    });
+    $.ajax({
+        url: "./api/config",
+        headers: {
+            "Api": $.cookie("BSK_API"),
+            "Key": $.cookie("BSK_KEY"),
+            "Accept": "application/json"
+        },
+        method: "GET",
+        dataType: "JSON",
+        data: "docs",
+        success: function (service) {
+            var docs = '';
+            $.each(service.data, function (i, doc) {
+                docs += '<tr>';
+                docs += '<td>' + doc.name + '</td>';
+                docs += '<td>' + doc.info + '</td>';
+                docs += '</tr>';
+            });
+            $('#docs-list').html(docs);
+        }
+    });
 }
 
 function Submit() {
+    var editor = CodeMirror.fromTextArea(document.getElementById("terminal"), {
+        lineNumbers: true,
+        styleActiveLine: true,
+        matchBrackets: true,
+        readOnly: 'nocursor',
+        theme: 'blackboard',
+        mode: 'shell'
+    });
     $('#formCMD').validate({
         errorElement: "span",
         errorClass: 'help-block',
@@ -56,15 +98,19 @@ function Submit() {
                 method: "POST",
                 data: $(form).serialize(),
                 beforeSend: function () {
-                    $('#terminal').empty();
+                    editor.setValue('Loading...');
                     $('button[type=submit]', '#formCMD').attr('disabled', true);
                 },
                 success: function (response) {
-                    $('#terminal').html(response);
+                    editor.setValue(response);
                     $('button[type=submit]', '#formCMD').attr('disabled', false);
                 }
             });
         }
+    });
+    $('button#reset').click(function () {
+        editor.setValue('');
+        $('form.active').trigger('reset');
     });
 }
 
@@ -72,13 +118,86 @@ function Action() {
     $('button#save').click(function () {
         $('form.active').submit();
     });
-    $('button#reset').click(function () {
-        $('form.active').trigger('reset');
+    $('button#check').click(function () {
+        $.ajax({
+            url: "./api/config",
+            headers: {
+                "Api": $.cookie("BSK_API"),
+                "Key": $.cookie("BSK_KEY"),
+                "Accept": "application/json"
+            },
+            method: "POST",
+            data: {
+                'check': true,
+                'email': $('#email').val(),
+                'pswd': $('#pswd').val(),
+                'host': $('#host').val(),
+                'port': $('#port').val()
+            },
+            beforeSend: function () {
+                $('button#check').attr('disabled', true).html('<i class="fa fa-spinner fa-spin"></i>');
+            },
+            success: function (response) {
+                $('#check_info').html(response).fadeIn('slow').removeClass('d-none');
+                setInterval(function () {
+                    $('#check_info').empty().fadeOut('slow').addClass('d-none');
+                }, 5000);
+                $('button#check').attr('disabled', false).html('Test');
+            }
+        });
     });
+}
+
+function Editor() {
+    var delay;
+    var themes = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+        lineNumbers: true,
+        theme: 'blackboard',
+        mode: 'text/html'
+    });
+    $('select#type').change(function () {
+        $.ajax({
+            url: "./api/config",
+            headers: {
+                "Api": $.cookie("BSK_API"),
+                "Key": $.cookie("BSK_KEY"),
+                "Accept": "application/json"
+            },
+            method: "GET",
+            dataType: "JSON",
+            data: {
+                "theme": $(this).val()
+            },
+            beforeSend: function () {
+                themes.setValue('');
+                $('#content').val('');
+            },
+            success: function (edit) {
+                themes.setValue(edit.status ? edit.data.content : '');
+                $('#content').val(edit.status ? edit.data.content : '');
+            }
+        });
+    });
+    themes.on('change', themes => {
+        clearTimeout(delay);
+        $('#content').val(themes.getValue());
+        delay = setTimeout(updatePreview, 300);
+    });
+
+    function updatePreview() {
+        var previewFrame = document.getElementById('preview');
+        var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+        preview.open();
+        preview.write(themes.getValue());
+        preview.close();
+        $('#preview').css('height', previewFrame.contentWindow.document.documentElement.scrollHeight + 'px');
+    }
+    setTimeout(updatePreview, 300);
 }
 (function () {
     'use strict';
     Change();
     Submit();
     Action();
+    Editor();
 })();

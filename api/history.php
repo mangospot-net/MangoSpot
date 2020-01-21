@@ -1,19 +1,16 @@
 <?php
 if(isset($_GET['data'])){
-    $query = DataTable(
-        "radpostauth a inner join radcheck b on a.username = b.username", 
-        "a.id, a.username, a.authdate as date, a.reply", 
-        "a.username is not null and identity = '$Menu[identity]' and users = '$Menu[id]'", 
-        array("a.id", "a.username", "a.reply", "a.authdate")
+    $query = $Bsk->Table(
+        "radpostauth a inner join radcheck b on a.username = b.username left join radusergroup c on a.username = c.username", 
+        "a.id, a.username, c.groupname as profile, a.authdate as date, a.reply", 
+        "a.username is not null and b.identity = '$Menu[identity]' and b.users = '$Menu[id]'", 
+        array("a.id", "a.username", "c.groupname", "a.reply", "a.authdate")
     );
         echo json_encode($query, true);
 }
 if(isset($_POST['delete'])){
-    $count = count($_POST['delete']);
-    for($i = 0; $i < $count; $i++){
-        $Bsk->Hapus("radpostauth", array("id" => Rahmad($_POST['delete'][$i])));
-    }
-    echo json_encode($count ? 
+    $deleteID = $Bsk->Delete("radpostauth", array("id" => Rahmad($_POST['delete'])));
+    echo json_encode($deleteID ? 
 		array("status" => true, "message" => "success", "data" => "Delete data success") : 
 		array("status" => false, "message" => "error", "data" => "Delete data failed!"), true
 	);

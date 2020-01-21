@@ -417,7 +417,7 @@ var emailApp = function () {
 		emailAppTarget.toggleClass('emailapp-sidebar-toggle');
 		return false;
 	});
-	$(document).on("click", "#close_emailapp_sidebar", function (e) {
+	$(document).on("click", ".close-emailapp-sidebar", function (e) {
 		if (width <= 1400) {
 			emailAppTarget.removeClass('emailapp-sidebar-toggle');
 		}

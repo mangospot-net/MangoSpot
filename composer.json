@@ -1,0 +1,16 @@
+{
+    "name": "mangospot/mangospot",
+    "description": "MangoSpot Network & Software House Development",
+    "authors": [{
+        "name": "Basuki Rahmad",
+        "email": "mangospot.net@gmail.com"
+    }],
+    "require": {
+        "php": ">=5.3.0",
+        "phpmailer/phpmailer": "^6.1",
+        "carloswgama/php-onesignal": "^1.0",
+        "claviska/simpleimage": "^3.3",
+        "filipsedivy/php-download-file": "^1.0",
+        "phpoffice/phpspreadsheet": "^1.10"
+    }
+}

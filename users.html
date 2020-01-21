@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+    <link rel="stylesheet" href="vendors/jquery/jquery-ui.theme.min.css" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -90,7 +92,7 @@
         <div class="hk-pg-wrapper">
             <nav class="hk-breadcrumb" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light bg-transparent">
-                    <li class="breadcrumb-item"><a href="#">Hotspot</a></li>
+                    <li class="breadcrumb-item"><a href="#">Radius</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Form Users</li>
                 </ol>
             </nav>
@@ -105,11 +107,11 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <section class="hk-sec-wrapper">
-                            <div class="input-group mb-15">
-                                <div class="btn-group input-group-prepend">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="btn-group input-group-prepend pull-left">
                                     <button aria-expanded="false" data-toggle="dropdown"
-                                        class="btn btn-info dropdown-toggle" type="button">
+                                        class="btn btn-info btn-sm dropdown-toggle" type="button">
                                         <span class="icon-label"><i class="fa fa-plus"></i></span> Add
                                         <span class="caret"></span>
                                     </button>
@@ -120,37 +122,50 @@
                                         <a class="dropdown-item" href="#add-batch" data-toggle="modal">
                                             <i class="fa fa-users"></i> Batch
                                         </a>
-                                        <a class="dropdown-item" href="#add-import" data-toggle="modal">
+                                        <a class="dropdown-item" href="#add-users" data-toggle="modal">
                                             <i class="fa fa-upload"></i> Import
                                         </a>
                                     </div>
                                 </div>
-                                <select class="form-control profiles" id="profile">
-                                    <option value="">-- All Profile --</option>
-                                </select>
+                                <div class="pull-right mt-5">
+                                    <a href="javascript:void(0);" class="refresh-tabel"><i
+                                            class="fa fa-refresh"></i></a>
+                                </div>
                             </div>
-                            <form class="table-wrap" method="POST" id="removed">
-                                <table id="tables" class="table table-hover table-striped dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th width="5%"><input type="checkbox" id="CheckAll"></th>
-                                            <th>Username</th>
-                                            <th>Profile</th>
-                                            <th>Shared</th>
-                                            <th>Rate</th>
-                                            <th>Expired</th>
-                                            <th>Created</th>
-                                            <th>Act</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </form>
-                        </section>
-                        <div class="modal fade" id="add-one" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <select class="form-control profiles" id="profile">
+                                            <option value="">-- All Profile --</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <select class="form-control reseller" id="reseller">
+                                            <option value="">-- All Reseller --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="tables" class="table dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%"><input type="checkbox" id="CheckAll"></th>
+                                                <th>Username</th>
+                                                <th>Profile</th>
+                                                <th>Created</th>
+                                                <th>Description</th>
+                                                <th>Act</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="add-one" aria-hidden="true">
+                            <div class="modal-dialog">
                                 <form class="modal-content" id="form-one" method="POST" action="users">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Form One Users</h5>
+                                        <h5 class="modal-title">Form One</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -158,8 +173,17 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="username">Username <span class="symbol required"></span></label>
-                                            <input type="text" class="form-control" id="username" name="username"
-                                                placeholder="Username" required>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="username" name="username"
+                                                    placeholder="Username" required>
+                                                <div class="input-group-append">
+                                                    <label class="input-group-text">
+                                                        <input type="checkbox" id="checkPPP">&nbsp;PPP
+                                                        <input type="hidden" id="ppp" name="radreply[]">
+                                                        <input type="hidden" name="attribut[]" value="Framed-Protocol">
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="value">Password <span class="symbol required"></span></label>
@@ -168,80 +192,106 @@
                                                     name="radcheck[]" placeholder="Password" required>
                                                 <div class="input-group-append">
                                                     <label class="input-group-text">
-                                                        <input type="checkbox" id="show_paswd">&nbsp;Show
+                                                        <input type="checkbox" id="show_paswd" class="fa check-eye">
                                                     </label>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="attribute[]" value="Cleartext-Password">
                                         </div>
                                         <div class="form-group">
-                                            <label for="groupname">Profile </label>
-                                            <select class="form-control profiles" id="groupname" name="groupname">
+                                            <label for="profiles">Profile </label>
+                                            <select class="form-control profiles" id="profiles" name="groupname">
                                                 <option value="">-- Select Profile --</option>
                                             </select>
                                         </div>
-                                        <div class="row">
-                                            <div class="form-group col-md-4">
-                                                <label for="shared">Shared User </label>
-                                                <input type="number" min="1" class="form-control" id="shared"
-                                                    name="radcheck[]" value="" placeholder="1">
-                                                <input type="hidden" name="attribute[]" value="Simultaneous-Use">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="rate">Rate Limit</label>
-                                                <input type="text" class="form-control noSpaces" id="rate"
-                                                    name="radreply[]" placeholder="512K/1M">
-                                                <input type="hidden" name="attribut[]" value="Mikrotik-Rate-Limit">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="quota">Quota </label>
-                                                <input type="text" class="form-control noSpaces" id="quota"
-                                                    name="radreply[]" placeholder="1MB">
-                                                <input type="hidden" name="attribut[]" value="Mikrotik-Total-Limit">
-                                                <input type="hidden" id="valume" name="radcheck[]">
-                                                <input type="hidden" name="attribute[]" value="Max-Data">
-                                            </div>
-                                        </div>
-                                        <div class="row">
+                                        <div class="row manual">
                                             <div class="form-group col-md-4">
                                                 <label for="period">Access Priod
                                                     <a data-toggle="tooltip" data-placement="top"
                                                         data-original-title="A users can login for the specified period"><i
-                                                            class="fa fa-question-circle"></i></a>
+                                                            class="fa fa-question-circle"></i>
+                                                    </a>
                                                 </label>
-                                                <input type="text" class="form-control noSpaces" id="period"
-                                                    name="radcheck[]" placeholder="1d">
+                                                <input type="number" readonly class="form-control" id="period"
+                                                    name="radcheck[]" placeholder="Access Priod">
                                                 <input type="hidden" name="attribute[]" value="Access-Period">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="time">Every Time
+                                                <label for="time">Many Time
                                                     <a data-toggle="tooltip" data-placement="top"
                                                         data-original-title="A user can login as many times as needed but can be online for the specified time"><i
-                                                            class="fa fa-question-circle"></i></a>
+                                                            class="fa fa-question-circle"></i>
+                                                    </a>
                                                 </label>
-                                                <input type="text" class="form-control noSpaces" id="times"
-                                                    name="radcheck[]" placeholder="2h">
+                                                <input type="number" readonly class="form-control" id="times"
+                                                    name="radcheck[]" placeholder="Many Time">
                                                 <input type="hidden" name="attribute[]" value="Max-All-Session">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="daily">Per Day
                                                     <a data-toggle="tooltip" data-placement="top"
-                                                        data-original-title="A user with User-Name test123 has online time limit of 3 hours per day"><i
-                                                            class="fa fa-question-circle"></i></a>
+                                                        data-original-title="A user with User-Name test123 has online time limit of 3 hours per day">
+                                                        <i class="fa fa-question-circle"></i>
+                                                    </a>
                                                 </label>
-                                                <input type="text" class="form-control noSpaces" id="daily"
-                                                    name="radcheck[]" placeholder="1m">
+                                                <input type="number" readonly class="form-control" id="daily"
+                                                    name="radcheck[]" placeholder="Per Day">
                                                 <input type="hidden" name="attribute[]" value="Max-Daily-Session">
+                                            </div>
+                                        </div>
+                                        <div class="row manual">
+                                            <div class="form-group col-md-4">
+                                                <label for="shared">Shared User
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        data-original-title="Shared user are any resource that uses a single pair of credentials to authenticate multiple users.">
+                                                        <i class="fa fa-question-circle"></i>
+                                                    </a>
+                                                </label>
+                                                <input type="number" min="1" class="form-control" id="shared"
+                                                    name="radcheck[]" value="" placeholder="1">
+                                                <input type="hidden" name="attribute[]" value="Simultaneous-Use">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="rate">Rate Limit
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        data-original-title="1.rx-rate/tx-rate 2.rx-burst-rate/tx-burst-rate 3.rx-burst-threshold/tx-burst-threshold 4.rx-burst-time/tx-burst-time">
+                                                        <i class="fa fa-question-circle"></i>
+                                                    </a>
+                                                </label>
+                                                <input type="text" class="form-control UpperCase" id="rate"
+                                                    name="radreply[]" placeholder="512K/1M 3M/4M 2M/3M 8/8">
+                                                <input type="hidden" name="attribut[]" value="Mikrotik-Rate-Limit">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="quota">Quota Limit
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        data-original-title="(B) Bytes, (KB) KiloBytes, (MB) MegaBytes, (GB) GigaBytes, (TB) TeraBytes">
+                                                        <i class="fa fa-question-circle"></i>
+                                                    </a>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="number" min="0" id="quota_numb" class="form-control"
+                                                        placeholder="1">
+                                                    <input type="hidden" id="quota" name="radreply[]">
+                                                    <input type="hidden" name="attribut[]" value="Mikrotik-Total-Limit">
+                                                    <input type="hidden" id="volume" name="radcheck[]">
+                                                    <input type="hidden" name="attribute[]" value="Max-Data">
+                                                    <div class="input-group-append">
+                                                        <select class="custom-select custom-select-md" id="quota_code">
+                                                            <option value="B">B</option>
+                                                            <option value="KB">KB</option>
+                                                            <option value="MB">MB</option>
+                                                            <option value="GB">GB</option>
+                                                            <option value="TB">TB</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="description">Description</label>
                                             <textarea class="form-control" id="description" name="description"
                                                 placeholder="Description..."></textarea>
-                                        </div>
-                                        <div class="alert alert-info">
-                                            <i class="fa fa-info"></i> Time Code<br /> 1i: (1Minute), 1h: (1Hour),
-                                            1d: (1Day), 1m: (1Month), Default: 1Seconds
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -258,7 +308,7 @@
                             <div class="modal-dialog" role="document">
                                 <form class="modal-content" id="form-batch" method="POST" action="users">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Form Batch Users</h5>
+                                        <h5 class="modal-title">Form Batch</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -268,7 +318,7 @@
                                             <div class="form-group col-md-3">
                                                 <label for="qty">Qty <span class="symbol required"></span></label>
                                                 <input type="number" min="1" class="form-control normal" name="qty"
-                                                    placeholder="Qty" value="3" required>
+                                                    placeholder="Qty" value="5" required>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="mode">Mode </label>
@@ -279,26 +329,27 @@
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label for="length">Length <span class="symbol required"></span></label>
-                                                <input type="number" min="3" max="10" class="form-control" name="length"
-                                                    value="3" required>
+                                                <input type="number" min="4" class="form-control" name="length"
+                                                    value="4" required>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-3">
                                                 <label for="prefix">Prefix </label>
                                                 <input type="text" class="form-control" name="prefix"
                                                     placeholder="Prefix">
                                             </div>
-                                            <div class="form-group col-md-8">
+                                            <div class="form-group col-md-9">
                                                 <label for="charecter">Charecter </label>
                                                 <select class="form-control" name="charecter" required>
                                                     <option value="1">abcd</option>
                                                     <option value="2">ABCD</option>
                                                     <option value="3">aBcD</option>
-                                                    <option value="4">1abc2de</option>
-                                                    <option value="5">1ABC2DE</option>
-                                                    <option value="6">1aBc2dE</option>
-                                                    <option value="7">1#aB3&D</option>
+                                                    <option value="4">1234</option>
+                                                    <option value="5">1abc2de</option>
+                                                    <option value="6">1ABC2DE</option>
+                                                    <option value="7">1aBc2dE</option>
+                                                    <option value="8">1#aB3&D</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -325,32 +376,16 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="modal fade" id="add-import" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal fade" id="add-users" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                                <form class="modal-content" id="FormImport" method="POST" action="users">
+                                <form class="modal-content" id="import-users" method="POST" action="users">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Form Import Users</h5>
+                                        <h5 class="modal-title">Form Import</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="username">File Excel <span
-                                                    class="symbol required"></span></label>
-                                            <div class="custom-file">
-                                                <input type="file" name="file" class="custom-file-input"
-                                                    id="validatedCustomFile" required>
-                                                <label class="custom-file-label" for="validatedCustomFile">Choose
-                                                    file...</label>
-                                                <div class="invalid-feedback">Example invalid custom file feedback</div>
-                                            </div>
-                                            <div class="progress progress-sm bar" style="display: none;" align="center">
-                                                <div class="progress-bar" id="progress" role="progressbar"
-                                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-                                                    style="width: 0%;"></div>
-                                            </div>
-                                        </div>
                                         <div class="form-group">
                                             <label for="groupname">Profile </label>
                                             <select class="form-control profiles" name="groupname">
@@ -358,22 +393,45 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label for="groupname">
+                                                File <small class="text-red">.xls</small>
+                                                <span class="symbol required"></span>
+                                            </label>
+                                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                                <div class="form-control text-truncate" data-trigger="fileinput">
+                                                    <i class="fa fa-file fileinput-exists"></i>
+                                                    <span class="fileinput-filename"></span>
+                                                </div>
+                                                <span class="input-group-append">
+                                                    <span class=" btn btn-primary btn-file">
+                                                        <span class="fileinput-new">Select file</span>
+                                                        <span class="fileinput-exists">Change</span>
+                                                        <input type="file" name="file" required>
+                                                    </span>
+                                                    <a href="#" class="btn btn-danger fileinput-exists"
+                                                        data-dismiss="fileinput">Remove</a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="description">Description</label>
                                             <textarea class="form-control" name="description"
                                                 placeholder="Description..."></textarea>
                                         </div>
-                                        <div class="alert alert-warning">
-                                            <i class="fa fa-info"></i> Pastikan format file (.xls)
-                                        </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="hidden" id="timer" name="created" value="">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
-                                                class="fa fa-close"></i>
-                                            Close</button>
-                                        <button type="submit" name="import" value="true" class="btn btn-blue"> <i
-                                                class="fa fa-upload"></i>
-                                            Upload</button>
+                                        <div class="mr-auto">
+                                            <a href="dist/file/users.xls" class="btn btn-info">
+                                                <i class="fa fa-download"></i> Format
+                                            </a>
+                                            <input type="hidden" id="timer" name="created" value="">
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            <i class="fa fa-close"></i> Close
+                                        </button>
+                                        <button type="submit" name="import" value="true" class="btn btn-blue">
+                                            <i class="fa fa-upload"></i> Upload
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -414,6 +472,7 @@
         </div>
     </div>
     <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/jquery/jquery-ui.min.js"></script>
     <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
@@ -423,15 +482,17 @@
     <script src="vendors/datatables/js/buttons.bootstrap4.min.js"></script>
     <script src="vendors/datatables/js/dataTables.responsive.min.js"></script>
     <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
+    <script src="vendors/durationpicker/duration-picker.min.js"></script>
+    <script src="vendors/jasny-bootstrap/jasny-bootstrap.min.js"></script>
     <script src="vendors/validation/jquery.validate.min.js"></script>
     <script src="vendors/validation/additional-methods.min.js"></script>
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="vendors/qr-code/jquery-qrcode.min.js"></script>
     <script src="vendors/moment/moment.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
-    <script src="dist/js/jquery-qrcode.min.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

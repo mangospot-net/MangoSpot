@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title></title>
     <link rel="stylesheet" href="dist/css/style.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="vendors/codemirror/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="vendors/codemirror/blackboard.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -90,7 +93,7 @@
         <div class="hk-pg-wrapper">
             <nav class="hk-breadcrumb" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light bg-transparent">
-                    <li class="breadcrumb-item"><a href="#">Hotspot</a></li>
+                    <li class="breadcrumb-item"><a href="#">Radius</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Users Expired</li>
                 </ol>
             </nav>
@@ -105,37 +108,89 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <section class="hk-sec-wrapper">
-                            <div class="form-group">
-                                <label for="nasname">Profile <span class="symbol required"></span></label>
-                                <select class="form-control" id="profile">
-                                    <option value="">-- All --</option>
-                                </select>
-                            </div>
-                            <form class="table-wrap" method="POST" id="removed">
-                                <table id="tables" width="100%" class="table table-hover table-striped dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th width="5%"><input type="checkbox" id="CheckAll"></th>
-                                            <th>Profile</th>
-                                            <th>Username</th>
-                                            <th>Start</th>
-                                            <th>Expired</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                                <div class="input-group mt-15">
-                                    <input type="hidden" id="price" name="price" value="">
-                                    <div class="btn-group input-group-prepend">
-                                        <button type="submit" id="action" class="btn btn-danger" disabled><i
-                                                class="fa fa-trash"></i>
-                                            Delete</i></button>
-                                    </div>
-                                    <input class="form-control text-right" id="total" disabled>
+                        <form class="card" method="POST" id="removed">
+                            <div class="card-header">
+                                Table Expired
+                                <div class="pull-right mt-5">
+                                    <a href="javascript:void(0);" class="refresh-tabel"><i
+                                            class="fa fa-refresh"></i></a>
                                 </div>
-                            </form>
-                        </section>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="nasname">Profile </label>
+                                        <select class="form-control" id="profile">
+                                            <option value="">-- All --</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="reseller">Reseller <span class="symbol required"></span></label>
+                                        <select class="form-control" name="client" id="reseller" required>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="table-wrap">
+                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%"><input type="checkbox" id="CheckAll"></th>
+                                                <th>Username</th>
+                                                <th>Profile</th>
+                                                <th>Start</th>
+                                                <th>Usage</th>
+                                                <th>Price</th>
+                                                <th>Discount</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <div class="input-group mt-15">
+                                        <input type="hidden" id="price" name="price" value="">
+                                        <input type="hidden" id="discount" name="discount" value="">
+                                        <input type="hidden" id="income" name="income" value="">
+                                        <div class="btn-group input-group-prepend">
+                                            <button type="submit" id="action" class="btn btn-danger" disabled><i
+                                                    class="fa fa-trash"></i>
+                                                Delete</i></button>
+                                        </div>
+                                        <input class="form-control text-right" id="count" placeholder="Price" readonly>
+                                        <input class="form-control text-right" id="piece" placeholder="Discount"
+                                            readonly>
+                                        <input class="form-control text-right" id="total" placeholder="Total" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal fade" id="add-data" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Script Code</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <select id="code" class="form-control">
+                                            <option value="">-- Select Code --</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea id="code-editor"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="mr-auto">
+                                    </div>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                            class="fa fa-close"></i>
+                                        Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,13 +202,20 @@
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
     <script src="vendors/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.dataTables.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.buttons.min.js"></script>
+    <script src="vendors/datatables/js/buttons.bootstrap4.min.js"></script>
+    <script src="vendors/datatables/js/buttons.print.min.js"></script>
     <script src="vendors/datatables/js/dataTables.responsive.min.js"></script>
     <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
+    <script src="vendors/codemirror/codemirror.js"></script>
+    <script src="vendors/codemirror/mode/meta.js"></script>
+    <script src="vendors/codemirror/addon/mode/loadmode.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

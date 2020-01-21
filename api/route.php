@@ -7,7 +7,7 @@ function Replace($data){
 if(isset($_GET['data'])){
     $online = array();
     $setData = (empty($_GET['data']) ? "" : " and id = '".Rahmad($_GET['data'])."'");
-    $routes = $Bsk->View(
+    $routes = $Bsk->Select(
         "nas", "id, identity, nasname, username, password, port, description", 
         "identity = '$Menu[identity]' and status = 'true' $radius ".$setData, "id asc"
     );
@@ -16,14 +16,15 @@ if(isset($_GET['data'])){
         if ($Router->connect($trafic['nasname'].$ports, $trafic['username'], $Auth->decrypt($trafic['password'], 'BSK-RAHMAD'))) {
             $IPAddr = $Router->comm("/ip/route/print");
             foreach ($IPAddr as $IPList) {
-                if(!$IPList['dynamic']){
+                $test[] =$IPList;
+                if(!isset($IPList['dynamic'])){
                     $online[] = array(
                         "identity"  => $trafic['id'],
                         "router"    => $trafic['description'],
                         "address"   => $IPList['dst-address'],
                         "gateway"   => $IPList['gateway'],
                         "distance"  => $IPList['distance'],
-                        "mark"      => $IPList['routing-mark'],
+                        "mark"      => (isset($IPList['routing-mark']) ? $IPList['routing-mark'] : ''),
                         "status"    => $IPList['disabled'],
                         "id"        => $IPList['.id']
                     );
@@ -33,6 +34,7 @@ if(isset($_GET['data'])){
     }
     $Router->disconnect();
     $json_data = array(
+        "te"    => $test,
 		"draw"            => 1,
 		"recordsTotal"    => count($online),
 		"recordsFiltered" => count($online),
@@ -42,7 +44,7 @@ if(isset($_GET['data'])){
 }
 if(isset($_GET['server'])){
     $server = array();
-    $querys = $Bsk->View("nas", "id, description as name", "identity = '$Menu[identity]' ".$radius, "id asc");
+    $querys = $Bsk->Select("nas", "id, description as name", "identity = '$Menu[identity]' ".$radius, "id asc");
     foreach ($querys as $hspLists) {
         $server[] = $hspLists;
     }
@@ -55,7 +57,7 @@ if(isset($_GET['router'])){
     $route = array();
     $infac = array();
     $mikro = Rahmad($_GET['router']);
-    $chang = $Bsk->Tampil("nas", "nasname, username, password, port", "id = '$mikro' and identity = '$Menu[identity]' ".$radius);
+    $chang = $Bsk->Show("nas", "nasname, username, password, port", "id = '$mikro' and identity = '$Menu[identity]' ".$radius);
     $port1 = ($chang['port'] ? ":".$chang['port'] : "");
     if ($Router->connect($chang['nasname'].$port1, $chang['username'], $Auth->decrypt($chang['password'], 'BSK-RAHMAD'))) {
         $RoutLust = $Router->comm('/ip/firewall/mangle/print', array('?action' => 'mark-routing'));
@@ -75,7 +77,7 @@ if(isset($_GET['router'])){
 }
 if(isset($_GET['detail'])){
     $id_detail = explode('*', $_GET['detail']);
-    $query_detail = $Bsk->Tampil("nas", "id, nasname, username, password, port", "id = '$id_detail[0]' and identity = '$Menu[identity]' ".$radius);
+    $query_detail = $Bsk->Show("nas", "id, nasname, username, password, port", "id = '$id_detail[0]' and identity = '$Menu[identity]' ".$radius);
     $showPort = ($query_detail['port'] ? ":".$query_detail['port'] : "");
     if ($Router->connect($query_detail['nasname'].$showPort, $query_detail['username'], $Auth->decrypt($query_detail['password'], 'BSK-RAHMAD'))) {
         $RoutShow = $Router->comm('/ip/route/print', array("?.id"=> '*'.$id_detail[1]));
@@ -105,7 +107,7 @@ if(isset($_POST['gateway'])){
     foreach ($ps_unset as $key) {
         unset($_POST[$key]);
     }
-    $ip_route = $Bsk->Tampil("nas", "id, nasname, username, password, port", "id = '$id_posts' and identity = '$Menu[identity]' ".$radius);
+    $ip_route = $Bsk->Show("nas", "id, nasname, username, password, port", "id = '$id_posts' and identity = '$Menu[identity]' ".$radius);
     $ip_ports = ($ip_route['port'] ? ":".$ip_route['port'] : "");
     if ($Router->connect($ip_route['nasname'].$ip_ports, $ip_route['username'], $Auth->decrypt($ip_route['password'], 'BSK-RAHMAD'))) {
         $ip_query = array_merge($_POST, array('disabled' => $disabled));
@@ -123,7 +125,7 @@ if(isset($_POST['gateway'])){
 }
 if(isset($_POST['active'])){
     $id_active = explode('*', $_POST['active']);
-    $check_active = $Bsk->Tampil("nas", "id, nasname, username, password, port", "id = '$id_active[0]' and identity = '$Menu[identity]' ".$radius);
+    $check_active = $Bsk->Show("nas", "id, nasname, username, password, port", "id = '$id_active[0]' and identity = '$Menu[identity]' ".$radius);
     $stausPort = ($check_active['port'] ? ":".$check_active['port'] : "");
     if ($Router->connect($check_active['nasname'].$stausPort, $check_active['username'], $Auth->decrypt($check_active['password'], 'BSK-RAHMAD'))) {
         $prints = $Router->comm('/ip/route/print', array("?.id"=> '*'.$id_active[1]));
@@ -141,7 +143,7 @@ if(isset($_POST['active'])){
 if(isset($_POST['delete'])){
     $remove = false;
     $getRout = explode('*', $_POST['delete']);
-    $raouter = $Bsk->Tampil(
+    $raouter = $Bsk->Show(
         "nas", "nasname, username, password, port", 
         "id = '$getRout[0]' and identity = '$Menu[identity]' and status = 'true' ".$radius
     );

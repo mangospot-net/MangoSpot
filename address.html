@@ -7,6 +7,7 @@
     <title></title>
     <link rel="stylesheet" href="dist/css/style.css" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -107,20 +108,22 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <a href="#add-data" class="btn btn-info" data-toggle="modal" data-value="0">
-                                            <i class="fa fa-plus"></i>
-                                            <span class="hidden-xs">Add</span>
-                                        </a>
-                                    </div>
+                                <a href="#add-data" class="btn btn-info btn-sm" data-toggle="modal" data-value="0">
+                                    <i class="fa fa-plus"></i>
+                                    <span class="hidden-xs">Add</span>
+                                </a>
+                                <div class="pull-right mt-5">
+                                    <a href="javascript:void(0);" class="refresh-tabel"><i
+                                            class="fa fa-refresh"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
                                     <select class="form-control" id="server">
                                         <option value="">-- All Router --</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-wrap mt-15">
+                                <div class="table-responsive mt-15">
                                     <table id="tables" width="100%" class="table table-hover table-striped dataTable">
                                         <thead>
                                             <tr>
@@ -204,8 +207,8 @@
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

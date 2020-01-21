@@ -15,6 +15,22 @@ function Select() {
             });
         }
     });
+    $.ajax({
+        url: "./api/level",
+        headers: {
+            "Api": $.cookie("BSK_API"),
+            "Key": $.cookie("BSK_KEY"),
+            "Accept": "application/json"
+        },
+        method: "GET",
+        dataType: "JSON",
+        data: "radius",
+        success: function (radius) {
+            $.each(radius.data, function (i, nas) {
+                $('#data').append('<option value="' + nas.id + '">' + nas.name + '</option>');
+            });
+        }
+    });
 };
 
 function Tables() {
@@ -36,6 +52,9 @@ function Tables() {
             },
             {
                 "data": "value",
+            },
+            {
+                "data": "data"
             },
             {
                 "data": "id",
@@ -101,6 +120,7 @@ function Action() {
                         $('#' + i).val(show);
                     });
                     $('#value').val(detail.data.value.split(",")).select2();
+                    $('#data').val(detail.data.data.split(",")).select2();
                     $('#status').bootstrapToggle(detail.data.status ? 'on' : 'off');
                 }
             }

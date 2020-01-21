@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="dist/css/style.css" type="text/css" />
     <link rel="stylesheet" href="vendors/daterangepicker/daterangepicker.css" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -106,34 +107,108 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <section class="hk-sec-wrapper">
-                            <div class="form-group">
-                                <input class="form-control" type="text" id="daterange" value="" />
+                        <div class="card">
+                            <div class="card-header">
+                                Payment Report
+                                <div class="pull-right">
+                                    <a href="javascript:void(0);" class="refresh-tabel">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="table-wrap">
-                                <table id="tables" width="100%" class="table table-hover table-striped dataTable">
-                                    <thead>
-                                        <tr>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" id="daterange" value="" />
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Users</th>
+                                                <th>Price</th>
+                                                <th>Discount</th>
+                                                <th>Income</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <td>Total:</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-right"></td>
+                                                <td class="text-right"></td>
+                                                <td class="text-right"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Average:</td>
+                                                <td class="text-center avg_1"></td>
+                                                <td class="text-right avg_2"></td>
+                                                <td class="text-right avg_3"></td>
+                                                <td class="text-right avg_4"></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                Payment Chart
+                                <div class="pull-right">
+                                    <a href="javascript:void(0);" class="refresh-chart">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body" id="data-chart"></div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="show-data" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title detail_date"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body table-responsive pa-0" id="print-content">
+                                    <table class="table" width="100%" class="table table-bordered table-striped">
+                                        <thead>
+                                            <th>No</th>
+                                            <th>Username</th>
+                                            <th>Profiles</th>
                                             <th>Date</th>
-                                            <th>Voucher</th>
                                             <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Total:</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>Average:</th>
-                                            <th class="avg_1"></th>
-                                            <th class="avg_2"></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                            <th>Discount</th>
+                                            <th>Income</th>
+                                        </thead>
+                                        <tbody id="detail-data"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="4">Total <span class="detail_date"></span></td>
+                                                <td class="detail_price" align="right"></td>
+                                                <td class="detail_discount" align="right"></td>
+                                                <td class="detail_income" align="right"></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="modal-footer pa-5">
+                                    <div class="mr-auto"></div>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        <i class="fa fa-close"></i>
+                                        Close
+                                    </button>
+                                    <button type="button" class="btn btn-blue print" value="print-content">
+                                        <i class="fa fa-print"></i>
+                                        Print
+                                    </button>
+                                </div>
                             </div>
-                        </section>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -145,15 +220,20 @@
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
     <script src="vendors/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.dataTables.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.buttons.min.js"></script>
+    <script src="vendors/datatables/js/buttons.bootstrap4.min.js"></script>
+    <script src="vendors/datatables/js/buttons.print.min.js"></script>
     <script src="vendors/datatables/js/dataTables.responsive.min.js"></script>
-    <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
     <script src="vendors/moment/moment.js"></script>
+    <script src="vendors/highcharts/highcharts.js"></script>
+    <script src="vendors/highcharts/modules/exporting.js"></script>
     <script src="vendors/daterangepicker/daterangepicker.js"></script>
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

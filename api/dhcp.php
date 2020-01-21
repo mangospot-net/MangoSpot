@@ -9,7 +9,7 @@ if(isset($_GET['data'])){
     $client = array();
     $setData = (empty($_GET['data']) ? "" : " and id = '".Rahmad($_GET['data'])."'");
     $setType = Rahmad($_GET['type']);
-    $routes = $Bsk->View(
+    $routes = $Bsk->Select(
         "nas", "id, identity, nasname, username, password, port, description", 
         "identity = '$Menu[identity]' and status = 'true' $radius ".$setData, "id asc"
     );
@@ -61,7 +61,7 @@ if(isset($_GET['data'])){
 }
 if(isset($_GET['server'])){
     $server = array();
-    $querys = $Bsk->View("nas", "id, description as name", "identity = '$Menu[identity]' ".$radius, "id asc");
+    $querys = $Bsk->Select("nas", "id, description as name", "identity = '$Menu[identity]' ".$radius, "id asc");
     foreach ($querys as $hspLists) {
         $server[] = $hspLists;
     }
@@ -74,7 +74,7 @@ if(isset($_GET['router'])){
     $route = array();
     $infac = array();
     $mikro = Rahmad($_GET['router']);
-    $chang = $Bsk->Tampil("nas", "nasname, username, password, port", "id = '$mikro' and identity = '$Menu[identity]' ".$radius);
+    $chang = $Bsk->Show("nas", "nasname, username, password, port", "id = '$mikro' and identity = '$Menu[identity]' ".$radius);
     $port1 = ($chang['port'] ? ":".$chang['port'] : "");
     if ($Router->connect($chang['nasname'].$port1, $chang['username'], $Auth->decrypt($chang['password'], 'BSK-RAHMAD'))) {
         $RoutLust = $Router->comm('/ip/pool/print');
@@ -98,7 +98,7 @@ if(isset($_GET['router'])){
 if(isset($_GET['detail'])){
     $id_detail = explode('*', $_GET['detail']);
     $id_type = Rahmad($_GET['type']);
-    $query_detail = $Bsk->Tampil("nas", "id, nasname, username, password, port", "id = '$id_detail[0]' and identity = '$Menu[identity]' ".$radius);
+    $query_detail = $Bsk->Show("nas", "id, nasname, username, password, port", "id = '$id_detail[0]' and identity = '$Menu[identity]' ".$radius);
     $showPort = ($query_detail['port'] ? ":".$query_detail['port'] : "");
     if ($Router->connect($query_detail['nasname'].$showPort, $query_detail['username'], $Auth->decrypt($query_detail['password'], 'BSK-RAHMAD'))) {
         $DHCPServer = $Router->comm('/ip/dhcp-server/print', array("?.id"=> '*'.$id_detail[1]));
@@ -131,7 +131,7 @@ if(isset($_GET['detail'])){
 }
 if(isset($_GET['dns'])){
     $dns_router = Rahmad($_GET['dns']);
-    $dns_detail = $Bsk->Tampil("nas", "id, nasname, username, password, port", "id = '$dns_router' and identity = '$Menu[identity]' ".$radius);
+    $dns_detail = $Bsk->Show("nas", "id, nasname, username, password, port", "id = '$dns_router' and identity = '$Menu[identity]' ".$radius);
     $dns_port = ($dns_detail['port'] ? ":".$dns_detail['port'] : "");
     if ($Router->connect($dns_detail['nasname'].$dns_port, $dns_detail['username'], $Auth->decrypt($dns_detail['password'], 'BSK-RAHMAD'))) {
         $DNSServer = $Router->comm('/ip/dns/print');
@@ -161,7 +161,7 @@ if(isset($_POST['name'])){
     foreach ($ps_unset as $key) {
         unset($_POST[$key]);
     }
-    $ip_route = $Bsk->Tampil("nas", "id, nasname, username, password, port", "id = '$id_posts' and identity = '$Menu[identity]' ".$radius);
+    $ip_route = $Bsk->Show("nas", "id, nasname, username, password, port", "id = '$id_posts' and identity = '$Menu[identity]' ".$radius);
     $ip_ports = ($ip_route['port'] ? ":".$ip_route['port'] : "");
     if ($Router->connect($ip_route['nasname'].$ip_ports, $ip_route['username'], $Auth->decrypt($ip_route['password'], 'BSK-RAHMAD'))) {
         $ip_query = array_merge($_POST, array('disabled' => $disabled));
@@ -187,7 +187,7 @@ if(isset($_POST['client'])){
     foreach ($ps_unsets as $keys) {
         unset($_POST[$keys]);
     }
-    $ip_routes = $Bsk->Tampil("nas", "id, nasname, username, password, port", "id = '$id_client' and identity = '$Menu[identity]' ".$radius);
+    $ip_routes = $Bsk->Show("nas", "id, nasname, username, password, port", "id = '$id_client' and identity = '$Menu[identity]' ".$radius);
     $ip_client = ($ip_routes['port'] ? ":".$ip_routes['port'] : "");
     if ($Router->connect($ip_routes['nasname'].$ip_client, $ip_routes['username'], $Auth->decrypt($ip_routes['password'], 'BSK-RAHMAD'))) {
         $cl_query = array_merge($_POST, 
@@ -216,7 +216,7 @@ if(isset($_POST['dns-server'])){
     foreach ($hd_dns as $hide) {
         unset($_POST[$hide]);
     }
-    $ip_dns = $Bsk->Tampil("nas", "id, nasname, username, password, port", "id = '$id_dns' and identity = '$Menu[identity]' ".$radius);
+    $ip_dns = $Bsk->Show("nas", "id, nasname, username, password, port", "id = '$id_dns' and identity = '$Menu[identity]' ".$radius);
     $po_dns = ($ip_dns['port'] ? ":".$ip_dns['port'] : "");
     if ($Router->connect($ip_dns['nasname'].$po_dns, $ip_dns['username'], $Auth->decrypt($ip_dns['password'], 'BSK-RAHMAD'))) {
         $Router->comm('/ip/dns/set', array_merge($_POST, array("allow-remote-requests" => $remote)));
@@ -230,7 +230,7 @@ if(isset($_POST['dns-server'])){
 if(isset($_POST['active'])){
     $id_active = explode('*', $_POST['active']);
     $tp_active = ($id_active[2] == 'server' ? 'dhcp-server' : 'dhcp-client');
-    $check_active = $Bsk->Tampil("nas", "id, nasname, username, password, port", "id = '$id_active[0]' and identity = '$Menu[identity]' ".$radius);
+    $check_active = $Bsk->Show("nas", "id, nasname, username, password, port", "id = '$id_active[0]' and identity = '$Menu[identity]' ".$radius);
     $stausPort = ($check_active['port'] ? ":".$check_active['port'] : "");
     if ($Router->connect($check_active['nasname'].$stausPort, $check_active['username'], $Auth->decrypt($check_active['password'], 'BSK-RAHMAD'))) {
         $prints = $Router->comm('/ip/'.$tp_active.'/print', array("?.id"=> '*'.$id_active[1]));
@@ -249,7 +249,7 @@ if(isset($_POST['delete'])){
     $remove = false;
     $getRout = explode('*', $_POST['delete']);
     $tp_rmv = ($getRout[2] == 'server' ? 'dhcp-server' : 'dhcp-client');
-    $raouter = $Bsk->Tampil(
+    $raouter = $Bsk->Show(
         "nas", "nasname, username, password, port", 
         "id = '$getRout[0]' and identity = '$Menu[identity]' and status = 'true' ".$radius
     );

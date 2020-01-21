@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="dist/css/style.css">
     <link rel="stylesheet" type="text/css" href="vendors/morris.js/morris.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -198,7 +199,7 @@
                                         <div class="loader-pendulums"></div>
                                     </div>
                                     <div class="card-header card-header-action">
-                                        <h6><i class="fa fa-history"></i> Log</h6>
+                                        <h6><i class="fa fa-history"></i> Radius Log</h6>
                                         <div class="d-flex align-items-center card-action-wrap">
                                             <a href="#" class="inline-block refresh">
                                                 <i class="ion ion-md-radio-button-off"></i>
@@ -224,7 +225,7 @@
                                         <div class="loader-pendulums"></div>
                                     </div>
                                     <div class="card-header card-header-action">
-                                        <h6><i class="fa fa-bar-chart"></i> Traffic CPU</h6>
+                                        <h6><i class="fa fa-bar-chart"></i> MikroTik CPU</h6>
                                         <div class="d-flex align-items-center card-action-wrap">
                                             <a href="#" class="inline-block refresh">
                                                 <i class="ion ion-md-radio-button-off"></i>
@@ -262,7 +263,7 @@
                                         <div class="loader-pendulums"></div>
                                     </div>
                                     <div class="card-header card-header-action">
-                                        <h6><i class="fa fa-signal"></i> Traffic TX</h6>
+                                        <h6><i class="fa fa-signal"></i> MikroTik TX</h6>
                                         <div class="d-flex align-items-center card-action-wrap">
                                             <a href="#" class="inline-block refresh">
                                                 <i class="ion ion-md-radio-button-off"></i>
@@ -280,7 +281,7 @@
                                         <div class="loader-pendulums"></div>
                                     </div>
                                     <div class="card-header card-header-action">
-                                        <h6><i class="fa fa-signal"></i> Traffic RX</h6>
+                                        <h6><i class="fa fa-signal"></i> MikroTik RX</h6>
                                         <div class="d-flex align-items-center card-action-wrap">
                                             <a href="#" class="inline-block refresh">
                                                 <i class="ion ion-md-radio-button-off"></i>
@@ -289,6 +290,62 @@
                                     </div>
                                     <div class="card-body pa-0">
                                         <div id="trafik-rx" class="h-300p"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hk-row">
+                            <div class="col-lg-12">
+                                <div class="card card-refresh">
+                                    <div class="refresh-container">
+                                        <div class="loader-pendulums"></div>
+                                    </div>
+                                    <div class="card-header card-header-action">
+                                        <h6><i class="fa fa-tachometer"></i> System Information </h6>
+                                        <div class="d-flex align-items-center card-action-wrap">
+                                            <a href="#" class="inline-block refresh">
+                                                <i class="ion ion-md-radio-button-off"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body row pb-0">
+                                        <div class="col-md-4">
+                                            <div id="server-cpu" class="pichart">
+                                                <span class="percent"></span>
+                                                <span class="label">CPU</span>
+                                            </div>
+                                            <div class="cpu_title ma-10 text-center"></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div id="server-ram" class="pichart">
+                                                <span class="percent"></span>
+                                                <span class="label">RAM</span>
+                                            </div>
+                                            <div class="ram_title ma-10 text-center"></div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div id="server-disk" class="pichart">
+                                                <span class="percent"></span>
+                                                <span class="label">DISK</span>
+                                            </div>
+                                            <div class="disk_title ma-10 text-center"></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body row pt-0">
+                                        <div class="col-md-4">
+                                            <pre class="cpu_output info h-200p"></pre>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <pre class="ram_output info h-200p"></pre>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <pre class="disk_output info h-200p"></pre>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer pa-0" style="display: block;">
+                                        <div class="progress-wrap">
+                                            <div class="progress progress-bar-xl" id="temp_server"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -305,8 +362,9 @@
         <script src="vendors/echarts/echarts-en.min.js"></script>
         <script src="vendors/moment/moment.js"></script>
         <script src="vendors/highcharts/highcharts.js"></script>
-        <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-        <script src="dist/js/jquery.slimscroll.js"></script>
+        <script src="vendors/piechart/jquery.easypiechart.min.js"></script>
+        <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+        <script src="vendors/bootstrap/dropdown-extended.js"></script>
         <script src="dist/js/feather.min.js"></script>
         <script src="dist/js/controls.js"></script>
         <script src="dist/js/init.js"></script>

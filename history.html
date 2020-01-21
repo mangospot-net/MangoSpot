@@ -7,6 +7,7 @@
     <title></title>
     <link rel="stylesheet" href="dist/css/style.css" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -105,29 +106,30 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <section class="hk-sec-wrapper">
-                            <button class="btn btn-danger" id="deleteAll">
-                                <i class="fa fa-trash"></i>
-                                <span class="hidden-xs">Clear History</span>
-                            </button>
-                            <form class="table-wrap mt-15" method="POST" id="removed">
-                                <table id="tables" width="100%" class="table table-hover table-striped dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th width="5%"><input type="checkbox" id="CheckAll"></th>
-                                            <th>Username</th>
-                                            <th>Info</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                                <div class="form-group mt-15">
-                                    <button type="submit" id="action" class="btn btn-danger" disabled><i
-                                            class="fa fa-trash"></i>
-                                        Delete</i></button>
+                        <div class="card">
+                            <div class="card-header">
+                                History
+                                <div class="pull-right">
+                                    <a href="javascript:void(0);" class="refresh-tabel"><i
+                                            class="fa fa-refresh"></i></a>
                                 </div>
-                            </form>
-                        </section>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%"><input type="checkbox" id="CheckAll"></th>
+                                                <th>Username</th>
+                                                <th>Profile</th>
+                                                <th>Info</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,13 +141,16 @@
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
     <script src="vendors/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.dataTables.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.buttons.min.js"></script>
+    <script src="vendors/datatables/js/buttons.bootstrap4.min.js"></script>
     <script src="vendors/datatables/js/dataTables.responsive.min.js"></script>
     <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

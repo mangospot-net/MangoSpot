@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+    <link rel="stylesheet" type="text/css" href="vendors/codemirror/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="vendors/codemirror/blackboard.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -120,9 +123,18 @@
                                         required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="type">Name <span class="symbol required"></span></label>
-                                    <textarea class="form-control" rows="10" id="content" name="content"
-                                        placeholder="Insert Text HTML" required></textarea>
+                                    <label for="type">Script <span class="symbol required"></span></label>
+                                    <button type="button" data-toggle="modal" data-target="#data-docs"
+                                        class="btn btn-info btn-sm float-right">
+                                        <i class="fa fa-book"></i> Docs
+                                    </button>
+                                    <textarea id="code-editor"></textarea>
+                                </div>
+                                <div style="display: none">
+                                    <textarea class="form-control" id="content" name="content" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <iframe id="preview" style="width: 100%"></iframe>
                                 </div>
                             </div>
                             <div class="card-footer text-muted">
@@ -135,6 +147,29 @@
                             </div>
                         </form>
                     </div>
+                    <div class="modal fade" id="data-docs" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Documentation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body pa-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%">
+                                            <thead>
+                                                <th>Code</th>
+                                                <th>Value</th>
+                                            </thead>
+                                            <tbody id="docs-list"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="hk-footer-wrap container" data-include="menu/footer.html"></div>
@@ -146,9 +181,14 @@
     <script src="vendors/validation/jquery.validate.min.js"></script>
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/codemirror/codemirror.js"></script>
+    <script src="vendors/codemirror/mode/xml/xml.js"> </script>
+    <script src="vendors/codemirror/mode/css/css.js"> </script>
+    <script src="vendors/codemirror/mode/javascript/javascript.js"> </script>
+    <script src="vendors/codemirror/mode/htmlmixed/htmlmixed.js"> </script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>
