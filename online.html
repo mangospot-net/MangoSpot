@@ -7,6 +7,7 @@
     <title></title>
     <link rel="stylesheet" href="dist/css/style.css" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -112,11 +113,13 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
+                                        <label for="server">Radius</label>
                                         <select class="form-control" id="server">
                                             <option value="">-- All Radius --</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label for="service">Service</label>
                                         <select class="form-control" id="service">
                                             <option value="">-- All Service --</option>
                                             <option value="1">Hotspot</option>
@@ -128,7 +131,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="table-wrap mt-15">
+                                <div class="table-responsive mt-15">
                                     <table id="tables" width="100%" class="table table-hover table-striped dataTable">
                                         <thead>
                                             <tr>
@@ -159,8 +162,8 @@
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

@@ -1,4 +1,4 @@
-# MangoSpot Radius Server
+# MangoSpot Radius Server v1.0.1
 1. Install Webserver Apache, PHP, PostgreSQL or MariaDB (MySQL)
 2. Install FreeRadius
 3. Enable sqlcounter (accessperiod & quotalimit) [MySQL](https://github.com/mangospot-net/MangoSpot/tree/master/SQL/sqlcounter-mysql) / [PostgreSQL](https://github.com/mangospot-net/MangoSpot/tree/master/SQL/sqlcounter-postgresql)

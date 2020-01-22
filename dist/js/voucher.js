@@ -72,6 +72,7 @@ function Tables(params) {
         "columns": [{
                 "data": "id",
                 "orderable": false,
+                "className": 'text-center',
                 render: function (data, type, row) {
                     return '<input type="checkbox" name="remove[]" value="' + row.id + '">';
                 }
@@ -121,16 +122,17 @@ function Tables(params) {
     });
     new $.fn.dataTable.Buttons(Table, {
         buttons: [{
-            text: '<i class="fa fa-trash-o"></i>',
+            text: '<i class="fa fa-trash"></i>',
+            titleAttr: 'Delete',
+            className: 'btn-danger btn-sm',
             action: function (e, dt, node, config) {
-                if ($('input[name="remove[]"]:checked').length > 0) {
-                    $('#removed').trigger('submit');
-                }
+                Remove();
             }
         }]
     });
     Table.buttons(0, null).container().prependTo($('#tables_wrapper .dataTables_length'));
     $('#tables_wrapper .dataTables_length .btn-secondary').addClass("btn-sm");
+    $('#tables_wrapper .dataTables_length button.btn-danger').removeClass("btn-secondary").attr('disabled', true);
 };
 
 function Themes(data) {
@@ -153,49 +155,43 @@ function Themes(data) {
 }
 
 function Remove() {
-    $('#CheckAll').click(function (e) {
-        var table = $(e.target).closest('table');
-        $('td input:checkbox', table).prop('checked', this.checked);
-    });
-    $('#removed').submit(function (e) {
-        e.preventDefault();
-        var forms = $(this).serialize();
-        var totsl = $('input[name="remove[]"]:checked').length;
-        swal({
-            title: "Are you sure!",
-            text: "Delete permanent this (" + totsl + ") data?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "Cancel",
-            showLoaderOnConfirm: true,
-            closeOnConfirm: false,
-            closeOnCancel: true
-        }, function (isConfirm) {
-            if (isConfirm) {
+    var totsl = $('input[name="remove[]"]:checked').length;
+    swal({
+        title: "Are you sure!",
+        text: "Delete permanent this (" + totsl + ") data?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "Cancel",
+        showLoaderOnConfirm: true,
+        closeOnConfirm: false,
+        closeOnCancel: true
+    }, function (isConfirm) {
+        if (isConfirm) {
+            $('input[name="remove[]"]:checked').each(function () {
                 $.ajax({
-                    url: "./api/voucher",
                     headers: {
                         "Api": $.cookie("BSK_API"),
                         "Key": $.cookie("BSK_KEY"),
                         "Accept": "application/json"
                     },
+                    url: "./api/voucher",
                     method: "POST",
-                    dataType: "JSON",
-                    data: forms,
-                    success: function (remove) {
-                        $('#CheckAll').prop('checked', false);
-                        $('.dataTable').DataTable().ajax.reload();
-                        swal({
-                            title: "Delete!",
-                            text: remove.data,
-                            timer: 2000,
-                            type: 'success'
-                        });
+                    data: {
+                        'delete': $(this).val()
                     }
                 });
-            }
-        });
+            });
+            swal({
+                title: "Delete!",
+                text: "Delete data success",
+                timer: 2000,
+                type: 'success'
+            });
+            $('#CheckAll').prop('checked', false);
+            $('.dataTable').DataTable().ajax.reload();
+            $('#tables_wrapper .dataTables_length button.btn-danger').attr('disabled', true);
+        }
     });
 };
 
@@ -219,26 +215,14 @@ function Prints(data, type, theme) {
         },
         success: function (prints) {
             var theme = '';
-            var numbs = 0;
-            $.each(prints.data, function (e, params) {
-                theme += prints.themes.content;
+            $.each(prints.print, function (e, params) {
+                theme += params;
             });
-            $('#print-content').html(theme);
-            $.each(prints.data, function (i, param) {
-                numbs++;
-                $('#print-content').html(function (index, html) {
-                    return html
-                        .replace('[NO]', numbs)
-                        .replace('[identity]', param.identity)
-                        .replace('[profile]', param.profile ? param.profile : '')
-                        .replace('[username]', param.username)
-                        .replace('[password]', param.password)
-                        .replace('[price]', param.price)
-                        .replace('[QR-Code]', '<div class="qr-' + param.username + '" data-text="' + param.url + '/login?username=' + param.username + '&password=' + param.password + '"></div>');
-                }).find('.qr-' + param.username).qrcode({
+            $('#print-content').html(theme).find('.qr-code').each(function (i, val) {
+                $(this).qrcode({
                     render: "image",
                     size: 75,
-                    text: $('.qr-' + param.username).data('text')
+                    text: $(this).data('code')
                 });
             });
         }
@@ -248,6 +232,14 @@ function Prints(data, type, theme) {
 function Action(params) {
     $('body').on('click', 'a[href="#add-batch"]', function () {
         $('#create').val(moment().format('YYYY-MM-DD HH:mm:ss'));
+    });
+    $('#CheckAll').click(function (e) {
+        var table = $(e.target).closest('table');
+        $('td input:checkbox', table).prop('checked', this.checked);
+    });
+    $('body').on('click', 'input[type=checkbox]', function () {
+        var check = $('input[name="remove[]"]:checked');
+        $('#tables_wrapper .dataTables_length button.btn-danger').attr('disabled', check.length <= 0 ? true : false);
     });
     $('body').on('click', 'a[href="#print"]', function () {
         $('input#data').val($(this).html());
@@ -286,6 +278,5 @@ function Action(params) {
     Select();
     Packet();
     Tables();
-    Remove();
     Action();
 })();

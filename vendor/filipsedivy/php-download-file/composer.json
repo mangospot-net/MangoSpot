@@ -1,0 +1,26 @@
+{
+	"name": "filipsedivy/php-download-file",
+	"description": "PHP class for download files",
+	"keywords": ["download", "class", "download files"],
+	"license": "MIT",
+	"type": "library",
+	"authors": [
+		{
+			"name": "Filip Šedivý",
+			"email": "mail@filipsedivy.cz",
+			"homepage": "http://www.filipsedivy.cz"
+		}
+	],
+	"support": {
+		"email": "mail@filipsedivy.cz",
+		"issues": "https://github.com/filipsedivy/PHP-DownloadFile/issues"
+	},
+	"require": {
+		"php": ">=5.3"
+	},
+        "autoload": {
+            "files": [
+                "src/DownloadFile.php"
+            ]
+        }
+}

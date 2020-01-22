@@ -1,0 +1,21 @@
+{
+    "name": "carloswgama/php-onesignal",
+    "description": "Enviar Push Notification usando One Signal",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Carlos W. Gama",
+            "email": "carloswgama@gmail.com"
+        }
+    ],
+     "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload" : {
+        "psr-4": {
+            "CWG\\OneSignal\\": "src/"
+        }
+    }
+}

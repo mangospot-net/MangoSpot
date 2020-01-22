@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title></title>
     <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+    <link rel="stylesheet" type="text/css" href="vendors/codemirror/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="vendors/codemirror/blackboard.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -116,9 +119,21 @@
                                         </a>
                                     </li>
                                     <li role="presentation" class="nav-item">
+                                        <a href="#form-theme" class="nav-link" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-html5"></i>
+                                            <span class="d-none d-sm-block">Theme</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="nav-item">
                                         <a href="#form-code" class="nav-link" data-toggle="tab" aria-expanded="false">
                                             <i class="fa fa-code"></i>
                                             <span class="d-none d-sm-block">Code</span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="nav-item">
+                                        <a href="#form-notify" class="nav-link" data-toggle="tab" aria-expanded="false">
+                                            <i class="fa fa-bell"></i>
+                                            <span class="d-none d-sm-block">OneSignal</span>
                                         </a>
                                     </li>
                                     <li role="presentation" class="nav-item">
@@ -148,34 +163,25 @@
                                         data-modal="false" data-reset="false">
                                         <h5>Email SMTP</h5>
                                         <span>
-                                            Konfigurasi Email dengan SMTP (Simple Mail Transfer Protocol)
+                                            Config Email with SMTP (Simple Mail Transfer Protocol)
                                         </span>
                                         <hr />
                                         <div class="row">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label class="control-label">
                                                     Sender Name <span class="symbol required"></span>
                                                 </label>
                                                 <input type="text" class="form-control" id="name" name="name"
                                                     placeholder="Sender Name" required>
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="control-label">
-                                                    SMTP Server <span class="symbol required"></span>
-                                                </label>
-                                                <input type="text" class="form-control" id="host" name="host"
-                                                    placeholder="smtp.sipkur.net" required>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label class="control-label">
                                                     Email <span class="symbol required"></span>
                                                 </label>
                                                 <input type="email" class="form-control" id="email" name="email"
                                                     placeholder="Email" required>
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label class="control-label">
                                                     Password <span class="symbol required"></span>
                                                 </label>
@@ -184,40 +190,115 @@
                                                         id="pswd" name="pswd" required>
                                                     <div class="input-group-append">
                                                         <label class="input-group-text">
-                                                            <input type="checkbox" id="show_paswd">&nbsp;Show
+                                                            <input type="checkbox" id="show_paswd" class="fa check-eye">
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group col-md-8">
+                                            <div class="form-group col-md-4">
                                                 <label class="control-label">
-                                                    Security <span class="symbol required"></span>
+                                                    SMTP Server <span class="symbol required"></span>
                                                 </label>
-                                                <select class="form-control" id="smtp" name="smtp" required>
-                                                    <option value="">-- Select Data --</option>
-                                                    <option value="ssl">SSL</option>
-                                                    <option value="tls">TLS</option>
+                                                <input type="text" class="form-control" id="host" name="host"
+                                                    placeholder="smtp.mangospot.net" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="control-label">
+                                                    SMTP Security
+                                                </label>
+                                                <select class="form-control" id="smtp" name="smtp">
+                                                    <option data-value="25" value="">None</option>
+                                                    <option data-value="465" value="ssl">SSL</option>
+                                                    <option data-value="587" value="tls">TLS</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label class="control-label">
-                                                    Port <span class="symbol required"></span>
+                                                    SMTP Port <span class="symbol required"></span>
                                                 </label>
-                                                <input type="number" placeholder="Port" class="form-control" id="port"
-                                                    name="port">
+                                                <div class="input-group">
+                                                    <input type="number" value="25" placeholder="Port"
+                                                        class="form-control" id="port" name="port">
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-info" id="check">
+                                                            Test
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="alert alert-info d-none" id="check_info"></div>
                                         <input type="hidden" name="save" value="true">
+                                    </form>
+                                    <form id="form-theme" class="tab-pane" method="POST" action="config"
+                                        data-modal="false" data-reset="false">
+                                        <h5>Email Theme</h5>
+                                        <span>
+                                            Config Email Template (Format Code HTML & CSS)
+                                        </span>
+                                        <hr />
+                                        <div class="form-group">
+                                            <label for="type" class="control-label">
+                                                Type <span class="symbol required"></span>
+                                            </label>
+                                            <select class="form-control" id="type" name="type">
+                                                <option value="">-- Select Data --</option>
+                                                <optgroup label="Acount">
+                                                    <option value="forgot">Forgot</option>
+                                                    <option value="register">Register</option>
+                                                    <option value="verification">Verification</option>
+                                                </optgroup>
+                                                <optgroup label="Shop">
+                                                    <option value="order">Order</option>
+                                                    <option value="payment">Payment</option>
+                                                    <option value="delivery">Delivery</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="code-editor" class="control-label">
+                                                Script
+                                                <span class="symbol required"></span>
+                                            </label>
+                                            <button type="button" data-toggle="modal" data-target="#data-docs"
+                                                class="btn btn-info btn-sm float-right">
+                                                <i class="fa fa-book"></i> Docs
+                                            </button>
+                                            <textarea id="code-editor"></textarea>
+                                        </div>
+                                        <div style="display: none">
+                                            <textarea class="form-control" id="content" name="content"
+                                                required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <iframe id="preview" style="width: 100%"></iframe>
+                                        </div>
                                     </form>
                                     <form id="form-code" class="tab-pane" method="POST" action="config"
                                         data-modal="false" data-reset="false">
                                         <h5>Code</h5>
                                         <span>
-                                            Konfigurasi Code &amp; API (Application Programming Interface)
+                                            Config Code &amp; API (Application Programming Interface)
                                         </span>
                                         <hr>
+                                        <div class="row">
+                                            <div class="form-group col-md-8">
+                                                <label class="control-label">
+                                                    DNS Wifi
+                                                </label>
+                                                <input type="url" placeholder="https://wifi.mangospot.net"
+                                                    class="form-control" id="sosmed" name="sosmed">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="control-label">
+                                                    Currency
+                                                </label>
+                                                <input type="text" class="form-control" id="currency" name="currency"
+                                                    placeholder="IDR">
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="control-label">
                                                 API Google Map
@@ -241,11 +322,35 @@
                                         </div>
                                         <input type="hidden" name="save" value="true">
                                     </form>
+                                    <form id="form-notify" class="tab-pane" method="POST" action="config"
+                                        data-modal="false" data-reset="false">
+                                        <h5>OneSignal</h5>
+                                        <span>
+                                            Create API on <a href="https://app.onesignal.com"
+                                                target="_blank">OneSignal</a>
+                                        </span>
+                                        <hr>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                APP ID
+                                            </label>
+                                            <input type="text" placeholder="OneSignal APP ID" class="form-control"
+                                                id="on_api" name="on_api">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                REST API KEY
+                                            </label>
+                                            <input type="text" placeholder="REST API KEY" class="form-control"
+                                                id="on_key" name="on_key">
+                                        </div>
+                                        <input type="hidden" name="save" value="true">
+                                    </form>
                                     <form id="form-google" class="tab-pane" method="POST" action="config"
                                         data-modal="false" data-reset="false">
                                         <h5>API Google</h5>
                                         <span>
-                                            Silahkan buat API di <a href="https://console.developers.google.com"
+                                            Create API on <a href="https://console.developers.google.com"
                                                 target="_blank">Google Developers</a>
                                         </span>
                                         <hr>
@@ -276,7 +381,7 @@
                                         data-modal="false" data-reset="false">
                                         <h5>API Facebook</h5>
                                         <span>
-                                            Silahkan buat API di <a href="https://developers.facebook.com/"
+                                            Create API on <a href="https://developers.facebook.com/"
                                                 target="_blank">Facebook Developers</a>
                                         </span>
                                         <hr>
@@ -309,28 +414,8 @@
                                                 <label class="control-label">
                                                     Server <span class="symbol required"></span>
                                                 </label>
-                                                <select class="form-control" name="command" required>
+                                                <select class="form-control" id="command" name="command" required>
                                                     <option value="">-- Select Server --</option>
-                                                    <optgroup label="Server">
-                                                        <option value="apache2">Apache</option>
-                                                        <option value="webmin">Webmin</option>
-                                                        <option value="freeradius">Free Radius</option>
-                                                        <option value="bind9">Bind DNS</option>
-                                                        <option value="squid">Web Proxy</option>
-                                                        <option value="vboxweb">VirtualBox</option>
-                                                    </optgroup>
-                                                    <optgroup label="Printer">
-                                                        <option value="cups">CUPS</option>
-                                                        <option value="cups-browsed">CUPS Browser</option>
-                                                    </optgroup>
-                                                    <optgroup label="Database">
-                                                        <option value="mysql">MySQL</option>
-                                                        <option value="postgresql">PostgreSQL</option>
-                                                    </optgroup>
-                                                    <optgroup label="Network">
-                                                        <option value="networking">Network</option>
-                                                        <option value="fail2ban">Fail2ban</option>
-                                                    </optgroup>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -345,9 +430,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <pre id="terminal" class="bg-dark-100 p-3 h-300p text-white">
-Welcome to MangoSpot
-                                        </pre>
+                                        <textarea id="terminal" readonly placeholder="Welcome to MangoSpot"></textarea>
                                     </form>
                                 </div>
                             </div>
@@ -363,6 +446,29 @@ Welcome to MangoSpot
                                 </button>
                             </div>
                         </div>
+                        <div class="modal fade" id="data-docs" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Documentation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body pa-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped" width="100%">
+                                                <thead>
+                                                    <th>Code</th>
+                                                    <th>Value</th>
+                                                </thead>
+                                                <tbody id="docs-list"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -376,8 +482,15 @@ Welcome to MangoSpot
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/codemirror/codemirror.js"></script>
+    <script src="vendors/codemirror/mode/css/css.js"> </script>
+    <script src="vendors/codemirror/mode/shell/shell.js"> </script>
+    <script src="vendors/codemirror/mode/xml/xml.js"> </script>
+    <script src="vendors/codemirror/mode/javascript/javascript.js"> </script>
+    <script src="vendors/codemirror/addon/display/placeholder.js"> </script>
+    <script src="vendors/codemirror/mode/htmlmixed/htmlmixed.js"> </script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

@@ -37,13 +37,13 @@ if(isset($_GET['config'])){
     );
 }
 if(isset($_GET['menu'])){
-    $parent_menu = $Bsk->View("menu", "slug", "id in ($Menu[value]) group by slug", "slug asc");
+    $parent_menu = $Bsk->Select("menu", "slug", "id in ($Menu[value]) group by slug", "slug asc");
     $array_menu = array(); 
     foreach($parent_menu as $slug_menu){ 
         $array_menu[] = $slug_menu['slug']; 
     } 
     $implode_menu = implode(',', $array_menu);
-    $query_menu = $Bsk->View(
+    $query_menu = $Bsk->Select(
         "menu","id, name, value, icon, slug",
         "id in ($implode_menu,$Menu[value]) and status = 'true'",
         "number asc"
@@ -70,7 +70,7 @@ if(isset($_GET['menu'])){
 }
 if(isset($_GET['accept'])){
     $menu_access = array();
-    $query_access = $Bsk->View("menu", "value", "id in ($Menu[value])");
+    $query_access = $Bsk->Select("menu", "value", "id in ($Menu[value])");
     foreach ($query_access as $show_access) {
         $menu_access[] = ucwords($show_access['value']);
     }
@@ -85,7 +85,7 @@ if(isset($_GET['accept'])){
             "status"	=> false, 
             "message"	=> "error", 
             "color"		=> "green",
-            "data"		=> array('Login')
+            "data"		=> array('Login', 'Forgot', 'Register')
         ), true
     );
 }

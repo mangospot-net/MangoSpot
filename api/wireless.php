@@ -2,7 +2,7 @@
 if(isset($_GET['data'])){
     $signal = array();
     $select = (empty($_GET['data']) ? "" : " and id = '".Rahmad($_GET['data'])."'");
-    $routes = $Bsk->View(
+    $routes = $Bsk->Select(
         "nas", "id, nasname, username, password, port, description", 
         "identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true' ".$select, "id asc"
     );
@@ -33,7 +33,7 @@ if(isset($_GET['data'])){
 }
 if(isset($_GET['router'])){
     $route = array();
-    $query = $Bsk->View(
+    $query = $Bsk->Select(
         "nas", "id, description as name", 
         "identity = '$Menu[identity]' and users = '$Menu[id]' and status = 'true'", "id asc"
     );

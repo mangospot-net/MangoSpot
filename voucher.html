@@ -7,6 +7,7 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="dist/css/style.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -119,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form class="table-wrap" method="POST" id="removed">
+                                <div class="table-responsive">
                                     <table id="tables" class="table table-hover table-striped dataTable">
                                         <thead>
                                             <tr>
@@ -132,7 +133,7 @@
                                             </tr>
                                         </thead>
                                     </table>
-                                </form>
+                                </div>
                             </div>
                         </div>
                         <div class="modal fade" id="add-batch" tabindex="-1" role="dialog" aria-hidden="true">
@@ -165,17 +166,17 @@
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label for="length">Length <span class="symbol required"></span></label>
-                                                <input type="number" min="3" max="10" class="form-control" name="length"
-                                                    value="3" required>
+                                                <input type="number" min="4" max="10" class="form-control" name="length"
+                                                    value="4" required>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-3">
                                                 <label for="prefix">Prefix </label>
                                                 <input type="text" class="form-control" name="prefix"
                                                     placeholder="Prefix">
                                             </div>
-                                            <div class="form-group col-md-8">
+                                            <div class="form-group col-md-9">
                                                 <label for="charecter">Charecter </label>
                                                 <select class="form-control" name="charecter" required>
                                                     <option value="1">abcd</option>
@@ -255,10 +256,10 @@
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="vendors/qr-code/jquery-qrcode.min.js"></script>
     <script src="vendors/moment/moment.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
-    <script src="dist/js/jquery-qrcode.min.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

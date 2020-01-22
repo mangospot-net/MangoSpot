@@ -145,14 +145,14 @@ function DataCPU() {
         data: "traffic",
         success: function (traffic) {
             var loads = '';
-            $.each(traffic.data.cpu, function (i, cpu) {
+            $.each(traffic.data.cpu, function (i, mcpu) {
                 var series = char.series[0],
                     shift = series.data.length > 19;
-                char.series[i].addPoint(cpu.data, true, shift);
+                char.series[i].addPoint(mcpu.data, true, shift);
                 loads += '<div class="progress-lb-wrap mb-5">';
-                loads += '<label class="progress-label">' + cpu.name + '</label>';
+                loads += '<label class="progress-label">' + mcpu.name + '</label>';
                 loads += '<div class="progress">';
-                loads += '<div class="progress-bar progress-bar-striped ' + bgColor(cpu.data[1]) + '" role="progressbar" style="width: ' + cpu.data[1] + '%" aria-valuenow="' + cpu.data[1] + '" aria-valuemin="0" aria-valuemax="100">' + cpu.data[1] + '%';
+                loads += '<div class="progress-bar progress-bar-striped ' + bgColor(mcpu.data[1]) + '" role="progressbar" style="width: ' + mcpu.data[1] + '%" aria-valuenow="' + mcpu.data[1] + '" aria-valuemin="0" aria-valuemax="100">' + mcpu.data[1] + '%';
                 loads += '</div>';
                 loads += '</div>';
                 loads += '</div>';
@@ -345,6 +345,45 @@ function LineRX(data) {
     });
 }
 
+function Circle(data) {
+    $('div[id^=server-]').easyPieChart({
+        easing: 'easeOutBounce',
+        size: 200,
+        scaleColor: '#7a5449',
+        trackColor: '#f5f5f6',
+        barColor: function (percent) {
+            return (percent < 50 ? '#5cb85c' : percent < 85 ? '#f0ad4e' : '#cb3935');
+        },
+        onStep: function (from, to, percent) {
+            $(this.el).find('.percent').text(Math.round(percent));
+        }
+    });
+}
+
+function Servers() {
+    $.ajax({
+        url: "./api/",
+        headers: {
+            "Api": $.cookie("BSK_API"),
+            "Key": $.cookie("BSK_KEY"),
+            "Accept": "application/json"
+        },
+        method: "GET",
+        dataType: "JSON",
+        data: "server",
+        success: function (result) {
+            $.each(result.data, function (i, val) {
+                if (i != 'temp') {
+                    $('#server-' + i).data('easyPieChart').update(val.percent);
+                } else if (val.percent) {
+                    $('#temp_server').html('<div class="progress-bar progress-bar-striped progress-bar-animated ' + bgColor(val.percent) + '" role="progressbar" style="width: ' + val.percent + '%" aria-valuenow="' + val.percent + '">' + val.percent + '%');
+                }
+                $('.' + i + '_title').html(val.title);
+                $('.' + i + '_output').text(val.output ? val.output.join('\n') : '');
+            });
+        }
+    });
+}
 
 function Traffic() {
     $.ajax({
@@ -461,7 +500,9 @@ function update() {
 }
 History();
 Charts();
+Circle();
 Income();
+Servers();
 Traffic();
 
 function Refreh() {
@@ -469,5 +510,8 @@ function Refreh() {
     Charts();
     Income();
 }
+setInterval(function () {
+    Servers();
+}, 3000);
 setInterval(update, 1000);
 setInterval(Refreh, 10000);

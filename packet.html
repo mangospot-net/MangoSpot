@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+</head>
+
+<body>
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>
+    <div class="hk-wrapper hk-vertical-nav">
+        <nav class="navbar navbar-expand-xl navbar-light fixed-top hk-navbar">
+            <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span
+                    class="feather-icon"><i data-feather="menu"></i></span></a>
+            <a class="navbar-brand" href="./">
+                <img class="brand-img d-inline-block" src="dist/img/logo-light.png" alt="brand" height="40" />
+            </a>
+            <ul class="navbar-nav hk-navbar-content">
+                <li class="nav-item dropdown dropdown-authentication">
+                    <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <div class="media-img-wrap">
+                                <div class="avatar">
+                                    <img src="dist/img/users/no_foto.jpg" alt="user"
+                                        class="avatar-img rounded-circle user-image">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <span><span class="user_users"></span> <i class="zmdi zmdi-chevron-down"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX"
+                        data-dropdown-out="flipOutX">
+                        <a class="dropdown-item" href="profile.html">
+                            <i class="dropdown-icon zmdi zmdi-account"></i>
+                            <span>Profile</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item logout" href="javascript:void(0);"><i
+                                class="dropdown-icon zmdi zmdi-power"></i><span>Logout</span></a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <nav class="hk-nav hk-nav-light">
+            <a href="javascript:void(0);" id="hk_nav_close" class="hk-nav-close"><span class="feather-icon"><i
+                        data-feather="x"></i></span></a>
+            <div class="nicescroll-bar">
+                <div class="navbar-nav-wrap">
+                    <ul class="navbar-nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./">
+                                <i class="material-icons">home</i>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse"
+                                data-target="#page_account">
+                                <i class="material-icons">account_box</i>
+                                <span class="nav-link-text">My Account</span>
+                            </a>
+                            <ul id="page_account" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="profile.html">Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link logout" href="javascript:void(0);">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <hr class="nav-separator">
+                    <div id="list-menu"></div>
+                </div>
+            </div>
+        </nav>
+        <div id="hk_nav_backdrop" class="hk-nav-backdrop"></div>
+        <div class="hk-pg-wrapper">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Packet</li>
+                </ol>
+            </nav>
+            <div class="container">
+                <div class="hk-pg-header">
+                    <h4 class="hk-pg-title">
+                        <span class="pg-title-icon">
+                            <span class="feather-icon"><i data-feather="package"></i></span>
+                        </span>
+                        Packet Client
+                    </h4>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="#add-data" class="btn btn-info btn-sm" data-toggle="modal" data-value="0">
+                                    <i class="fa fa-plus"></i>
+                                    <span class="hidden-xs">Add</span>
+                                </a>
+                                <div class="pull-right mt-5">
+                                    <a href="javascript:void(0);" class="refresh-tabel"><i
+                                            class="fa fa-refresh"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Client</th>
+                                                <th>Profile</th>
+                                                <th>Price</th>
+                                                <th>Total</th>
+                                                <th>Voucher</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="add-data" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <form class="modal-content" id="form-data" method="POST" action="packet">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Form Packet</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="client">Client <span class="symbol required"></span></label>
+                                            <select class="form-control" id="client" name="client" required>
+                                                <option value="">-- Select client --</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="groupname">Profile <span class="symbol required"></span></label>
+                                            <select class="form-control" id="groupname" name="groupname" required>
+                                                <option value="">-- Select Profile --</option>
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="price">Price <span class="symbol required"></span></label>
+                                                <input type="number" min="0" class="form-control" id="price"
+                                                    name="price" placeholder="Price" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="total">Total <span class="symbol required"></span></label>
+                                                <input type="number" min="0" class="form-control" id="total"
+                                                    name="total" placeholder="Total Voucher" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="mr-auto">
+                                            <input type="checkbox" id="status" name="status" checked
+                                                data-toggle="toggle" data-size="small" data-onstyle="success"
+                                                data-offstyle="danger" value="true">
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                                                class="fa fa-close"></i>
+                                            Close</button>
+                                        <button type="submit" id="id" name="id" value="0" class="btn btn-blue"> <i
+                                                class="fa fa-save"></i> Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hk-footer-wrap container" data-include="menu/footer.html"></div>
+        </div>
+    </div>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="vendors/datatables/js/dataTables.responsive.min.js"></script>
+    <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
+    <script src="vendors/validation/jquery.validate.min.js"></script>
+    <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
+    <script src="vendors/jquery-toast/jquery.toast.js"></script>
+    <script src="vendors/sweetalert/sweetalert.min.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
+    <script src="dist/js/feather.min.js"></script>
+    <script src="dist/js/controls.js"></script>
+    <script src="dist/js/init.js"></script>
+    <script src="dist/js/packet.js"></script>
+
+</body>
+
+</html>

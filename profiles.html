@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title></title>
     <link rel="stylesheet" href="dist/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="vendors/jquery/jquery-ui.theme.min.css" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -90,7 +92,7 @@
         <div class="hk-pg-wrapper">
             <nav class="hk-breadcrumb" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light bg-transparent">
-                    <li class="breadcrumb-item"><a href="#">Hotspot</a></li>
+                    <li class="breadcrumb-item"><a href="#">Radius</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Form Users</li>
                 </ol>
             </nav>
@@ -105,33 +107,35 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <section class="hk-sec-wrapper">
-                            <a class="btn btn-info" href="#add-data" data-toggle="modal" data-value="-1">
-                                <i class="fa fa-plus"></i> Add Data
-                            </a>
-                            <div class="row mt-15">
-                                <div class="col-sm">
-                                    <div class="table-wrap">
-                                        <table id="tables" width="100%"
-                                            class="table table-hover table-striped dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Shared</th>
-                                                    <th>Rate Limit</th>
-                                                    <th>Quota</th>
-                                                    <th>Peiod</th>
-                                                    <th>Price</th>
-                                                    <th width="5%">Act</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a class="btn btn-info btn-sm" href="#add-data" data-toggle="modal" data-value="-1">
+                                    <i class="fa fa-plus"></i> Add
+                                </a>
+                                <div class="pull-right mt-5">
+                                    <a href="javascript:void(0);" class="refresh-tabel"><i
+                                            class="fa fa-refresh"></i></a>
                                 </div>
                             </div>
-                        </section>
-                        <div class="modal fade" id="add-data" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Shared</th>
+                                                <th>Rate</th>
+                                                <th>Price</th>
+                                                <th>Discount</th>
+                                                <th width="10%">Act</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="add-data" aria-hidden="true">
+                            <div class="modal-dialog">
                                 <form class="modal-content" id="form-data" action="profiles" method="POST">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Form Profiles</h5>
@@ -140,39 +144,43 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="row">
-                                            <div class="form-group col-md-8">
-                                                <label for="groupname">Profile Name <span
-                                                        class="symbol required"></span></label>
+                                        <div class="form-group">
+                                            <label for="groupname">
+                                                Profile Name <span class="symbol required"></span>
+                                            </label>
+                                            <div class="input-group">
                                                 <input type="text" class="form-control" id="groupname" name="groupname"
                                                     placeholder="Profile Name" required>
+                                                <div class="input-group-append">
+                                                    <label class="input-group-text">
+                                                        <input type="checkbox" id="checkPPP">&nbsp;PPP
+                                                        <input type="hidden" id="ppp" name="radgroupreply[]">
+                                                        <input type="hidden" name="attribut[]" value="Framed-Protocol">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="shared">Shared User
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        data-original-title="Shared user are any resource that uses a single pair of credentials to authenticate multiple users.">
+                                                        <i class="fa fa-question-circle"></i>
+                                                    </a>
+                                                </label>
+                                                <input type="number" min="1" class="form-control" id="shared"
+                                                    name="radgroupcheck[]" value="" placeholder="1">
+                                                <input type="hidden" name="attribute[]" value="Simultaneous-Use">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="price">Price</label>
                                                 <input type="number" min="0" class="form-control" id="price"
                                                     name="price" placeholder="Price">
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="form-group col-md-4">
-                                                <label for="shared">Shared User </label>
-                                                <input type="number" min="1" class="form-control" id="shared"
-                                                    name="radgroupcheck[]" value="" placeholder="1">
-                                                <input type="hidden" name="attribute[]" value="Simultaneous-Use">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="rate">Rate Limit</label>
-                                                <input type="text" class="form-control noSpaces" id="rate"
-                                                    name="radgroupreply[]" placeholder="512K/1M">
-                                                <input type="hidden" name="attribut[]" value="Mikrotik-Rate-Limit">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="quota">Quota </label>
-                                                <input type="text" class="form-control noSpaces" id="quota"
-                                                    name="radgroupreply[]" placeholder="1MB">
-                                                <input type="hidden" name="attribut[]" value="Mikrotik-Total-Limit">
-                                                <input type="hidden" id="volume" name="radgroupcheck[]">
-                                                <input type="hidden" name="attribute[]" value="Max-Data">
+                                                <label for="discount">Discount</label>
+                                                <input type="number" min="0" class="form-control" id="discount"
+                                                    name="discount" placeholder="Discount">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -182,18 +190,20 @@
                                                         data-original-title="A users can login for the specified period"><i
                                                             class="fa fa-question-circle"></i></a>
                                                 </label>
-                                                <input type="text" class="form-control noSpaces" id="period"
-                                                    name="radgroupcheck[]" placeholder="1d">
-                                                <input type="hidden" name="attribute[]" value="Access-Period">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control period" id="period"
+                                                        name="radgroupcheck[]" placeholder="Access Priod" readonly>
+                                                    <input type="hidden" name="attribute[]" value="Access-Period">
+                                                </div>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="time">Every Time
+                                                <label for="time">Many Time
                                                     <a data-toggle="tooltip" data-placement="top"
                                                         data-original-title="A user can login as many times as needed but can be online for the specified time"><i
                                                             class="fa fa-question-circle"></i></a>
                                                 </label>
-                                                <input type="text" class="form-control noSpaces" id="times"
-                                                    name="radgroupcheck[]" placeholder="2h">
+                                                <input type="number" id="times" name="radgroupcheck[]"
+                                                    class="form-control" placeholder="Many Times" readonly>
                                                 <input type="hidden" name="attribute[]" value="Max-All-Session">
                                             </div>
                                             <div class="form-group col-md-4">
@@ -202,9 +212,50 @@
                                                         data-original-title="A user with User-Name test123 has online time limit of 3 hours per day"><i
                                                             class="fa fa-question-circle"></i></a>
                                                 </label>
-                                                <input type="text" class="form-control noSpaces" id="daily"
-                                                    name="radgroupcheck[]" placeholder="1m">
-                                                <input type="hidden" name="attribute[]" value="Max-Daily-Session">
+                                                <div class="input-group">
+                                                    <input type="number" id="daily" name="radgroupcheck[]"
+                                                        class="form-control" placeholder="Per Day" readonly>
+                                                    <input type="hidden" name="attribute[]" value="Max-Daily-Session">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-7">
+                                                <label for="rate">
+                                                    Rate Limit
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        data-original-title="1.rx-rate/tx-rate 2.rx-burst-rate/tx-burst-rate 3.rx-burst-threshold/tx-burst-threshold 4.rx-burst-time/tx-burst-time">
+                                                        <i class="fa fa-question-circle"></i>
+                                                    </a>
+                                                </label>
+                                                <input type="text" class="form-control UpperCase" id="rate"
+                                                    name="radgroupreply[]" placeholder="512K/1M 3M/4M 2M/3M 8/8">
+                                                <input type="hidden" name="attribut[]" value="Mikrotik-Rate-Limit">
+                                            </div>
+                                            <div class="form-group col-md-5">
+                                                <label for="quota">Quota Limit
+                                                    <a data-toggle="tooltip" data-placement="top"
+                                                        data-original-title="(B) Bytes, (KB) KiloBytes, (MB) MegaBytes, (GB) GigaBytes, (TB) TeraBytes">
+                                                        <i class="fa fa-question-circle"></i>
+                                                    </a>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="number" min="0" id="quota_numb" class="form-control"
+                                                        placeholder="1">
+                                                    <input type="hidden" id="quota" name="radgroupreply[]">
+                                                    <input type="hidden" name="attribut[]" value="Mikrotik-Total-Limit">
+                                                    <input type="hidden" id="volume" name="radgroupcheck[]">
+                                                    <input type="hidden" name="attribute[]" value="Max-Data">
+                                                    <div class="input-group-append">
+                                                        <select class="custom-select custom-select-md" id="quota_code">
+                                                            <option value="B">B</option>
+                                                            <option value="KB">KB</option>
+                                                            <option value="MB">MB</option>
+                                                            <option value="GB">GB</option>
+                                                            <option value="TB">TB</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -212,17 +263,13 @@
                                             <textarea class="form-control" id="description" name="description"
                                                 placeholder="Description..."></textarea>
                                         </div>
-                                        <div class="alert alert-info">
-                                            <i class="fa fa-info"></i> Time Code<br /> 1i: (1Minute), 1h: (1Hour),
-                                            1d: (1Day), 1m: (1Month), Default: 1Seconds
-                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
                                                 class="fa fa-close"></i>
                                             Close</button>
-                                        <button type="submit" id="id" name="id" value="-1" class="btn btn-blue"> <i
-                                                class="fa fa-save"></i> Save</button>
+                                        <button type="submit" id="profiles" name="id" value="-1" class="btn btn-blue">
+                                            <i class="fa fa-save"></i> Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -234,18 +281,20 @@
         </div>
     </div>
     <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/jquery/jquery-ui.min.js"></script>
     <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
     <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
     <script src="vendors/datatables/js/dataTables.bootstrap4.min.js"></script>
     <script src="vendors/datatables/js/dataTables.responsive.min.js"></script>
     <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
+    <script src="vendors/durationpicker/duration-picker.min.js"></script>
     <script src="vendors/validation/jquery.validate.min.js"></script>
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

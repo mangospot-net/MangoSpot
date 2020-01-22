@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="dist/css/style.css">
     <link rel="stylesheet" type="text/css" href="vendors/dropify/css/dropify.min.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -153,16 +154,21 @@
                             <div class="tab-content block mt-20">
                                 <form class="tab-pane active" id="form-profile" action="profile" method="POST"
                                     data-modal="false" data-reset="false">
+                                    <div class="form-group">
+                                        <label for="name">Full Name <span class="symbol required"></span></label>
+                                        <input type="text" id="name" name="name" class="form-control"
+                                            placeholder="Full Name" required>
+                                    </div>
                                     <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="name">Full Name <span class="symbol required"></span></label>
-                                            <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="Full Name" required>
-                                        </div>
                                         <div class="form-group col-md-6">
                                             <label for="phone">Phone <span class="symbol required"></span></label>
                                             <input type="text" id="phone" name="phone" class="form-control"
-                                                placeholder="Phone Number" value="" required>
+                                                placeholder="Phone Number" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="email">Email </label>
+                                            <input type="email" id="email" name="email" class="form-control"
+                                                placeholder="Email Address">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -179,11 +185,29 @@
                                             <input class="form-control" id="religion" name="religion">
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-5">
+                                            <label for="place">Birthplace </label>
+                                            <input type="text" id="place" name="place" class="form-control"
+                                                placeholder="Birthplace">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="birth">Birthday </label>
+                                            <input type="date" id="birth" name="birth" class="form-control"
+                                                placeholder="Birthday">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="zip">Zip Code </label>
+                                            <input type="number" maxlength="5" id="zip" name="zip" class="form-control"
+                                                placeholder="Zip Code">
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label for="address">Address </label>
                                         <textarea id="address" name="address" class="form-control"
                                             placeholder="Address"></textarea>
                                     </div>
+                                    <hr />
                                     <div class="form-group">
                                         <button type="reset" class="btn btn-secondary">
                                             <i class="fa fa-close"></i> Cancel
@@ -217,6 +241,7 @@
                                                 <input type="password" id="rep" name="rpassword" class="form-control"
                                                     placeholder="Repeat Password" required>
                                             </div>
+                                            <hr />
                                             <div class="form-group">
                                                 <button type="reset" class="btn btn-secondary">
                                                     <i class="fa fa-close"></i> Cancel
@@ -226,6 +251,25 @@
                                                 </button>
                                             </div>
                                         </form>
+                                        <div class="col-md-6">
+                                            <h5>Social Login</h5>
+                                            <button class="btn btn-indigo btn-block btn-wth-icon mt-10">
+                                                <span class="icon-label"><i class="fa fa-facebook"></i> </span>
+                                                <span class="btn-text">Login with facebook</span>
+                                            </button>
+                                            <button class="btn btn-purple btn-block btn-wth-icon mt-10">
+                                                <span class="icon-label"><i class="fa fa-instagram"></i> </span>
+                                                <span class="btn-text">Login with instagram</span>
+                                            </button>
+                                            <button class="btn btn-sky btn-block btn-wth-icon mt-10">
+                                                <span class="icon-label"><i class="fa fa-twitter"></i> </span>
+                                                <span class="btn-text">Login with twitter</span>
+                                            </button>
+                                            <button class="btn btn-danger btn-block btn-wth-icon mt-10">
+                                                <span class="icon-label"><i class="fa fa-google-plus"></i> </span>
+                                                <span class="btn-text">Login with google</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -244,8 +288,8 @@
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/dropify/js/dropify.min.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

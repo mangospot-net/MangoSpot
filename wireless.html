@@ -7,6 +7,7 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="dist/css/style.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -105,29 +106,35 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <section class="hk-sec-wrapper">
-                            <div class="row mt-15">
-                                <div class="col-sm">
+                        <div class="card">
+                            <div class="card-header">
+                                Table Wireless
+                                <div class="pull-right mt-5">
+                                    <a href="javascript:void(0);" class="refresh-tabel"><i
+                                            class="fa fa-refresh"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
                                     <select class="form-control" id="router">
                                         <option value="">-- All Router --</option>
                                     </select>
-                                    <div class="table-wrap mt-15">
-                                        <table id="tables" width="100%"
-                                            class="table table-hover table-striped dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>Router</th>
-                                                    <th>Radio</th>
-                                                    <th>Signal</th>
-                                                    <th>RX-Rate</th>
-                                                    <th>TX-Rate</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Router</th>
+                                                <th>Radio</th>
+                                                <th>Signal</th>
+                                                <th>RX-Rate</th>
+                                                <th>TX-Rate</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
                                 </div>
                             </div>
-                        </section>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -142,8 +149,8 @@
     <script src="vendors/datatables/js/dataTables.responsive.min.js"></script>
     <script src="vendors/bootstrap-toggle/bootstrap4-toggle.min.js"></script>
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>

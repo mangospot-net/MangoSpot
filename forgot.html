@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MangoSpot | Form Forgot</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="dist/css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+</head>
+
+<body>
+    <div class="preloader-it">
+        <div class="loader-pendulums"></div>
+    </div>
+    <div class="hk-wrapper">
+        <div class="hk-pg-wrapper hk-auth-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-8 pa-0">
+                        <div id="owl_demo_1" class="owl-carousel dots-on-item owl-theme"></div>
+                    </div>
+                    <div class="col-xl-4 pa-0">
+                        <div class="ma-30">
+                            <header class="text-center text-center mb-10">
+                                <a class="auth-brand" href="./">
+                                    <img class="brand-img" src="dist/img/logo-dark.png" alt="brand" />
+                                </a>
+                            </header>
+                            <form id="formReset" method="POST" action="forgot">
+                                <h2>Form Forgot</h2>
+                                <p class="mb-30">Please reset your password</p>
+                                <div class="form-group">
+                                    <input type="password" id="new" name="npassword" class="form-control"
+                                        placeholder="New Password" required>
+                                    <div class="invalid-feedback">
+                                        The password field is required!
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="reply" name="rpassword" class="form-control"
+                                        placeholder="Re-enter new password" required>
+                                    <div class="invalid-feedback">
+                                        The password field is required!
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-block btn-wth-icon" type="submit" name="forgot">
+                                    <span class="icon-label"><i class="fa fa-lock"></i>
+                                    </span><span class="btn-text">Reset Password</span>
+                                </button>
+                            </form>
+                            <p class="text-center mt-20">Back to <a href="login.html">Login</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="vendors/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script src="vendors/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="vendors/validation/jquery.validate.min.js"></script>
+    <script src="vendors/jquery-toast/jquery.toast.js"></script>
+    <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
+    <script src="dist/js/feather.min.js"></script>
+    <script src="dist/js/controls.js"></script>
+    <script src="dist/js/init.js"></script>
+    <script src="dist/js/forgot.js"></script>
+</body>
+
+</html>

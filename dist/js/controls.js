@@ -1,6 +1,5 @@
 var url = window.location.pathname;
 var filename = url.substring(url.lastIndexOf('/') + 1);
-$('title').html('MangoSpot | ' + (filename ? ucword(filename) : 'Dashboard'));
 
 function ucword(data) {
     var result = data.replace('.html', '').toLowerCase().replace(/\b[a-z]/g, function (letter) {
@@ -12,9 +11,11 @@ function ucword(data) {
 function Logout() {
     $.cookie("BSK_API", null);
     $.cookie("BSK_KEY", null);
+    $.cookie("BSK_AUTH", null);
     $.cookie("BSK_TOKEN", null);
     $.removeCookie("BSK_API");
     $.removeCookie("BSK_KEY");
+    $.removeCookie("BSK_AUTH");
     $.removeCookie("BSK_TOKEN");
     window.location = 'login.html';
 };
@@ -30,6 +31,27 @@ $.ajax({
     success: function (identity) {
         $('link[rel="shortcut icon"]').attr('href', identity.data.icon);
         $('img.brand-img').attr('src', identity.data.logo).attr('alt', identity.data.title);
+        $('title').html(identity.data.data + ' | ' + (filename ? ucword(filename) : 'Dashboard') + ' ' + identity.data.title);
+    }
+});
+$.ajax({
+    url: "./api/data",
+    method: "GET",
+    data: "config",
+    dataType: "JSON",
+    success: function (config) {
+        var OneSignal = window.OneSignal || [];
+        OneSignal.push(function () {
+            OneSignal.init({
+                appId: config.data.on_api,
+                autoResubscribe: true,
+            });
+            if ($.cookie("BSK_AUTH")) {
+                OneSignal.sendTag("key", $.cookie("BSK_AUTH"));
+            } else {
+                OneSignal.deleteTag("key");
+            }
+        });
     }
 });
 $.ajax({
@@ -119,6 +141,71 @@ $.ajax({
         }
     }
 });
+$('form[id^=import-]').each(function (index, element) {
+    var id = $(this).attr('id').replace('import-', '');
+    var action = $(this).attr('action');
+    var method = $(this).attr('method');
+    var modals = $(this).data('modal');
+    var extent = $(this).data('extension');
+    $('#import-' + id).validate({
+        errorElement: "span",
+        errorClass: 'help-block',
+        ignore: "required",
+        rules: {
+            file: {
+                required: true,
+                extension: extent ? extent : "xls"
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.help-block').removeClass('valid');
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error').find('.symbol').removeClass('ok').addClass('required');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        success: function (label, element) {
+            label.addClass('help-block valid');
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
+        },
+        submitHandler: function (form) {
+            var formData = form;
+            var formData = new FormData(formData);
+            $.ajax({
+                url: "./api/" + action,
+                headers: {
+                    "Api": $.cookie("BSK_API"),
+                    "Key": $.cookie("BSK_KEY"),
+                    "Accept": "application/json"
+                },
+                method: method,
+                dataType: "JSON",
+                data: formData,
+                mimeType: "multipart/form-data",
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function () {
+                    $('button[type=submit]', '#import-' + id).prop('disabled', true);
+                },
+                success: function (response) {
+                    $.toast({
+                        heading: "Import " + ucword(id),
+                        text: response.data,
+                        position: 'bottom-right',
+                        icon: response.message
+                    });
+                    if (typeof modals == 'undefined') {
+                        $('#add-' + id).modal('hide');
+                        $('.dataTable').DataTable().ajax.reload();
+                    }
+                    $('#import-' + id).trigger('reset');
+                    $('button[type=submit]', '#import-' + id).prop('disabled', true);
+                }
+            });
+        }
+    });
+});
 $('form[id^=form-]').each(function (index, element) {
     var id = $(this).attr('id').replace('form-', '');
     var action = $(this).attr('action');
@@ -163,6 +250,9 @@ $('form[id^=form-]').each(function (index, element) {
                             $.cookie("BSK_KEY", response.data.key, {
                                 expires: response.data.exp
                             });
+                            $.cookie("BSK_AUTH", response.data.auth, {
+                                expires: response.data.exp
+                            });
                             $.cookie("BSK_TOKEN", response.data.token, {
                                 expires: response.data.exp
                             });
@@ -183,6 +273,7 @@ $('form[id^=form-]').each(function (index, element) {
                     if (typeof resets == 'undefined') {
                         $('#form-' + id).trigger('reset');
                     }
+                    $('a[class^=refresh-]').trigger('click');
                     $('button[type=submit]', "#form-" + id).attr('disabled', false);
                 }
             });
@@ -198,7 +289,6 @@ $('body').on('click', 'button[name="active"]', function () {
             "Accept": "application/json"
         },
         method: "POST",
-        dataType: "JSON",
         data: {
             "active": $(this).val()
         },
@@ -206,6 +296,9 @@ $('body').on('click', 'button[name="active"]', function () {
             $('.dataTable').DataTable().ajax.reload();
         }
     });
+});
+$('body').on('click', 'a.refresh-tabel', function () {
+    $('.dataTable').DataTable().ajax.reload();
 });
 $('body').on('click', '[href="#delete"]', function () {
     var id_delete = $(this).data("value");
@@ -217,6 +310,7 @@ $('body').on('click', '[href="#delete"]', function () {
         showCancelButton: true,
         confirmButtonText: "Yes, delete it!",
         cancelButtonText: "Cancel",
+        showLoaderOnConfirm: true,
         closeOnConfirm: false,
         closeOnCancel: true
     }, function (isConfirm) {
@@ -234,12 +328,13 @@ $('body').on('click', '[href="#delete"]', function () {
                     'delete': id_delete
                 },
                 success: function (remove) {
+                    $('a[class^=refresh-]').trigger('click');
                     $('.dataTable').DataTable().ajax.reload();
                     swal({
-                        title: "Success!",
+                        title: "Delete!",
                         text: remove.data,
                         timer: 2000,
-                        type: 'success'
+                        type: remove.message
                     });
                 }
             })

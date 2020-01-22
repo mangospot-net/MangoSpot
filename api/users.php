@@ -1,60 +1,67 @@
 <?php
+$radius = ($Menu['data'] ? "and a.users = '$Menu[id]'" : "");
+$radiuz = ($Menu['data'] ? "" : "and a.users = '$Menu[id]'");
 if(isset($_GET['data'])){
-    $table_users = array();
-    $query_users = (empty($_GET['data']) ? 
-        $Bsk->View("radcheck", "username", "identity = '$Menu[identity]' and users = '$Menu[id]' group by username") : 
-        $Bsk->View("radusergroup", "username", "identity = '$Menu[identity]' and users = '$Menu[id]' and groupname = '".Rahmad($_GET['data'])."'")
-    );
-    foreach($query_users as $show_users){
-        $id_user     = $Bsk->Tampil("radcheck", "id, created", "username = '$show_users[username]' and attribute = 'Cleartext-Password' and identity = '$Menu[identity]' and users = '$Menu[id]'");
-        $shared_user = $Bsk->Tampil("radcheck", "value", "username = '$show_users[username]' and attribute = 'Simultaneous-Use' and identity = '$Menu[identity]' and users = '$Menu[id]'");
-        $rate_user   = $Bsk->Tampil("radreply", "value", "username = '$show_users[username]' and attribute = 'Mikrotik-Rate-Limit' and identity = '$Menu[identity]' and users = '$Menu[id]'");
-        $expired_user= $Bsk->Tampil("radcheck", "value", "username = '$show_users[username]' and attribute = 'Access-Period' and identity = '$Menu[identity]' and users = '$Menu[id]'");
-        $profile_user= $Bsk->Tampil("radusergroup", "groupname", "username = '$show_users[username]' and identity = '$Menu[identity]' and users = '$Menu[id]'");
-        $table_users[] = array(
-            "id"        => $id_user['id'],
-            "username"  => $show_users['username'],
-            "profiles"  => $profile_user['groupname'],
-            "shared"    => $shared_user['value'],
-            "rate"      => $rate_user['value'],
-            "expired"   => $expired_user['value'],
-            "created"   => $id_user['created']
-        );
-    }
-    $json_data = array(
-		"recordsTotal"    => intval(count($table_users)),
-		"recordsFiltered" => intval(count($table_users)),
-		"data"            => $table_users
+    $getUsers = (empty($_GET['users']) ? $Menu['id'] : Rahmad($_GET['users'])); 
+    $getGroup = (empty($_GET['data']) ? "" : " and profiles = '".Rahmad($_GET['data'])."' ");
+    $radcheck = $Bsk->Table(
+        "voucher", 
+        "id, username, profiles, description, created", 
+        "identity = '$Menu[identity]' and users = '$getUsers' ".$getGroup, 
+        array("id", "username", "profiles", "description", "created", "id")
 	);
-	echo json_encode($json_data, true);
+	echo json_encode($radcheck, true);
+}
+if(isset($_GET['table'])){
+    $get_user = (empty($_GET['users']) ? $Menu['id'] : Rahmad($_GET['users']));
+    $get_group = (empty($_GET['table']) ? '' : " and a.profiles = '".Rahmad($_GET['table'])."' ");
+    $tables = $Bsk->Table(
+        "voucher a left join radprice b on a.profiles = b.groupname and a.identity = b.identity", 
+        "a.id, a.username, a.profiles as profile, b.price, a.created", 
+        "a.identity = '$Menu[identity]' and a.users = '$get_user' ".$get_group, 
+        array("a.username", "a.profiles", "b.price", "a.created", "a.id")
+	);
+	echo json_encode($tables, true);
+}
+if(isset($_GET['level'])){
+    $level = array();
+    $seler = $Bsk->Select(
+        "users a inner join level b on a.level = b.id", 
+        "a.id, a.name", 
+        "a.identity = '$Menu[identity]' and b.slug = '$Menu[level]'", 
+        "a.name asc"
+    );
+    foreach ($seler as $reseller) {
+        $level[] = $reseller;
+    }
+    echo json_encode($level ? 
+		array("status" => true, "message" => "success", "data" => $level) : 
+		array("status" => false, "message" => "error", "data" => false), true
+	);
 }
 if(isset($_GET['detail'])){
     $id_detail = Rahmad($_GET['detail']);
-    $show_detail = $Bsk->Tampil(
-        "radcheck a 
-        left join radcheck b on a.username = b.username and b.attribute = 'Simultaneous-Use' 
-        left join radcheck c on a.username = c.username and c.attribute = 'Access-Period' 
-        left join radcheck d on a.username = d.username and d.attribute = 'Max-All-Session' 
-        left join radcheck e on a.username = e.username and e.attribute = 'Max-Daily-Session' 
-        left join radreply f on a.username = f.username and f.attribute = 'Mikrotik-Rate-Limit' 
-        left join radreply g on a.username = g.username and g.attribute = 'Mikrotik-Total-Limit' 
-        left join radcheck i on a.username = i.username and i.attribute = 'Max-Data' 
-        left join radusergroup h on a.username = h.username", 
-        "a.username as id, a.username, a.value as passwd, a.description, h.groupname, b.value as shared, c.value as period, d.value as times, e.value as daily, f.value as rate, g.value as quota, i.value as valume", 
-        "a.id = '$id_detail' and a.identity = '$Menu[identity]' and a.users = '$Menu[id]'"
+    $show_detail = $Bsk->Show("voucher a", "*", "a.id = '$id_detail' and a.identity = '$Menu[identity]' $radius");
+    $data_quota  = ($show_detail['quota'] ? preg_split('#(?<=\d)(?=[a-z])#i', $show_detail['quota']) : array('', 'B'));
+    $replace_data = array_replace(
+        $show_detail, 
+        array(
+            "quota_numb"=> $data_quota[0],
+            "quota_code"=> $data_quota[1]
+        )
     );
-    $replace_data = array_replace($show_detail, array("quota" => formatBytes($show_detail['quota']), "volume" => formatBytes($show_detail['quota'])));
     echo json_encode($show_detail ? 
 		array("status" => true, "message" => "success", "data" => $replace_data) : 
 		array("status" => false, "message" => "error", "data" => false), true
 	);
 }
+
 if(isset($_GET['profiles'])){
     $array_profile = array();
-    $query_profile = $Bsk->View(
+    $query_profile = $Bsk->Select(
         "radgroupcheck a left join radgroupreply b on a.groupname = b.groupname", 
-        "a.groupname", 
-        "a.identity = '$Menu[identity]' and a.users = '$Menu[id]' GROUP BY a.groupname", "a.groupname asc"
+        "a.groupname as id, a.groupname as name, a.groupname", 
+        "a.identity = '$Menu[identity]' $radiuz GROUP BY a.groupname", "a.groupname asc"
     );
     foreach ($query_profile as $show_profile) {
         $array_profile[] = $show_profile;
@@ -66,7 +73,7 @@ if(isset($_GET['profiles'])){
 }
 if(isset($_GET['theme'])){
     $themes = array();
-    $query_themes = $Bsk->View("themes", "id, name", "identity = '$Menu[identity]' and (users = '$Menu[id]' or users = 0)", "id asc");
+    $query_themes = $Bsk->Select("themes a", "a.id, a.name", "a.identity = '$Menu[identity]' and a.type = 'radius' $radiuz", "a.id asc");
     foreach ($query_themes as $value_themes) {
         $themes[] = $value_themes;
     }
@@ -76,15 +83,15 @@ if(isset($_GET['theme'])){
 	);
 }
 if(isset($_POST['username'])){
-    $id_users    = Rahmad($_POST['id']);
+    $id_users    = Rahmad($_POST['username']);
     $username    = Rahmad($_POST['username']);
     $count_check = count($_POST['radcheck']);
     $count_reply = count($_POST['radreply']);
     for($i=0; $i<$count_check; $i++){
         $attribute = $_POST['attribute'][$i];
-        $check_check = $Bsk->Tampil(
-            "radcheck", "username", 
-            "username = '$id_users' and attribute = '$attribute' and identity = '$Menu[identity]' and users = '$Menu[id]'"
+        $check_check = $Bsk->Show(
+            "radcheck a", "a.username", 
+            "a.username = '$id_users' and a.attribute = '$attribute' and a.identity = '$Menu[identity]' $radius"
         );
         if(!empty($_POST['radcheck'][$i])){
             $query_check = array(
@@ -97,24 +104,23 @@ if(isset($_POST['username'])){
                 "description"=> $_POST['description']
             );
             if($check_check){
-                $Bsk->Ubah("radcheck", $query_check, "username = '$check_check[username]' and attribute = '$attribute' and identity = '$Menu[identity]' and users = '$Menu[id]'");
+                $Bsk->Update("radcheck", $query_check, "username = '$check_check[username]' and attribute = '$attribute' and identity = '$Menu[identity]' ");
             } else {
-                $Bsk->Tambah("radcheck", array_merge($query_check, array("created" => date('Y-m-d H:i:s'))));
+                $Bsk->Insert("radcheck", array_merge($query_check, array("created" => date('Y-m-d H:i:s'))));
             }
         } else {
-            $Bsk->Hapus("radcheck", array(
+            $Bsk->Delete("radcheck", array(
                 "username"  => $check_check['username'],
                 "attribute" => $attribute,
-                "identity"  => $Menu['identity'],
-                "users"     => $Menu['id']
+                "identity"  => $Menu['identity']
             ));
         }
     }
     for($e=0; $e<$count_reply; $e++){
         $attribut = $_POST['attribut'][$e];
-        $check_reply = $Bsk->Tampil(
-            "radreply", "username", 
-            "username = '$id_users' and attribute = '$attribut' and identity = '$Menu[identity]' and users = '$Menu[id]'"
+        $check_reply = $Bsk->Show(
+            "radreply a", "a.username", 
+            "a.username = '$id_users' and a.attribute = '$attribut' and a.identity = '$Menu[identity]' $radius"
         );
         if(!empty($_POST['radreply'][$e])){
             $query_reply = array(
@@ -127,40 +133,40 @@ if(isset($_POST['username'])){
                 "description"=> $_POST['description']
             );
             if($check_reply){
-                $Bsk->Ubah("radreply", $query_reply, "username = '$check_reply[username]' and attribute = '$attribut' and identity = '$Menu[identity]' and users = '$Menu[id]'");
+                $Bsk->Update("radreply", $query_reply, "username = '$check_reply[username]' and attribute = '$attribut' and identity = '$Menu[identity]' ");
             } else {
-                $Bsk->Tambah("radreply", array_merge($query_reply, array("created" => date('Y-m-d H:i:s'))));
+                $Bsk->Insert("radreply", array_merge($query_reply, array("created" => date('Y-m-d H:i:s'))));
             }
         } else {
-            $Bsk->Hapus("radreply", array(
+            $Bsk->Delete("radreply", array(
                 "username"  => $check_reply['username'],
                 "attribute" => $attribut,
-                "identity"  => $Menu['identity'],
-                "users"     => $Menu['id']
+                "identity"  => $Menu['identity']
             ));
         }
     }
-    $check_group = $Bsk->Tampil("radusergroup", "username", "username = '$id_users' and identity = '$Menu[identity]' and users = '$Menu[id]'");
+    $check_group = $Bsk->Show("radusergroup a", "a.username", "a.username = '$id_users' and a.identity = '$Menu[identity]' $radius");
     if(!empty($_POST['groupname'])){
-        ($check_group ? 
-            $Bsk->Ubah("radusergroup", 
+        if($check_group){
+            $Bsk->Update("radusergroup", 
                 array(
                     "username"  => $username,
                     "groupname" => Rahmad($_POST['groupname'])
                 ),
-                "username = '$check_group[username]' and identity = '$Menu[identity]' and users = '$Menu[id]'"
-            ) :
-            $Bsk->Tambah("radusergroup", 
+                "username = '$check_group[username]' and identity = '$Menu[identity]' "
+            );
+        } else {
+            $Bsk->Insert("radusergroup", 
                 array(
                     "username"  => $username,
                     "groupname" => Rahmad($_POST['groupname']),
                     "identity"  => $Menu['identity'],
                     "users"     => $Menu['id']
                 )
-            )
-        );
+            );
+        }
     } else {
-        $Bsk->Hapus("radusergroup", array("username" => $id_users, "identity" => $Menu['identity'], "users" => $Menu['id']));
+        $Bsk->Delete("radusergroup", array("username" => $id_users, "identity" => $Menu['identity']));
     }
     echo json_encode($username ? 
 		array("status" => true, "message" => "success", "color" => "green", "data" => "Proccess data success") : 
@@ -188,8 +194,8 @@ if(isset($_POST['qty'])){
             "description"=> $_POST['description'],
             "created"    => $_POST['created']
         );
-        $add_batch = $Bsk->Tambah("radcheck", $post_qty);
-        $Bsk->Tambah("radusergroup", 
+        $add_batch = $Bsk->Insert("radcheck", $post_qty);
+        $Bsk->Insert("radusergroup", 
             array(
                 "identity"  => $Menu['identity'],
                 "users"     => $Menu['id'],
@@ -210,94 +216,91 @@ if(isset($_POST['qty'])){
 }
 if(isset($_POST['delete'])){
     $id_delete = Rahmad($_POST['delete']);
-    $check_delete = $Bsk->Tampil("radcheck", "username", "id = '$id_delete' and identity = '$Menu[identity]' and users = '$Menu[id]'");
-    $Bsk->Hapus("radacct", array("username" => $check_delete['username']));
-    $Bsk->Hapus("radcheck", array("username" => $check_delete['username']));
-    $Bsk->Hapus("radreply", array("username" => $check_delete['username']));
-    $Bsk->Hapus("radusergroup", array("username" => $check_delete['username']));
+    $check_delete1 = $Bsk->Show("radcheck a", "a.username", "a.identity = '$Menu[identity]' and a.id = '$id_delete' and a.attribute = 'Cleartext-Password' ".$radius);
+    $check_delete2 = $Bsk->Show("radcheck a", "a.username", "a.identity = '$Menu[identity]' and a.username = '$id_delete' ".$radius);
+    $check_delete = ($check_delete1 ? $check_delete1 : $check_delete2);
+    $Bsk->Delete("radacct", array("username" => $check_delete['username']));
+    $Bsk->Delete("radcheck", array("username" => $check_delete['username']));
+    $Bsk->Delete("radreply", array("username" => $check_delete['username']));
+    $Bsk->Delete("radusergroup", array("username" => $check_delete['username']));
     echo json_encode($check_delete ? 
 		array("status" => true, "message" => "success", "color" => "green", "data" => "Delete data success") : 
 		array("status" => false, "message" => "error", "color" => "red", "data" => "Delete data failed!"), true
 	);
 }
-if(isset($_POST['remove'])){
-    $count_remove = count($_POST['remove']);
-    for($r = 0; $r < $count_remove; $r++){
-        $id_remove = Rahmad($_POST['remove'][$r]);
-        $check_remove = $Bsk->Tampil("radcheck", "username", "id = '$id_remove' and identity = '$Menu[identity]' and users = '$Menu[id]'");
-        $Bsk->Hapus("radacct", array("username" => $check_remove['username']));
-        $Bsk->Hapus("radcheck", array("username" => $check_remove['username']));
-        $Bsk->Hapus("radreply", array("username" => $check_remove['username']));
-        $Bsk->Hapus("radusergroup", array("username" => $check_remove['username']));
-    }
-    echo json_encode($count_remove ? 
-		array("status" => true, "message" => "success", "color" => "green", "data" => "Delete data success") : 
-		array("status" => false, "message" => "error", "color" => "red", "data" => "Delete data failed!"), true
-	);
-}
 if(isset($_GET['print'])){
+    $number = 0;
+    $array_print = array();
+    $data_print  = array();
     $id_print    = Rahmad($_GET['print']);
     $type_print  = Rahmad($_GET['type']);
-    $type_theme  = (empty($_GET['themes']) ? "" : "and id = '".Rahmad($_GET['themes'])."'");
-    $array_print = array();
+    $type_theme  = (empty($_GET['themes']) ? "" : "and a.id = '".Rahmad($_GET['themes'])."'");
     $where_print = ($type_print == 'batch' ? "and a.created = '$id_print'" : "and a.username = '$id_print'"); 
-    $query_theme = $Bsk->Tampil("themes", "content", "identity = '$Menu[identity]' and (users = '$Menu[id]' or users = 0) ".$type_theme, "id asc");
-    $batch_print = $Bsk->View(
-        "radcheck a left join radusergroup b on a.username = b.username left join price c on b.groupname = c.groupname", 
-        "a.username, a.value as password, b.groupname as profile, c.value as price", 
-        "a.attribute = 'Cleartext-Password' and a.identity = '$Menu[identity]' and a.users = '$Menu[id]' $where_print"
-    );
+    $query_theme = $Bsk->Show("themes a", "a.content", "a.identity = '$Menu[identity]' and a.type = 'radius' $radius ".$type_theme, "a.id asc");
+    $batch_print = $Bsk->Select("print a", "*", "a.identity = '$Menu[identity]' $radius $where_print" );
     foreach ($batch_print as $value_print) {
-        $array_print[] = array_replace($value_print, array("identity" => $Identity['data'], "price" => Rp($value_print['price'])));
+        $number++;
+        $array_print[] = $value_print;
+        $data_print[] = HTMLReplace($query_theme['content'],
+            array_replace(
+                $value_print, 
+                array(
+                    "no"        => $number,
+                    "period"    => secTime($value_print['period']),
+                    "times"     => secTime($value_print['times']),
+                    "daily"     => secTime($value_print['daily']),
+                    "price"     => Money($value_print['price'], $Config['currency']),
+                    "qr_code"   => '<div class="qr-code" data-code="'.$value_print['qr_code'].'"></div>'
+                )
+            )
+        );
     }
     echo json_encode($array_print ? 
-		array("status" => true, "message" => "success", "color" => "green", "themes" => $query_theme, "data" => $array_print) : 
+		array("status" => true, "message" => "success", "color" => "green", "themes" => $query_theme, "print" => $data_print, "data" => $array_print) : 
 		array("status" => false, "message" => "error", "color" => "red", "themes" => false, "data" => "Print data failed!"), true
 	);
 }
 if(isset($_POST['import'])){
-	$ok = 0; $faild = 0;
+	$valid = 0; $failed = 0;
 	if($_FILES['file']['name']!=""){
-		$fl = $_FILES['file']['tmp_name'];
-		error_reporting(E_ALL ^ E_NOTICE);
-		$file = new Spreadsheet_Excel_Reader($fl);
-		$baris = $file->rowcount(0);
-		for ($ii=2; $ii<=$baris; $ii++){
-			$datakolom1 = $file->val($ii, 1, 0);
-			$datakolom2 = $file->val($ii, 2, 0);
-			$check_import = $Bsk->Tampil("radcheck", "*", "username = '$datakolom1'");
-			if(!$check_import){
-                $post_file = array(
+        $excelFile = $_FILES['file']['tmp_name'];
+        $excelRead = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($excelFile);
+        $excelObjc = $excelRead->load($excelFile);
+        $worksheet = $excelObjc->getSheet(0);
+        $excelRows = $worksheet->getHighestRow();
+		for ($x = 2; $x <= $excelRows; $x++){
+			$excelData1 = $worksheet->getCell('A'.$x)->getValue();
+			$excelData2 = $worksheet->getCell('B'.$x)->getValue();
+			$checkQuery = $Bsk->Show("radcheck", "*", "username = '$excelData1'");
+			if(!$checkQuery){
+                $postQuery = array(
                     "identity"   => $Menu['identity'],
                     "users"      => $Menu['id'],
-                    "username"   => $datakolom1,
+                    "username"   => $excelData1,
                     "attribute"  => "Cleartext-Password", 
                     "op"         => ":=",
-                    "value"      => $datakolom2,
+                    "value"      => $excelData2,
                     "description"=> $_POST['description'],
                     "created"    => $_POST['created']
                 );
-                $post_group = array(
+                $gruopQuery = array(
                     "identity"  => $Menu['identity'],
                     "users"     => $Menu['id'],
-                    "username"  => $datakolom1,
+                    "username"  => $excelData1,
                     "groupname" => Rahmad($_POST['groupname'])
                 );
-                $Bsk->Tambah("radcheck", $post_file);
+                $Bsk->Insert("radcheck", $postQuery);
                 if(!empty($_POST['groupname'])){
-                    $Bsk->Tambah("radusergroup", $post_group);
+                    $Bsk->Insert("radusergroup", $gruopQuery);
                 }
-				$ok++;
+				$valid++;
 			} else {
-				$faild++;
+				$failed++;
 			}
 		}
-		$import = true;
-	} else {
-		$import = false;
 	}
-	echo json_encode($import ?
-        array("status" => true, "message" => "success", "color" => "green", "data" => "Import data success ".$ok." & failed ".$faild) : 
+	echo json_encode($_FILES ?
+        array("status" => true, "message" => "success", "color" => "green", "data" => "Import data success ".$valid." & failed ".$failed) : 
         array("status" => false, "message" => "error", "color" => "red", "data" => "Import data failed!"), true
     );
 }

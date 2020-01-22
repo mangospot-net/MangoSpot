@@ -388,6 +388,7 @@ CREATE VIEW active AS
     WHERE a.acctstoptime IS NULL
     GROUP BY a.radacctid, b.identity, b.users, a.username, c.groupname;
 
+<<<<<<< HEAD
 DROP VIEW IF EXISTS levels;
 CREATE VIEW levels AS
     SELECT 
@@ -402,6 +403,8 @@ CREATE VIEW levels AS
         status
    FROM level;
 
+=======
+>>>>>>> master
 DROP VIEW IF EXISTS access;
 CREATE VIEW access AS  
     SELECT 
