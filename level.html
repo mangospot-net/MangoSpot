@@ -7,6 +7,7 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="dist/css/style.css">
     <link rel="shortcut icon" href="favicon.ico">
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
 </head>
 
 <body>
@@ -105,28 +106,32 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <section class="hk-sec-wrapper">
-                            <a href="#add-data" class="btn btn-info" data-toggle="modal" data-value="0">
-                                <i class="fa fa-plus"></i>
-                                <span class="hidden-xs">Add Data</span>
-                            </a>
-                            <div class="row mt-15">
-                                <div class="col-sm">
-                                    <div class="table-wrap">
-                                        <table id="tables" width="100%"
-                                            class="table table-hover table-striped dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Data</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="#add-data" class="btn btn-info btn-sm" data-toggle="modal" data-value="0">
+                                    <i class="fa fa-plus"></i>
+                                    <span class="hidden-xs">Add</span>
+                                </a>
+                                <div class="pull-right mt-5">
+                                    <a href="javascript:void(0);" class="refresh-tabel"><i
+                                            class="fa fa-refresh"></i></a>
                                 </div>
                             </div>
-                        </section>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="tables" width="100%" class="table table-hover table-striped dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Menu</th>
+                                                <th>Radius</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal fade" id="add-data" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <form class="modal-content" id="form-data" method="POST" action="level">
@@ -143,9 +148,12 @@
                                                 placeholder="Level Name" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="type">Data <span class="symbol required"></span></label>
-                                            <select class="form-control select2" multiple id="value" name="value[]"
-                                                required></select>
+                                            <label for="value">Menu <span class="symbol required"></span></label>
+                                            <ul class="list-group h-320p overflow-auto" id="list_value"></ul>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="data">Radius </label>
+                                            <ul class="list-group" id="list_data"></ul>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -154,11 +162,12 @@
                                                 data-toggle="toggle" data-size="small" data-onstyle="success"
                                                 data-offstyle="danger" value="true">
                                         </div>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
-                                                class="fa fa-close"></i>
-                                            Close</button>
-                                        <button type="submit" id="id" name="id" value="0" class="btn btn-blue"> <i
-                                                class="fa fa-save"></i> Save</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            <i class="fa fa-close"></i> Close
+                                        </button>
+                                        <button type="submit" id="id" name="id" value="0" class="btn btn-blue" disabled>
+                                            <i class="fa fa-save"></i> Save
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -180,9 +189,8 @@
     <script src="vendors/jquery-cookie/jquery.cookie.js"></script>
     <script src="vendors/jquery-toast/jquery.toast.js"></script>
     <script src="vendors/sweetalert/sweetalert.min.js"></script>
-    <script src="vendors/select2/js/select2.min.js"></script>
-    <script src="dist/js/dropdown-bootstrap-extended.js"></script>
-    <script src="dist/js/jquery.slimscroll.js"></script>
+    <script src="vendors/slimscroll/jquery.slimscroll.js"></script>
+    <script src="vendors/bootstrap/dropdown-extended.js"></script>
     <script src="dist/js/feather.min.js"></script>
     <script src="dist/js/controls.js"></script>
     <script src="dist/js/init.js"></script>
