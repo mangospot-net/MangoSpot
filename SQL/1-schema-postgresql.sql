@@ -388,6 +388,23 @@ CREATE VIEW active AS
     WHERE a.acctstoptime IS NULL
     GROUP BY a.radacctid, b.identity, b.users, a.username, c.groupname;
 
+<<<<<<< HEAD
+DROP VIEW IF EXISTS levels;
+CREATE VIEW levels AS
+    SELECT 
+        id,
+        identity,
+        slug,
+        name,
+        value,
+        data,
+        ((length(value) - length(replace(value, ',', ''))) + 1) AS menu,
+        ((length(data) - length(replace(data, ',', ''))) + 1) AS radius,
+        status
+   FROM level;
+
+=======
+>>>>>>> master
 DROP VIEW IF EXISTS access;
 CREATE VIEW access AS  
     SELECT 

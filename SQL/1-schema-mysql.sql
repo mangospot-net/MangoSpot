@@ -317,6 +317,22 @@ BEGIN
 	RETURN bytes;
 END;
 
+<<<<<<< HEAD
+CREATE VIEW levels AS
+    SELECT 
+        id,
+        identity,
+        slug,
+        name,
+        value,
+        data,
+        ((length(value) - length(replace(value, ',', ''))) + 1) AS menu,
+        ((length(data) - length(replace(data, ',', ''))) + 1) AS radius,
+        status
+   FROM level;
+
+=======
+>>>>>>> master
 CREATE VIEW access AS  
   SELECT 
     a.id,

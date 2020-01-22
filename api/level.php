@@ -1,6 +1,14 @@
 <?php
 if(isset($_GET['data'])){
     $details = array();
+<<<<<<< HEAD
+    $levels = $Bsk->Table(
+        "levels", "id, name, menu as value, radius as data, status", 
+        "identity = '$Menu[identity]' and slug = '$Menu[level]'", 
+        array("name", "value", "data", "status", "id")
+    );
+    echo json_encode($levels, true);
+=======
     $levels = $Bsk->Table("level", "*", "identity = '$Menu[identity]' and slug = '$Menu[level]'", 
         array("name", "value", "data", "status", "id")
     );
@@ -18,6 +26,7 @@ if(isset($_GET['data'])){
 		$details[] = array_replace($list, array("value" => implode(', ', $vim[$list['id']]), "data" => $rds[$list['id']]));
 	}
     echo json_encode(array_replace($levels, array("data" => $details)), true);
+>>>>>>> master
 }
 if(isset($_GET['type'])){
     $type = array();
@@ -42,10 +51,22 @@ if(isset($_GET['radius'])){
 	);
 }
 if(isset($_GET['detail'])){
+<<<<<<< HEAD
+    $id_detail     = Rahmad($_GET['detail']);
+    $query_detail  = $Bsk->Show("level", "id, name, value, data, status", "id = '$id_detail' and identity = '$Menu[identity]' and slug = '$Menu[level]'");
+    $query_replace = array_replace(
+        $query_detail, 
+        array(
+            "value" => ($query_detail['value'] ? explode(',', $query_detail['value']) : array()),
+            "data"  => ($query_detail['data'] ? explode(',', $query_detail['data']) : array())
+        )
+    );
+=======
     $id_detail = Rahmad($_GET['detail']);
     $query_detail = $Bsk->Show("level", "id, name, value, data, status", "id = '$id_detail' and identity = '$Menu[identity]' and slug = '$Menu[level]'");
+>>>>>>> master
     echo json_encode($query_detail ? 
-		array("status" => true, "message" => "success", "data" => $query_detail) : 
+		array("status" => true, "message" => "success", "data" => $query_replace) : 
 		array("status" => false, "message" => "error", "data" => false), true
 	);
 }
@@ -56,13 +77,22 @@ if(isset($_POST['name'])){
     $data_post = array_replace(
         $_POST, 
         array(
+<<<<<<< HEAD
+            "value"  => (isset($_POST['value']) ? implode(',', $_POST['value']) : NULL), 
+            "data"   => (isset($_POST['data']) ? implode(',', $_POST['data']) : NULL),
+=======
             "value" => implode(',', $_POST['value']), 
             "data"  => implode(',', $_POST['data']),
+>>>>>>> master
             "status" => (isset($_POST['status']) ? 'true' : 'false')
         )
     );
     $query_post = ($check_post ? 
+<<<<<<< HEAD
+        $Bsk->Change("level", $data_post, "id = '$check_post[id]'") : 
+=======
         $Bsk->Update("level", $data_post, "id = '$check_post[id]'") : 
+>>>>>>> master
         $Bsk->Insert("level", array_merge($data_post, array("identity" => $Menu['identity'], "slug" => $Menu['level'])))
     );
     echo json_encode($query_post ? 

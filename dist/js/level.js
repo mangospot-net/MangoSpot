@@ -10,9 +10,39 @@ function Select() {
         dataType: "JSON",
         data: "type",
         success: function (response) {
+            var menu = '';
             $.each(response.data, function (i, val) {
-                $('#value').append('<option value="' + val.id + '">' + val.name + '</option>');
+                menu += '<li class="list-group-item pa-10">';
+                menu += '<div class="custom-control custom-checkbox">';
+                menu += '<input type="checkbox" name="value[]" value="' + val.id + '" class="custom-control-input" id="value_' + val.id + '">';
+                menu += '<label class="custom-control-label" for="value_' + val.id + '">' + val.name + '</label>';
+                menu += '</div>';
+                menu += '</li>';
             });
+            $('#list_value').html(menu);
+        }
+    });
+    $.ajax({
+        url: "./api/level",
+        headers: {
+            "Api": $.cookie("BSK_API"),
+            "Key": $.cookie("BSK_KEY"),
+            "Accept": "application/json"
+        },
+        method: "GET",
+        dataType: "JSON",
+        data: "radius",
+        success: function (radius) {
+            var nasid = '';
+            $.each(radius.data, function (i, nas) {
+                nasid += '<li class="list-group-item pa-10">';
+                nasid += '<div class="custom-control custom-checkbox">';
+                nasid += '<input type="checkbox" name="data[]" value="' + nas.id + '" class="custom-control-input" id="data_' + nas.id + '">';
+                nasid += '<label class="custom-control-label" for="data_' + nas.id + '">' + nas.name + '</label>';
+                nasid += '</div>';
+                nasid += '</li>';
+            });
+            $('#list_data').html(nasid);
         }
     });
     $.ajax({
@@ -93,15 +123,9 @@ function Tables() {
 };
 
 function Action() {
-    $('.select2').select2({
-        placeholder: 'Select menu',
-        allowClear: true
-    });
     $('body').on('click', 'a[href="#add-data"]', function () {
         var id_data = $(this).data('value');
         $('#id').val(id_data);
-        $('#value').val(null).trigger('change');
-        $('#form-data').trigger('reset');
         $.ajax({
             url: "./api/level",
             headers: {
@@ -114,17 +138,37 @@ function Action() {
             data: {
                 "detail": id_data
             },
+            beforeSend: function () {
+                $('#form-data').trigger('reset');
+                $('button#id').attr('disabled', true);
+                $('input[id^=value_], input[id^=data_]').attr('checked', false);
+            },
             success: function (detail) {
                 if (detail.status) {
                     $.each(detail.data, function (i, show) {
-                        $('#' + i).val(show);
+                        if (jQuery.inArray(i, ['value', 'data']) !== -1) {
+                            $.each(detail.data[i], function (e, list) {
+                                $('#' + i + '_' + list).attr('checked', true);
+                            });
+                        } else {
+                            $('#' + i).val(show);
+                        }
                     });
+<<<<<<< HEAD
+=======
                     $('#value').val(detail.data.value.split(",")).select2();
                     $('#data').val(detail.data.data.split(",")).select2();
+>>>>>>> master
                     $('#status').bootstrapToggle(detail.data.status ? 'on' : 'off');
+                    var checked = $('input[name="value[]"]:checked');
+                    $('button#id').attr('disabled', checked.length <= 0 ? true : false);
                 }
             }
         });
+    });
+    $('body').on('click', 'input[type=checkbox][name="value[]"]', function () {
+        var check = $('input[name="value[]"]:checked');
+        $('button#id').attr('disabled', check.length <= 0 ? true : false);
     });
 };
 
