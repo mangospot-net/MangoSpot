@@ -317,7 +317,6 @@ BEGIN
 	RETURN bytes;
 END;
 
-<<<<<<< HEAD
 CREATE VIEW levels AS
     SELECT 
         id,
@@ -331,8 +330,6 @@ CREATE VIEW levels AS
         status
    FROM level;
 
-=======
->>>>>>> master
 CREATE VIEW access AS  
   SELECT 
     a.id,
