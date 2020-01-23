@@ -432,7 +432,7 @@ CREATE VIEW expiredgroup AS
       ELSE d.price - d.discount 
     END AS total,
     date_format(min(b.acctstarttime),'%Y-%m-%d %H:%i') AS time,
-    date_format(from_unixtime(unix_timestamp(b.acctstarttime) + a.value),'%Y-%m-%d %H:%i') AS expired 
+    CHAR(date_format(from_unixtime(unix_timestamp(b.acctstarttime) + a.value),'%Y-%m-%d %H:%i')) AS expired 
   FROM expiredcheck a JOIN radacct b ON a.username = b.username 
   LEFT JOIN radusergroup c ON a.username = c.username AND a.identity = c.identity
   LEFT JOIN radprice d ON c.groupname = d.groupname AND a.identity = d.identity 
@@ -453,7 +453,7 @@ UNION
       ELSE d.price - d.discount 
     END AS total,
     date_format(min(b.acctstarttime),'%Y-%m-%d %H:%i') AS time,
-    formatbytes(sum(b.acctinputoctets) + sum(b.acctoutputoctets)) AS expired 
+    CHAR(formatbytes(sum(b.acctinputoctets) + sum(b.acctoutputoctets))) AS expired 
   FROM expiredcheck a JOIN radacct b ON a.username = b.username 
   LEFT JOIN radusergroup c ON a.username = c.username AND a.identity = c.identity 
   LEFT JOIN radprice d ON c.groupname = d.groupname AND a.identity = d.identity 
