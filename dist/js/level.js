@@ -45,22 +45,6 @@ function Select() {
             $('#list_data').html(nasid);
         }
     });
-    $.ajax({
-        url: "./api/level",
-        headers: {
-            "Api": $.cookie("BSK_API"),
-            "Key": $.cookie("BSK_KEY"),
-            "Accept": "application/json"
-        },
-        method: "GET",
-        dataType: "JSON",
-        data: "radius",
-        success: function (radius) {
-            $.each(radius.data, function (i, nas) {
-                $('#data').append('<option value="' + nas.id + '">' + nas.name + '</option>');
-            });
-        }
-    });
 };
 
 function Tables() {
@@ -154,11 +138,6 @@ function Action() {
                             $('#' + i).val(show);
                         }
                     });
-<<<<<<< HEAD
-=======
-                    $('#value').val(detail.data.value.split(",")).select2();
-                    $('#data').val(detail.data.data.split(",")).select2();
->>>>>>> master
                     $('#status').bootstrapToggle(detail.data.status ? 'on' : 'off');
                     var checked = $('input[name="value[]"]:checked');
                     $('button#id').attr('disabled', checked.length <= 0 ? true : false);
