@@ -315,7 +315,9 @@ BEGIN
 		ELSE SET bytes = byte;
 	END CASE;
 	RETURN bytes;
-END;
+END; //
+
+DELIMITER ;
 
 CREATE VIEW levels AS
     SELECT 
