@@ -149,7 +149,7 @@ if(isset($_POST['autoremove']) || isset($_GET['autoremove'])){
         "identity = '$data_auth[identity]' and users = '$data_auth[id]' group by identity, users"
     );
     $saved_sql = $Bsk->Select(
-        "expired", "username, profile, time, usage, quota, price, discount, total",
+        "expired", "username, profile, time, usages, quota, price, discount, total",
         "identity = '$data_auth[identity]' and users = '$data_auth[id]'", "time asc"
     );
     foreach($saved_sql as $value_sql){
