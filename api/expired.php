@@ -6,9 +6,9 @@ if(isset($_GET['data'])){
     $users = (empty($_GET['users']) ? $Menu['id'] : Rahmad($_GET['users']));
     $query = $Bsk->Table(
         "expired", 
-        "profile, username, time, usage, usage as expired, price, discount, total", 
+        "profile, username, time, usages, usages as expired, price, discount, total", 
         "identity = '$Menu[identity]' and users = '$users' ".$chang, 
-        array("username", "username", "profile", "time", "usage", "price", "discount", "total")
+        array("username", "username", "profile", "time", "usages", "price", "discount", "total")
     );
     echo json_encode($query, true);
 }
@@ -71,7 +71,7 @@ if(isset($_POST['delete'])){
         "identity = '$Menu[identity]' and users = '$getId' and username in (".$implod.") group by identity, users"
     );
     $saved = $Bsk->Select(
-        "expired", "username, profile, time, usage, quota, price, discount, total",
+        "expired", "username, profile, time, usages, quota, price, discount, total",
         "identity = '$Menu[identity]' and users = '$getId' and username IN (".$implod.") ", "time asc"
     );
     foreach($saved as $insert){
