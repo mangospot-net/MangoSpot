@@ -40,9 +40,9 @@ function Tables() {
                 return row.download ? formatBytes(row.download) : '';
             }
         }, {
-            "data": "usage",
+            "data": "usages",
             render: function (data, type, row) {
-                return row.usage ? formatBytes(row.usage) : '';
+                return row.usages ? formatBytes(row.usages) : '';
             }
         }],
         oLanguage: {
@@ -166,7 +166,7 @@ function Tables() {
                 });
                 $.each(result.data.data, function (i, rows) {
                     numb++;
-                    var expl = rows.usage.split(' / ');
+                    var expl = rows.usages.split(' / ');
                     text += '<tr>';
                     text += '<td align="center">' + numb + '</td>';
                     text += '<td>' + rows.username + '</td>';
