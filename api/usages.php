@@ -4,22 +4,22 @@ if(isset($_GET['data'])){
     $chang = (empty($_GET['data']) ? "" : " and date  BETWEEN '$explo[0]' and '$explo[1]' ");
     $query = $Bsk->Table(
         "resume", 
-        "id, date, total, upload, download, usage", 
+        "id, date, total, upload, download, usages", 
         "identity = '$Menu[identity]' and users = '$Menu[id]' ".$chang, 
-        array("date", "total", "upload", "download", "usage")
+        array("date", "total", "upload", "download", "usages")
     );
     echo json_encode($query, true);
 }
 if(isset($_GET['detail'])){
     $getID = Rahmad($_GET['detail']);
-    $details = $Bsk->Show("income", "date, total, upload, download, (upload + download) as usage, data", "id = '$getID' and identity = '$Menu[identity]'");
+    $details = $Bsk->Show("income", "date, total, upload, download, (upload + download) as usages, data", "id = '$getID' and identity = '$Menu[identity]'");
     $jsonData = ($details['data'] ? json_decode($details['data'], true) : array());
     $arrayData = array_replace(
         $details, 
         array(
             "upload"    => formatBytes($details['upload']),
             "download"  => formatBytes($details['download']),
-            "usage"     => formatBytes($details['usage']),
+            "usages"    => formatBytes($details['usages']),
             "data"      => $jsonData, 
             "date"      => DateFormat($details['date'], 'Y-m-d')
         )
