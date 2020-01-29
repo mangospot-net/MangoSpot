@@ -388,7 +388,6 @@ CREATE VIEW active AS
     WHERE a.acctstoptime IS NULL
     GROUP BY a.radacctid, b.identity, b.users, a.username, c.groupname;
 
-<<<<<<< HEAD
 DROP VIEW IF EXISTS levels;
 CREATE VIEW levels AS
     SELECT 
@@ -403,8 +402,6 @@ CREATE VIEW levels AS
         status
    FROM level;
 
-=======
->>>>>>> master
 DROP VIEW IF EXISTS access;
 CREATE VIEW access AS  
     SELECT 
@@ -525,7 +522,7 @@ CREATE VIEW expired AS
     a.discount,
     a.total,
     a."time",
-    concat(formatbytes(sum(b.acctinputoctets)::bigint), ' / ', formatbytes(sum(b.acctoutputoctets)::bigint)) AS usage,
+    concat(formatbytes(sum(b.acctinputoctets)::bigint), ' / ', formatbytes(sum(b.acctoutputoctets)::bigint)) AS usages,
     sum(b.acctinputoctets) AS upload,
     sum(b.acctoutputoctets) AS download,
     (sum(b.acctinputoctets) + sum(b.acctoutputoctets)) AS quota
@@ -549,7 +546,7 @@ CREATE VIEW resume AS
         to_char(date, 'Dy') AS week,
         upload,
         download,
-        (upload + download) AS usage
+        (upload + download) AS usages
    FROM income;
 
 DROP VIEW IF EXISTS profiles;
