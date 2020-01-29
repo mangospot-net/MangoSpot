@@ -33,7 +33,7 @@ function Tables() {
         }, {
             "data": "time"
         }, {
-            "data": "usage"
+            "data": "usages"
         }, {
             "data": "price"
         }, {
