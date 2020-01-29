@@ -473,7 +473,7 @@ CREATE VIEW expired AS
     a.discount, 
     a.total, 
     a.time, 
-    concat(formatbytes(sum(b.acctinputoctets)), ' / ', formatbytes(sum(b.acctoutputoctets))) as 'usage',
+    concat(formatbytes(sum(b.acctinputoctets)), ' / ', formatbytes(sum(b.acctoutputoctets))) as usages,
     sum(b.acctinputoctets) AS upload,
     sum(b.acctoutputoctets) AS download,
     (sum(b.acctinputoctets) + sum(b.acctoutputoctets)) AS quota
@@ -512,7 +512,7 @@ CREATE VIEW resume AS
     DATE_FORMAT(date, '%D') AS week,
     upload,
     download,
-    (upload + download) AS 'usage'
+    (upload + download) AS usages
   FROM income;
 
 CREATE VIEW profiles AS  
