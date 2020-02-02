@@ -126,7 +126,11 @@ class Connect extends PDO{
 		$search = array();
 		if(!empty($requestData['search']['value'])){
 			foreach($columns as $colums){
-				$search[] ="lower($colums::text) LIKE '%".strtolower($requestData['search']['value'])."%' ";
+				if($this->sql == 'pgsql'){
+					$search[] ="lower($colums::text) LIKE '%".strtolower($requestData['search']['value'])."%' ";
+				} else {
+					$search[] ="lower($colums) LIKE '%".strtolower($requestData['search']['value'])."%' ";
+				}
 			}
 			$sql.= " AND (".implode(' OR ', $search).")";
 		}
