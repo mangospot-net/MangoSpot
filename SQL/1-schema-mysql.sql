@@ -525,7 +525,7 @@ CREATE VIEW profiles AS
     c.value AS period,
     d.value AS rate,
     formatbytes(e.value) AS quota,
-    formatbytes(f.value) AS valume,
+    formatbytes(f.value) AS volume,
     g.value AS times,
     h.value AS daily,
     i.value AS ppp,
@@ -559,7 +559,7 @@ CREATE VIEW voucher AS
     f.value AS daily,
     h.value AS rate,
     formatbytes(i.value) AS quota,
-    formatbytes(g.value) AS valume,
+    formatbytes(g.value) AS volume,
     j.value AS ppp,
     a.description,
     a.created
