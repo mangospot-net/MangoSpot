@@ -11,6 +11,7 @@
         "carloswgama/php-onesignal": "^1.0",
         "claviska/simpleimage": "^3.3",
         "filipsedivy/php-download-file": "^1.0",
-        "phpoffice/phpspreadsheet": "^1.10"
+        "phpoffice/phpspreadsheet": "^1.10",
+        "phpseclib/mcrypt_compat": "^1.0"
     }
 }
