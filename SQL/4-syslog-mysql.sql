@@ -11,54 +11,52 @@ CREATE TABLE sysseverity (
   color     varchar(100)
 ) ENGINE = INNODB COMMENT='Syslog';
 
-CREATE TABLE systemevents (
-  id                    int(16) NOT NULL auto_increment,
-  customerid            bigint,
-  receivedat            timestamp(6),
-  devicereportedtime    timestamp(6),
-  facility              smallint,
-  priority              smallint,
-  fromhost              varchar(60),
-  message               text,
-  ntseverity            integer,
-  importance            integer,
-  eventsource           varchar(60),
-  eventuser             varchar(60),
-  eventcategory         integer,
-  eventid               integer,
-  eventbinarydata       text,
-  maxavailable          integer,
-  currusage             integer,
-  minusage              integer,
-  maxusage              integer,
-  infounitid            integer,
-  syslogtag             varchar(60),
-  eventlogtype          varchar(60),
-  genericfilename       varchar(60),
-  systemid              integer,
-  PRIMARY KEY (id)
+CREATE TABLE SystemEvents (
+  ID int unsigned not null auto_increment primary key,
+  CustomerID bigint,
+  ReceivedAt datetime NULL,
+  DeviceReportedTime datetime NULL,
+  Facility smallint NULL,
+  Priority smallint NULL,
+  FromHost varchar(60) NULL,
+  Message text,
+  NTSeverity int NULL,
+  Importance int NULL,
+  EventSource varchar(60),
+  EventUser varchar(60) NULL,
+  EventCategory int NULL,
+  EventID int NULL,
+  EventBinaryData text NULL,
+  MaxAvailable int NULL,
+  CurrUsage int NULL,
+  MinUsage int NULL,
+  MaxUsage int NULL,
+  InfoUnitID int NULL ,
+  SysLogTag varchar(60),
+  EventLogType varchar(60),
+  GenericFileName VarChar(60),
+  SystemID int NULL
 ) ENGINE = INNODB COMMENT='Syslog';
 
-CREATE TABLE systemeventsproperties (
-  id            int(16) NOT NULL auto_increment,
-  systemeventid integer,
-  paramname     varchar(255),
-  paramvalue    text,
-  PRIMARY KEY (id)
+CREATE TABLE SystemEventsProperties (
+  ID int unsigned not null auto_increment primary key,
+  SystemEventID int NULL ,
+  ParamName varchar(255) NULL ,
+  ParamValue text NULL
 ) ENGINE = INNODB COMMENT='Syslog';
 
 CREATE VIEW syslog AS  SELECT a.id,
-    a.receivedat AS date,
+    a.ReceivedAt AS date,
     b.name AS facility,
     c.name AS priority,
-    a.syslogtag AS syslog,
-    a.message,
+    a.SysLogTag AS syslog,
+    a.Message AS message,
     c.color,
-    a.facility AS sysfacility,
-    a.priority AS syspriority
-   FROM ((systemevents a
-     LEFT JOIN sysfacility b ON ((a.facility = b.id)))
-     LEFT JOIN sysseverity c ON ((a.priority = c.id)));
+    a.Facility AS sysfacility,
+    a.Priority AS syspriority
+   FROM ((SystemEvents a
+     LEFT JOIN sysfacility b ON ((a.Facility = b.id)))
+     LEFT JOIN sysseverity c ON ((a.Priority = c.id)));
 
 INSERT INTO sysseverity (id, name, info, color) VALUES (0, 'Emerg', 'system is unusable', 'secondary');
 INSERT INTO sysseverity (id, name, info, color) VALUES (1, 'Alert', 'action must be taken immediately', 'primary');
