@@ -1,4 +1,3 @@
-
 CREATE TABLE radacct (
   radacctid           bigint(21) NOT NULL auto_increment,
   acctsessionid       varchar(64) NOT NULL default '',
@@ -517,7 +516,7 @@ CREATE VIEW resume AS
 
 CREATE VIEW profiles AS  
   SELECT 
-    row_number() OVER (ORDER BY a.groupname) AS id,
+    a.id,
     a.identity,
     a.users,
     a.groupname,
@@ -579,7 +578,6 @@ CREATE VIEW voucher AS
 CREATE VIEW print AS 
   SELECT 
     a.id,
-    row_number() OVER (ORDER BY a.id) AS no,
     a.identity,
     a.users,
     d.data,
