@@ -38,6 +38,6 @@ Edit Username & Password ssh on [api/config.php](https://github.com/mangospot-ne
 ```
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8CRUEDLPLCFSQ)
 ```
-Paypal: sipkur.net@gmail.com
+Paypal: mangospot.net@gmail.com
 Phone: +6285642311781
 ```
