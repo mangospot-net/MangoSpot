@@ -455,6 +455,28 @@ UNION
       ELSE d.price - d.discount 
     END AS total,
     date_format(min(b.acctstarttime),'%Y-%m-%d %H:%i') AS time,
+    sum(b.acctsessiontime) AS expired 
+  FROM expiredcheck a JOIN radacct b ON a.username = b.username 
+  LEFT JOIN radusergroup c ON a.username = c.username AND a.identity = c.identity 
+  LEFT JOIN radprice d ON c.groupname = d.groupname AND a.identity = d.identity 
+  WHERE a.attribute = 'Max-All-Session' 
+  GROUP BY a.identity,a.users,a.username,c.groupname,a.attribute,a.value,d.price,d.discount 
+  HAVING a.value <= sum(b.acctsessiontime)
+UNION 
+  SELECT 
+    a.identity,
+    a.users,
+    a.username,
+    c.groupname AS profile,
+    a.attribute,
+    a.value,
+    d.price,
+    d.discount,
+    CASE 
+      WHEN d.discount IS NULL THEN d.price 
+      ELSE d.price - d.discount 
+    END AS total,
+    date_format(min(b.acctstarttime),'%Y-%m-%d %H:%i') AS time,
     CHAR(formatbytes(sum(b.acctinputoctets) + sum(b.acctoutputoctets))) AS expired 
   FROM expiredcheck a JOIN radacct b ON a.username = b.username 
   LEFT JOIN radusergroup c ON a.username = c.username AND a.identity = c.identity 
